@@ -1,5 +1,7 @@
 package Main;
 
+import java.util.ArrayList;
+
 public class Board {
 
 	// 필드
@@ -11,14 +13,15 @@ public class Board {
 	private String category; // 카테고리
 	private int good; // 추천수
 	private int bad; // 비추천수
-	private Reply reply; // 댓글클래스
+	private ArrayList<Reply> reply; // 댓글클래스
 	private int report;  // 신고누적횟수
 	
 	// 생성자
 	public Board() {}
-
+	
 	public Board(String title, String content, String writer, String date, int view, String category, int good, int bad,
-			Reply reply, int report) {
+			ArrayList<Reply> reply, int report) {
+		super();
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
@@ -31,7 +34,6 @@ public class Board {
 		this.report = report;
 	}
 
-	
 	// 메소드
 	public String getTitle() {
 		return title;
@@ -97,11 +99,11 @@ public class Board {
 		this.bad = bad;
 	}
 
-	public Reply getReply() {
+	public ArrayList<Reply> getReply() {
 		return reply;
 	}
 
-	public void setReply(Reply reply) {
+	public void setReply(ArrayList<Reply> reply) {
 		this.reply = reply;
 	}
 

@@ -1,26 +1,29 @@
 package 한요한;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Board {
 
 	// 필드
-	private String title; // 게시물 제목 o
-	private String content; // 게시물 내용 o
-	private String writer; // 작성자 d
-	private LocalDateTime date; // 날짜 s
-	private int view; // 조회수 
+	private String title; // 게시물 제목
+	private String content; // 게시물 내용
+	private String writer; // 작성자
+	private LocalDateTime date; // 날짜
+	private int view; // 조회수
 	private String category; // 카테고리
 	private int good; // 추천수
 	private int bad; // 비추천수
-	private Reply reply; // 댓글클래스
+	private ArrayList<Reply> reply; // 댓글클래스
 	private int report;  // 신고누적횟수
+	private int index; // 번호
 	
 	// 생성자
 	public Board() {}
-
+	
 	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good, int bad,
-			Reply reply, int report) {
+			ArrayList<Reply> reply, int report, int index) {
+		super();
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
@@ -31,9 +34,9 @@ public class Board {
 		this.bad = bad;
 		this.reply = reply;
 		this.report = report;
+		this.index = index; 
 	}
 
-	
 	// 메소드
 	public String getTitle() {
 		return title;
@@ -99,11 +102,11 @@ public class Board {
 		this.bad = bad;
 	}
 
-	public Reply getReply() {
+	public ArrayList<Reply> getReply() {
 		return reply;
 	}
 
-	public void setReply(Reply reply) {
+	public void setReply(ArrayList<Reply> reply) {
 		this.reply = reply;
 	}
 
@@ -114,6 +117,15 @@ public class Board {
 	public void setReport(int report) {
 		this.report = report;
 	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
 	
 	
 	
