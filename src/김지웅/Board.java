@@ -1,5 +1,7 @@
 package 김지웅;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Board {
 
@@ -7,19 +9,20 @@ public class Board {
 	private String title; // 게시물 제목
 	private String content; // 게시물 내용
 	private String writer; // 작성자
-	private String date; // 날짜
+	private LocalDateTime date; // 날짜
 	private int view; // 조회수
 	private String category; // 카테고리
 	private int good; // 추천수
 	private int bad; // 비추천수
-	private Reply reply; // 댓글클래스
+	private ArrayList<Reply> replylist; // 댓글리스트
 	private int report;  // 신고누적횟수
+	private int index; // 게시물 인덱스번호
 	
 	// 생성자
 	public Board() {}
 
-	public Board(String title, String content, String writer, String date, int view, String category, int good, int bad,
-			Reply reply, int report) {
+	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good,
+			int bad, ArrayList<Reply> replylist, int report, int index) {
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
@@ -28,11 +31,16 @@ public class Board {
 		this.category = category;
 		this.good = good;
 		this.bad = bad;
-		this.reply = reply;
+		this.replylist = replylist;
 		this.report = report;
+		this.index = index;
 	}
 
-	
+
+
+
+
+
 	// 메소드
 	public String getTitle() {
 		return title;
@@ -58,11 +66,11 @@ public class Board {
 		this.writer = writer;
 	}
 
-	public String getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
@@ -98,14 +106,6 @@ public class Board {
 		this.bad = bad;
 	}
 
-	public Reply getReply() {
-		return reply;
-	}
-
-	public void setReply(Reply reply) {
-		this.reply = reply;
-	}
-
 	public int getReport() {
 		return report;
 	}
@@ -113,6 +113,23 @@ public class Board {
 	public void setReport(int report) {
 		this.report = report;
 	}
+
+	public ArrayList<Reply> getReplylist() {
+		return replylist;
+	}
+
+	public void setReplylist(ArrayList<Reply> replylist) {
+		this.replylist = replylist;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
 	
 	
 	
