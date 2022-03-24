@@ -25,6 +25,7 @@ public class Main {
 			int ch = scanner.nextInt();
 			if(ch==1) { //회원가입
 				System.out.println("----------------회원가입 페이지----------------");
+				System.out.println("(아이디는 4~12글자 사이여야 합니다.)");
 				System.out.print("아이디 입력 : "); String id = scanner.next();
 				System.out.print("비밀번호 입력 : "); String pw = scanner.next();
 				System.out.print("비밀번호 확인 : "); String pwcheck = scanner.next();
@@ -132,6 +133,10 @@ public class Main {
 			System.out.println("1.글쓰기 2.글보기 3.검색 4.이전페이지 5.다음페이지 6.뒤로가기");
 			int ch2 = scanner.nextInt();
 			if(ch2==1) { // 글쓰기
+				scanner.nextLine();
+				System.out.print("제목 입력 : "); String title = scanner.nextLine();
+				System.out.println("내용 입력 : "); String content = scanner.nextLine();
+				
 				
 			}
 			else if(ch2==2) { // 글보기
