@@ -74,9 +74,9 @@ public class Controller {
 		}
 		return false;	
 	}
-	public static String 카테고리글출력(String cateString) {
+	//public static String 카테고리글출력(String cateString) {
 		
-	}
+	//}
 	public static void 댓글작성() {
 		
 	}

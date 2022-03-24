@@ -131,7 +131,7 @@ public class main {
 			if(카테고리선택 == 1) {//시사카테고리	
 					System.out.println("*** 시사 ***");
 					//카테고리 글출력
-					String 카테고리 = Controller.카테고리글출력("시사");
+					//String 카테고리 = Controller.카테고리글출력("시사");
 					System.out.println("------------"); //구분선
 					System.out.println("1. 글쓰기 2.글보기 3.뒤로가기"); int 행동선택 = scanner.nextInt();//선택입력받기
 					if(행동선택 == 1) {
