@@ -9,17 +9,16 @@ public class main {
 		
 		while(true) {
 
-
-			System.out.println("                 *          *          *        **********      ***********                       ");
-			System.out.println("                *          *          *         *                    *          ");
-			System.out.println("               *          *          *          *                    *            ");
-			System.out.println("              *          *          *           **********           *                   ");
-			System.out.println("             * * *      * * *      * * *        *                    *           ");
-			System.out.println("             *     *    *     *    *     *      *                    *            ");
-			System.out.println("             *     *    *     *    *     *      *                    *           ");
-			System.out.println("               * *        * *        * *        **********           *                   ");
-			System.out.println("------------666엔터테인먼트 커뮤니티----------");
-			
+			System.out.println("--------------------------------------------------------------------------------------------");
+			System.out.println("|                 *          *          *        **********      ***********               |        ");
+			System.out.println("|                *          *          *         *                    *                    |        ");
+			System.out.println("|               *          *          *          *                    *                    |        ");
+			System.out.println("|              *          *          *           **********           *                    |        ");
+			System.out.println("|             * * *      * * *      * * *        *                    *                    |        ");
+			System.out.println("|             *     *    *     *    *     *      *                    *                    |        ");
+			System.out.println("|             *     *    *     *    *     *      *                    *                    |        ");
+			System.out.println("|               * *        * *        * *        **********           *       엔터테인먼트     |        ");
+			System.out.println("--------------------------------------------------------------------------------------------");
 			//메뉴
 			System.out.println("1.회원가입 2.로그인 3.아이디 찾기 4.비밀번호 찾기");
 			int ch = scanner.nextInt();
