@@ -17,7 +17,7 @@ public class main {
 			System.out.println("             * * *      * * *      * * *        *                    *           ");
 			System.out.println("             *     *    *     *    *     *      *                    *            ");
 			System.out.println("             *     *    *     *    *     *      *                    *           ");
-			System.out.println("               * *        * *        * *        **********  *        *                   ");
+			System.out.println("               * *        * *        * *        **********           *                   ");
 			System.out.println("------------666엔터테인먼트 커뮤니티----------");
 			
 			//메뉴
