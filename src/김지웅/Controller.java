@@ -69,26 +69,24 @@ public class Controller {
 		}
 		return false;
 	}
+	
 	public static boolean 글수정비밀번호체크(String id,String pw) {
 		for(Board temp : boardlist) {
-			if(temp.getWriter().equals(id)) {
 				for(Acount temp2 : acountlist) {
-					if(temp2.getPw().equals(pw)) {
+					if(temp.getWriter().equals(id) && temp2.getPw().equals(pw)) {
 						return true;
 					}
 				}
 				
-			}
+			
 		}
 		return false;
 	}
-	public static void 글수정(String id,String pw, int boardnum, String title, String content) {
-		for(Board temp : boardlist) {
-			if(temp.getWriter().equals(id)) {
-				
-			}
-		}
-		
+	
+	public static void 글수정(int boardnum, String title, String content) {
+		boardlist.get(boardnum).setTitle(title);
+		boardlist.get(boardnum).setContent(content);
+		게시물저장();
 	}
 	
 	public static void 글삭제(String id, String pw, int boardnum) {
@@ -105,6 +103,7 @@ public class Controller {
 			}
 		}
 	}
+	
 	public static void 검색() {
 		
 	}

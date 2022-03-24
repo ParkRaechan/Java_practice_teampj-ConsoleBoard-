@@ -166,28 +166,36 @@ public class Main {
 			else if(ch2==3) { // 댓글삭제
 				
 			}
+			
 			else if(ch2==4) { // 글수정
 				boolean result = Controller.글수정아이디체크(id);
 				if(result) {
 					System.out.print("비밀번호 입력 : "); String pw = scanner.next();
-					System.out.print("수정할 제목 입력 : "); String title = scanner.next();
-					scanner.next();
-					System.out.print("수정할 내용 입력 : "); String content = scanner.nextLine();
-					Controller.글수정(id,pw,boardnum,title,content);
-					System.out.println("수정이 완료되었습니다.");
+					boolean result2 = Controller.글수정비밀번호체크(id, pw);
+					if(result2) {
+						System.out.print("수정할 제목 입력 : "); String title = scanner.next();
+						scanner.next();
+						System.out.print("수정할 내용 입력 : "); String content = scanner.nextLine();
+						Controller.글수정(boardnum, title, content);
+						System.out.println("수정이 완료되었습니다.");
+					}
 				}else System.out.println("본인이 작성한 글만 수정이 가능합니다.");
-				
 			}
+			
 			else if(ch2==5) { // 글삭제
 				boolean result = Controller.글수정아이디체크(id);
 				if(result) {
 					System.out.print("비밀번호 입력 : "); String pw = scanner.next();
-					Controller.글수정비밀번호체크(id, pw);
-					Controller.글삭제(id,pw,boardnum);
-					System.out.println("삭제가 완료되었습니다.");
-					break;
+					boolean result2 = Controller.글수정비밀번호체크(id, pw);
+					if(result2) {
+						Controller.글삭제(id,pw,boardnum);
+						System.out.println("삭제가 완료되었습니다.");
+						break;
+					} else System.out.println("비밀번호가 일치하지 않습니다.");
+					
 				} else System.out.println("본인이 작성한 글만 삭제가 가능합니다.");
 			}
+			
 			else if(ch2==6) {break;} // 뒤로가기
 		}
 		
