@@ -3,18 +3,54 @@ package 한요한;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+
 public class Controller {
 
 	public static ArrayList<Acount> acountlist = new ArrayList<>();
 	public static ArrayList<Board> boardlist = new ArrayList<>();
 	public static int boardtnum = 1;
 	
-	public static void 회원가입() {
+	public static int 회원가입(String id, String pw, String pwcheck, String name, String email, String phone) {
+		if(id.length()<4 || id.length()>13) {
+			return 5; // 아이디길이가 4~12자리가 아님
+		}
+		if(!pw.equals(pwcheck)) {
+			return 1; // 비밀번호 확인 틀림
+		}
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id)) {
+				return 2; // 아이디 중복
+			}
+			else {
+				if(temp.getPhone().equals(phone)) {
+					return 3; // 해당 전화번호로 가입한 회원이 있음
+				}
+			}
+		}
+		ArrayList<Acount> templist = new ArrayList<>();
+		Acount temp = new Acount(id, pw, name, email, phone, 0, templist, 0, "" );
+		acountlist.add(temp);
+		return 4; // 회원가입 성공
 		
 	}
-	public static void 로그인() {
-		
+	public static int 로그인(String id, String pw) {
+		boolean idcheck = false;
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id)) {
+				idcheck = true;
+			}
+		}
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id) && temp.getPw().equals(pw)) {
+				return 1; // 로그인 성공
+			}
+		}
+		if(idcheck==false) {
+			return 2; // 가입된 아이디가 없음
+		}
+		return 3; // 비밀번호 틀림
 	}
+	///////////////////////////////////////////////////////////////////////////
 	public static boolean 글쓰기(String id, String title, String content, String category) {//요한
 		//id, 제목, 내용, 작성자id, 카테고리 받아오기
 		LocalDateTime date= LocalDateTime.now();// 현재날짜생성
@@ -24,7 +60,7 @@ public class Controller {
 		/* 파일처리 메소드 처리 성공시 true반환
 		 * 
 		 */		
-		return false;
+		return true;// 임시반환
 	}
 	public static boolean 글상세보기(int index) {// 인덱스일치하는 번호 찾은후 글이 있음 반환
 		//index 받아와서 해당글찾기
@@ -44,12 +80,46 @@ public class Controller {
 	public static void 댓글작성() {
 		
 	}
-	public static void 글수정() {
-		
+	public static boolean 글수정아이디체크(String id) {
+		for(Board temp : boardlist) {
+			if(temp.getWriter().equals(id)) {return true;}
+		}
+		return false;
 	}
-	public static void 글삭제() {
-		
+	public static boolean 글수정비밀번호체크(String id,String pw) {
+		for(Board temp : boardlist) {
+			if(temp.getWriter().equals(id)) {
+				for(Acount temp2 : acountlist) {
+					if(temp2.getPw().equals(pw)) {
+						return true;
+					}
+				}
+				
+			}
+		}
+		return false;
 	}
+	public static void 글수정(String id,String pw, int boardnum, String title, String content) {
+		for(Board temp : boardlist) {
+			if(temp.getWriter().equals(id)) {
+				
+			}
+		}
+	}
+//	public static void 글삭제(String id, String pw, int boardnum) {
+//		if(boardlist.get(boardnum).getWriter().equals(id)) {
+//			for(Acount temp : acountlist) {
+//				if(temp.getPw().equals(pw) && temp.getId().equals(id)) {
+//					boardlist.remove(boardnum);
+//					for(Board temp2 : boardlist) {
+//						temp2.getReplylist().remove(boardnum);
+//					}
+//					게시물저장();
+//					댓글저장();
+//				}
+//			}
+//		}
+//	}
 	public static void 검색() {
 		
 	}
@@ -100,6 +170,24 @@ public class Controller {
 	}
 	public static void 댓글불러오기() {
 		
+	}
+	public static String 아이디찾기(String name, String phone, String email) {
+		for(Acount temp : acountlist) {
+			if(temp.getName().equals(name) && temp.getEmail().equals(email)
+					&& temp.getPhone().equals(phone)) {
+				return temp.getId();
+			}
+		}
+		return "1";
+	}
+	public static String 비밀번호찾기(String id, String phone, String email) {
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id) && temp.getEmail().equals(email)
+					&& temp.getPhone().equals(phone)) {
+				return temp.getPw();
+			}
+		}
+		return "1";
 	}
 	
 }
