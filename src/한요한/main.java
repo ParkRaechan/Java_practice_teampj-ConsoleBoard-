@@ -125,13 +125,18 @@ public class main {
 	}
 	
 	public static void 카테고리메뉴(String id) {
-		while(true) {
 			System.out.println("1.시사 2.야구");
 			int 카테고리선택 = scanner.nextInt();
+			while(true) {
 			if(카테고리선택 == 1) {//시사카테고리	
 					System.out.println("*** 시사 ***");
-					//카테고리 글출력
-					//String 카테고리 = Controller.카테고리글출력("시사");
+					// 출력
+					System.out.println("제목\t내용\t번호");
+					for(Board temp : Controller.boardlist) {
+						if(temp.getCategory().equals("시사")) {
+							System.out.println(temp.getTitle() + temp.getContent() + temp.getIndex());
+						}
+					}
 					System.out.println("------------"); //구분선
 					System.out.println("1. 글쓰기 2.글보기 3.뒤로가기"); int 행동선택 = scanner.nextInt();//선택입력받기
 					if(행동선택 == 1) {
@@ -153,13 +158,17 @@ public class main {
 									System.out.println("번호: "+ temp.getIndex()  +" 제목: " + temp.getTitle() +" 카테고리: "+ temp.getCategory());
 									System.out.println("내용: " + temp.getContent());
 									System.out.println("추천수: " + temp.getGood() +" 비추: "+ temp.getBad() +" 신고수: " + temp.getReport());
-									System.out.println("----댓글창-----------------------------------------------------------");
-									for(Reply 댓글 : temp.getReply()) {
-										System.out.println("내용: " + 댓글.getContent() +" |작성자: "+ 댓글.getWriter());
-										System.out.println("추천수: " + 댓글.getGood() + " |비추: " + 댓글.getBad() + " |신고누적: " + 댓글.getReport());
-										System.out.println("----------------------------------------------------------------");
+									System.out.println("----댓글창-----------------------------------------------------------");		
+									int a = temp.getReply().size();
+									if(a < 0) {
+										
+									}else {
+										for(Reply temp2 : temp.getReply()) {
+											System.out.println("내용: " + temp2.getContent());
+										}
 									}
-								}
+									break;
+								}								
 							}// 출력 for문 end
 							System.out.println("1.수정 2.삭제 3.댓글달기 4.뒤로가기"); int 선택 = scanner.nextInt();
 							if(선택 == 1) { // 수정

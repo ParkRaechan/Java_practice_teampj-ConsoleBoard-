@@ -21,8 +21,8 @@ public class Board {
 	// »ý¼ºÀÚ
 	public Board() {}
 	
-	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good, int bad,
-			ArrayList<Reply> reply, int report, int index) {
+	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good, int bad
+			, int report, int index) {
 		super();
 		this.title = title;
 		this.content = content;
@@ -32,7 +32,6 @@ public class Board {
 		this.category = category;
 		this.good = good;
 		this.bad = bad;
-		this.reply = reply;
 		this.report = report;
 		this.index = index; 
 	}

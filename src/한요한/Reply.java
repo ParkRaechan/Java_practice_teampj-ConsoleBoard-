@@ -11,17 +11,20 @@ public class Reply {
 	private int good; // 추천수
 	private int bad; // 비추천수
 	private int report; // 신고누적횟수
+	private int index; // 번호연동
 	
 	// 생성자
 	public Reply() {}
 
-	public Reply(String content, String writer, LocalDateTime date, int good, int bad, int report) {
+	public Reply(String content, String writer, LocalDateTime date, int good, int bad, int report, int index) {
+		super();
 		this.content = content;
 		this.writer = writer;
 		this.date = date;
 		this.good = good;
 		this.bad = bad;
 		this.report = report;
+		this.index = index;
 	}
 
 	// 메소드
@@ -72,6 +75,16 @@ public class Reply {
 	public void setReport(int report) {
 		this.report = report;
 	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	
 	
 	
 	
