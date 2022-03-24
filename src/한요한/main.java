@@ -131,6 +131,7 @@ public class main {
 			if(카테고리선택 == 1) {//시사카테고리	
 					System.out.println("*** 시사 ***");
 					//카테고리 글출력
+					String 카테고리 = Controller.카테고리글출력("시사");
 					System.out.println("------------"); //구분선
 					System.out.println("1. 글쓰기 2.글보기 3.뒤로가기"); int 행동선택 = scanner.nextInt();//선택입력받기
 					if(행동선택 == 1) {
@@ -169,11 +170,11 @@ public class main {
 							
 							}else if(선택 == 4){ // 뒤로가기
 							}
-						}//글찾기 성공 id 출력문 end
+						}//글찾기 성공 if 출력문 end
 						else {// 찾기 실패시
 							System.out.println("해당글을 찾지못했습니다");
 						}
-					}else if(행동선택 == 3) {
+					}else if(행동선택 == 3) { // 뒤로가기
 						main.로그인메뉴(id);
 					}else {
 						System.out.println("알수없는 행동");
