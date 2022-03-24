@@ -14,7 +14,7 @@ public class Board {
 	private String category; // 카테고리
 	private int good; // 추천수
 	private int bad; // 비추천수
-	private ArrayList<Reply> reply; // 댓글클래스
+	private ArrayList<Reply> reply = new ArrayList<Reply>(); // 댓글클래스
 	private int report;  // 신고누적횟수
 	private int index; // 번호
 	

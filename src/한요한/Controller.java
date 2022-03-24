@@ -73,8 +73,15 @@ public class Controller {
 		}
 		return false;	
 	}
-	public static void 댓글작성() {
-		
+	public static void 댓글작성(String con, int index, String id) {
+		LocalDateTime date = LocalDateTime.now();
+		for(Board temp : Controller.boardlist) {
+			if(temp.getIndex() == index) { // 같은인덱스번호의 글이있으면
+				Reply e = new Reply(con, id, date,0,0,0,index);
+				temp.getReply().add(e);
+				break;
+			}
+		}
 	}
 	public static boolean 글수정아이디체크(String id) {
 		for(Board temp : boardlist) {

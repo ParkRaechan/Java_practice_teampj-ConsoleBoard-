@@ -152,33 +152,37 @@ public class main {
 						System.out.println("글번호입력: "); int index = scanner.nextInt();
 						boolean pass = Controller.글상세보기(index);
 						if(pass) { // 글찾기 성공시
-							for(Board temp : Controller.boardlist) {
-								if(temp.getIndex() == index) {
-									System.out.println("작성일: " + temp.getDate());
-									System.out.println("번호: "+ temp.getIndex()  +" 제목: " + temp.getTitle() +" 카테고리: "+ temp.getCategory());
-									System.out.println("내용: " + temp.getContent());
-									System.out.println("추천수: " + temp.getGood() +" 비추: "+ temp.getBad() +" 신고수: " + temp.getReport());
-									System.out.println("----댓글창-----------------------------------------------------------");		
-									int a = temp.getReply().size();
-									if(a < 0) {
+							while(true) {
+								for(Board temp : Controller.boardlist) {
+									if(temp.getIndex() == index) {
+										System.out.println("작성일: " + temp.getDate());
+										System.out.println("번호: "+ temp.getIndex()  +" 제목: " + temp.getTitle() +" 카테고리: "+ temp.getCategory());
+										System.out.println("내용: " + temp.getContent());
+										System.out.println("추천수: " + temp.getGood() +" 비추: "+ temp.getBad() +" 신고수: " + temp.getReport());
+										System.out.println("----댓글창-----------------------------------------------------------");		
 										
-									}else {
-										for(Reply temp2 : temp.getReply()) {
-											System.out.println("내용: " + temp2.getContent());
+										if(temp.getReply() == null) {
+											
+										}else {
+											for(Reply temp2 : temp.getReply()) {
+												System.out.println("내용: " + temp2.getContent());
+											}
 										}
-									}
-									break;
-								}								
-							}// 출력 for문 end
-							System.out.println("1.수정 2.삭제 3.댓글달기 4.뒤로가기"); int 선택 = scanner.nextInt();
-							if(선택 == 1) { // 수정
-								
-							}else if(선택 == 2) { // 삭제
-								
-							}else if(선택 == 3) { // 댓글달기
-							
-							}else if(선택 == 4){ // 뒤로가기
-							}
+										break;
+									}								
+								}// 출력 for문 end
+								System.out.println("1.수정 2.삭제 3.댓글달기 4.뒤로가기"); int 선택 = scanner.nextInt();
+								if(선택 == 1) { // 수정
+									
+								}else if(선택 == 2) { // 삭제
+									
+								}else if(선택 == 3) { // 댓글달기
+									System.out.println("내용: "); String con = scanner.next();
+									Controller.댓글작성(con, index, id);
+								}else if(선택 == 4){ // 뒤로가기
+									
+								}
+							}	
 						}//글찾기 성공 if 출력문 end
 						else {// 찾기 실패시
 							System.out.println("해당글을 찾지못했습니다");
