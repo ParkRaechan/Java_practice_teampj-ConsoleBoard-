@@ -2,20 +2,22 @@ package Main;
 
 import java.util.Scanner;
 
-public class Main {
+public class main {
 	
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		
 		while(true) {
 
-			System.out.println("                                        ");
-			System.out.println("                                        ");
-			System.out.println("                                        ");
-			System.out.println("                                        ");
-			System.out.println("                                        ");
-			System.out.println("                                        ");
-			System.out.println("                                        ");
+
+			System.out.println("                 *          *          *        **********      ***********                       ");
+			System.out.println("                *          *          *         *                    *          ");
+			System.out.println("               *          *          *          *                    *            ");
+			System.out.println("              *          *          *           **********           *                   ");
+			System.out.println("             * * *      * * *      * * *        *                    *           ");
+			System.out.println("             *     *    *     *    *     *      *                    *            ");
+			System.out.println("             *     *    *     *    *     *      *                    *           ");
+			System.out.println("               * *        * *        * *        **********  *        *                   ");
 			System.out.println("------------666엔터테인먼트 커뮤니티----------");
 			
 			//메뉴
