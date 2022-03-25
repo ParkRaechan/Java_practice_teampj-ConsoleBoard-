@@ -37,12 +37,67 @@ public class Controller {
 				}
 			}
 		}
-		ArrayList<Acount> templist = new ArrayList<>();
+		ArrayList<String> templist = new ArrayList<>();
 		Acount temp = new Acount(id, pw, name, email, phone, 0, templist, 0, null );
 		acountlist.add(temp);
 		return 4; // 회원가입 성공
 		
 	}
+	///////////////////////////////////회원파일 처리 시작/////////////////////////////////////////////
+	static void 회원파일처리(String id, String pw, String name, String email, String phone, int point, ArrayList<String> blockuser,
+			int report, String friend) throws IOException{
+		//회원저장
+			//파일에 [아이디,비번,이름,이메일,폰번]형식으로 저장
+		FileOutputStream out_a = new FileOutputStream("D:/java/회원test.txt",true);
+		String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+blockuser+","+Integer.toString(report)+","+friend+"\n";		
+		out_a.write(storage_a.getBytes());		
+
+	}//회원e
+	
+	
+	public static boolean 회원출력() throws IOException {
+		
+		FileInputStream input_a = new FileInputStream("D:/java/회원test.txt");
+		byte[] bytes_a = new byte[1024]; // 바이트배열선
+		input_a.read(bytes_a);				// 바이트 읽기
+		String str_a = new String(bytes_a); // 일어온거 저장
+		String[] 회원1 = str_a.split("\n"); //1회글마다 자르기
+		for(int t = 0; t < 회원1.length-1 ; t++) {	// 회당매출길이만큼 반복
+			if(회원1[t] != null && !회원1[t].equals("") ) {
+				String[] 회원요소 = 회원1[t].split(",");
+				String a_a = 회원요소[0]; // 회원 아이디
+				String b_a = 회원요소[1]; // 회원 비번
+				String c_a = 회원요소[2]; // 회원 이름
+				String d_a = 회원요소[3]; // 회원 이메일
+				String e_a = 회원요소[4]; // 회원 폰번
+				String f_a = 회원요소[5]; // 회원 포인트
+				ArrayList<String> g_a;
+				
+				g_a = str_a.split("+");
+				
+				
+				ArrayList<String> g_a = null; // 회원 차단유저
+				//차단유저 목록 -> 파일에 어떻게 넣어서 어떻게 뺄 것인가,,,,,
+				String h_a = 회원요소[7]; // 회원 신고
+				String i_a = 회원요소[8]; // 회원 친구
+
+				Acount o_a = new Acount(a_a,b_a,c_a,d_a,e_a,Integer.parseInt(f_a),g_a,Integer.parseInt(h_a),i_a);
+				
+				//배열에 파일 요소값 저장
+				Controller.acountlist.add(o_a);
+			
+			}
+		}
+		return true; //일별매출 리턴
+	}
+	
+	
+	
+	
+	
+	
+	///////////////////////////////////회원파일 처리 끝/////////////////////////////////////////////
+
 	public static int 로그인(String id, String pw) {
 		boolean idcheck = false;
 		for(Acount temp : acountlist) {
@@ -60,11 +115,19 @@ public class Controller {
 		}
 		return 3; // 비밀번호 틀림
 	}
+
 	
-	///////////////////////////////////////////////////////////////////////////
 	public static boolean 글쓰기(String id, String title, String content, String category) {//요한
 		//id, 제목, 내용, 작성자id, 카테고리 받아오기
 		LocalDateTime date= LocalDateTime.now();// 현재날짜생성
+		//번호 불러오기
+		for(Board temp : boardlist) {
+			if(boardtnum > temp.getIndex()) {
+				boardtnum = temp.getIndex() + 1;
+			}else {
+				boardtnum++;
+			}
+		}
 		yourDate = date;
 		yourCategory = category;
 		yourStoryNum = boardtnum;
@@ -88,7 +151,7 @@ public class Controller {
 		return false;	
 	}
 	
-	////////////////////////////////////파일처리////////////////////////////////////////////////////
+	////////////////////////////////////글쓰기 파일처리 시작////////////////////////////////////////////////////
 
 	static void 게시물파일처리(String title,String content,String writer,LocalDateTime date,int view, String category,int good,int bad,int report,int index) throws IOException{
 		//게시물저장
@@ -135,7 +198,7 @@ public class Controller {
 		}
 		return true; //일별매출 리턴
 	}
-	////////////////////////////////////파일처리////////////////////////////////////////////////////
+	////////////////////////////////////글쓰기 파일처리 끝////////////////////////////////////////////////////
 	
 	
 	public static void 댓글작성(String con, int index, String id) {
