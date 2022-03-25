@@ -22,6 +22,8 @@ public class Board {
 	private ArrayList<Reply> replylist = new ArrayList<Reply>(); // 댓글클래스
 	private int report;  // 신고누적횟수
 	private int index; // 번호
+	private ArrayList<String> p = new ArrayList<>();//아이디값 저장
+	
 	
 	// 생성자
 	public Board() {}

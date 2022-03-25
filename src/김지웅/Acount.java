@@ -12,14 +12,14 @@ public class Acount {
 	private String email; // 이메일
 	private String phone; // 전화번호
 	private int point; // 포인트
-	private ArrayList<Acount> blockuser; // 차단유저목록
+	private ArrayList<String> blockuser = new ArrayList<>(); // 차단유저목록
 	private int report; // 신고누적횟수
 	private String friend; // 친구
 	
 	// 생성자
 	public Acount() {}
 
-	public Acount(String id, String pw, String name, String email, String phone, int point, ArrayList<Acount> blockuser,
+	public Acount(String id, String pw, String name, String email, String phone, int point, ArrayList<String> blockuser,
 			int report, String friend) {
 		this.id = id;
 		this.pw = pw;
@@ -83,11 +83,11 @@ public class Acount {
 		this.point = point;
 	}
 
-	public ArrayList<Acount> getBlockuser() {
+	public ArrayList<String> getBlockuser() {
 		return blockuser;
 	}
 
-	public void setBlockuser(ArrayList<Acount> blockuser) {
+	public void setBlockuser(ArrayList<String> blockuser) {
 		this.blockuser = blockuser;
 	}
 

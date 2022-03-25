@@ -5,11 +5,15 @@ import java.util.ArrayList;
 
 
 
+
+
+
 public class Controller {
 
 	public static ArrayList<Acount> acountlist = new ArrayList<>();
 	public static ArrayList<Board> boardlist = new ArrayList<>();
 	public static int boardtnum = 1;
+	public static String[] 카테고리 = {"시사","야구"};
 	
 	
 	public static int 회원가입(String id, String pw, String pwcheck, String name, String email, String phone) {
@@ -29,8 +33,7 @@ public class Controller {
 				}
 			}
 		}
-		ArrayList<Acount> templist = new ArrayList<>();
-		Acount temp = new Acount(id, pw, name, email, phone, 0, templist, 0, null );
+		Acount temp = new Acount(id, pw, name, email, phone, 0, null, 0, null );
 		acountlist.add(temp);
 		return 4; // 회원가입 성공
 		
@@ -58,7 +61,7 @@ public class Controller {
 		//id, 제목, 내용, 작성자id, 카테고리 받아오기
 		LocalDateTime date= LocalDateTime.now();// 현재날짜생성
 		//제목, 내용, 작성자, 날짜, 조회수, 카테고리, 추천수, 비추천수, 댓글클래스, 신고누적횟수 객체화후list의 저장
-		boardlist.add(new Board(title, content, id, date, 0, category, 0, 0, null, 0, boardtnum));
+		boardlist.add(new Board(title, content, id, date, 0, category, 0, 0, null, 0,boardtnum));
 		boardtnum++;
 		/* 파일처리 메소드 처리 성공시 true반환
 		 * 
@@ -68,23 +71,28 @@ public class Controller {
 	
 	public static boolean 글상세보기(int index) {// 인덱스일치하는 번호 찾은후 글이 있음 반환
 		//index 받아와서 해당글찾기
-		int i = 0; //인덱스번호
+		 //인덱스번호
 		for(Board temp : boardlist) {
 			if(temp.getIndex() == index) {
 				//찾은 인덱스 번호 있다고 true 반환
 				return true;
 			}
-			i++;
 		}
 		return false;	
 	}
 	
-	public static void 카테고리글출력() {
-		
+	public static void 댓글작성(String con, int index, String id) {
+		LocalDateTime date = LocalDateTime.now();
+		for(Board temp : Controller.boardlist) {
+			if(temp.getIndex() == index) { // 같은인덱스번호의 글이있으면
+				Reply e = new Reply(con, id, date,0,0,0,index);
+				temp.getReplylist().add(e);
+				break;
+			}
+		}
 	}
-	public static void 댓글작성() {
-		
-	}
+	
+	
 	public static boolean 글수정아이디체크(String id) {
 		for(Board temp : boardlist) {
 			if(temp.getWriter().equals(id)) {return true;}
@@ -103,15 +111,15 @@ public class Controller {
 		return false;
 	}
 	
-	public static void 글수정(int boardnum, String title, String content) {
-		boardlist.get(boardnum).setTitle(title);
-		boardlist.get(boardnum).setContent(content);
+	public static void 글수정(int index, String title, String content) {
+		boardlist.get(index).setTitle(title);
+		boardlist.get(index).setContent(content);
 		게시물저장();
 	}
 	
-	public static void 글삭제(String id, String pw, int boardnum) {
+	public static void 글삭제(String id, String pw, int index) {
 		for(Board temp2 : boardlist) {
-			if(temp2.getIndex()==boardnum) {
+			if(temp2.getIndex()==index) {
 				for(Acount temp : acountlist) {
 					if(temp.getPw().equals(pw) && temp.getId().equals(id)) {
 						boardlist.remove(temp2);
@@ -125,26 +133,80 @@ public class Controller {
 		}
 	}
 	
-	public static void 검색() {
-		
+	public static ArrayList<Board> 검색(String serch) {
+		ArrayList<Board> 검색결과 = new ArrayList<Board>();
+		검색결과.clear();
+		for(Board temp : boardlist) {
+			if(temp.getTitle().indexOf(serch)!=-1) {
+				Board temp2 = new Board(temp.getTitle(), temp.getContent(), temp.getWriter(), 
+						temp.getDate(), temp.getView(), temp.getCategory(), temp.getGood(), temp.getBad(), 
+						temp.getReplylist(), temp.getReport(), temp.getIndex());
+				검색결과.add(temp2);
+				return 검색결과; // 검색결과 출력
+			}
+		}
+		return 검색결과;
 	}
+	
 	public static void 인기글() {
 		
 	}
-	public static void 댓글수정() {
-		
+	public static boolean 댓글수정(int 글인덱스, int 댓글인덱스, String 댓글수정, String id) {
+		// 글인덱스 / 인덱스/ 수정할 내용 / id 받아와서 
+		// 해당글내에 댓글리스트중 댓글인덱스 비교한후 아이디 체크 후 수정
+		for(Board temp : boardlist) {
+			if(temp.getIndex() == 글인덱스) { // 해당글 찾기
+				if(temp.getReplylist().get(댓글인덱스).getWriter().equals(id)) {// 해당글의 원하는 댓글인덱스의 작성자가 id랑일치했을때
+					// 내용 변경
+					temp.getReplylist().get(댓글인덱스).setContent(댓글수정);
+					return true;
+				}		
+			}// 게시물 글찾기 if end
+		}
+		return false;
 	}
-	public static void 댓글삭제() {
-		
-	}
+	public static boolean 댓글삭제(int 글인덱스, int 댓글인덱스, String id) {
+		// 글인덱스 / 인덱스/ 수정할 내용 / id 받아와서 
+				// 해당글내에 댓글리스트중 댓글인덱스 비교한후 아이디 체크 후 수정
+				for(Board temp : boardlist) {
+					if(temp.getIndex() == 글인덱스) { // 해당글 찾기
+						if(temp.getReplylist().get(댓글인덱스).getWriter().equals(id)) {// 해당글의 원하는 댓글인덱스의 작성자가 id랑일치했을때
+							// 내용 변경
+							temp.getReplylist().remove(댓글인덱스);
+							return true;
+						}		
+					}// 게시물 글찾기 if end
+				}
+				return false;
+		}
 	public static void 복권() {
 		
 	}
 	public static void 포인트랭킹() {
 		
 	}
-	public static void 신고() {
-		
+	public static boolean 신고(String id,int index) {
+		for(Board temp : boardlist) {
+			if(temp.getWriter().equals(id)) {
+				return false; // 신고한 아이디가 자신의 아이디
+			}
+		}
+		ArrayList<String> reportid = new ArrayList<>();
+		for(Board temp : boardlist) {
+			if(temp.getIndex()==index) {
+				temp.setReport(temp.getReport()+1);
+				reportid.add(temp.getWriter()) ;
+				break;
+			}
+		}
+
+		for(int i=0; i<acountlist.size(); i++) {
+			if(acountlist.get(i).getId().equals(id)) {
+				acountlist.get(i).setBlockuser(reportid);
+				break;
+			}
+		}
+		return true;
 	}
 	public static void 친구추가() {
 		
