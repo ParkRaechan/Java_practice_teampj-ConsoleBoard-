@@ -17,7 +17,7 @@ public class Board {
 	private ArrayList<Reply> reply = new ArrayList<Reply>(); // 댓글클래스
 	private int report;  // 신고누적횟수
 	private int index; // 번호
-	
+	private ArrayList<String> p = new ArrayList<>();
 	// 생성자
 	public Board() {}
 	
@@ -123,6 +123,14 @@ public class Board {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	public ArrayList<String> getP() {
+		return p;
+	}
+
+	public void setP(ArrayList<String> p) {
+		this.p = p;
 	}
 	
 	

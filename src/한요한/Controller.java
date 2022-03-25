@@ -118,6 +118,33 @@ public class Controller {
 			}
 		}
 	}
+	public static void 추천비추(boolean 여부, int index, String id) {
+		boolean pass = true; // 아이디 중복여부 체크
+		for(Board temp : boardlist) { 
+			for(String s : temp.getP()) { // 해당글 p리스트안에
+				if(s.equals(id)) {		 // 아이디값이 일치하면
+					pass = false; 		//추천 비추 못누르게
+				}
+			}
+		}
+		if(pass) { // 중복된아이디가 아니라면
+			for(Board temp : boardlist) {
+				if(여부) {
+					if(temp.getIndex() == index) {
+						temp.setGood(temp.getGood() + 1);//추천 개수늘리기
+						temp.getP().add(id);
+						break;
+					}		
+				}else {
+					if(temp.getIndex() == index) {
+						temp.setBad(temp.getBad() + 1);//비추 개수늘리기
+						temp.getP().add(id);
+						break;
+					}		
+				}
+			}	
+		}	
+	}
 //	public static void 글삭제(String id, String pw, int boardnum) {
 //		if(boardlist.get(boardnum).getWriter().equals(id)) {
 //			for(Acount temp : acountlist) {

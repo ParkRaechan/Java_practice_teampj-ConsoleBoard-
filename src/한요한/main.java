@@ -171,7 +171,7 @@ public class main {
 										break;
 									}								
 								}// 출력 for문 end
-								System.out.println("1.수정 2.삭제 3.댓글달기 4.댓글수정 5.댓글삭제 6.뒤로가기"); int 선택 = scanner.nextInt();
+								System.out.println("1.수정 2.삭제 3.댓글달기 4.댓글수정 5.댓글삭제 6.뒤로가기 7.추천 8.비추"); int 선택 = scanner.nextInt();
 								if(선택 == 1) { // 수정
 									
 								}else if(선택 == 2) { // 삭제
@@ -198,7 +198,12 @@ public class main {
 									}
 								}else if(선택 == 6) {// 뒤로가기
 									break;
-								}else {
+								}else if(선택 == 7) {
+									Controller.추천비추(true, index, id);
+								}else if(선택 == 8) {
+									Controller.추천비추(false, index, id);
+								}
+								else {
 									System.out.println("알수없는 행동");
 								}
 							}	
