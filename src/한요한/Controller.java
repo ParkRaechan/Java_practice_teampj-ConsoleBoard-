@@ -144,9 +144,20 @@ public class Controller {
 		}
 		return false;
 	}
-	public static void 댓글삭제() {
-		
-	}
+	public static boolean 댓글삭제(int 글인덱스, int 댓글인덱스, String id) {
+		// 글인덱스 / 인덱스/ 수정할 내용 / id 받아와서 
+				// 해당글내에 댓글리스트중 댓글인덱스 비교한후 아이디 체크 후 수정
+				for(Board temp : boardlist) {
+					if(temp.getIndex() == 글인덱스) { // 해당글 찾기
+						if(temp.getReply().get(댓글인덱스).getWriter().equals(id)) {// 해당글의 원하는 댓글인덱스의 작성자가 id랑일치했을때
+							// 내용 변경
+							temp.getReply().remove(댓글인덱스);
+							return true;
+						}		
+					}// 게시물 글찾기 if end
+				}
+				return false;
+		}
 	public static void 복권() {
 		
 	}

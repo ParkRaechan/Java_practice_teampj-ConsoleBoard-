@@ -7,7 +7,6 @@ public class main {
 	static Scanner scanner = new Scanner(System.in);
 	public static void main(String[] args) {
 		
-		
 		while(true) {
 
 			System.out.println(" -------------------------------------------------------------------------------------------");
@@ -116,7 +115,7 @@ public class main {
 			else if(ch==4) {
 				
 			}else if(ch==5) {
-				break;
+				
 			}
 			else {
 				 System.out.println("제시된 번호 입력 바람");	
@@ -184,11 +183,21 @@ public class main {
 									System.out.println("수정할댓글인덱스: "); int 댓글인덱스 = scanner.nextInt();
 									System.out.println("수정할내용: "); 	  String 댓글수정 = scanner.next();
 									boolean pass2 = Controller.댓글수정(index, 댓글인덱스, 댓글수정, id);
-									
+									if(pass2) {
+										System.out.println("댓글수정 성공");
+									}else {
+										System.out.println("댓글수정 실패");
+									}
 								}else if(선택 == 5) {// 댓글삭제
-									
+									System.out.println("수정할댓글인덱스: "); int 댓글인덱스 = scanner.nextInt();
+									boolean pass2 = Controller.댓글삭제(index, 댓글인덱스, id);
+									if(pass2) {
+										System.out.println("댓글삭제 성공");
+									}else {
+										System.out.println("댓글삭제 실패");
+									}
 								}else if(선택 == 6) {// 뒤로가기
-									
+									break;
 								}else {
 									System.out.println("알수없는 행동");
 								}
