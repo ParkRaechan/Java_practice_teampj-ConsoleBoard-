@@ -55,9 +55,16 @@ public class Controller {
 	public static boolean 글쓰기(String id, String title, String content, String category) {//요한
 		//id, 제목, 내용, 작성자id, 카테고리 받아오기
 		LocalDateTime date= LocalDateTime.now();// 현재날짜생성
+		//번호 불러오기
+		for(Board temp : boardlist) {
+			if(boardtnum > temp.getIndex()) {
+				boardtnum = temp.getIndex() + 1;
+			}else {
+				boardtnum++;
+			}
+		}
 		//제목, 내용, 작성자, 날짜, 조회수, 카테고리, 추천수, 비추천수, 댓글클래스, 신고누적횟수 객체화후list의 저장
 		boardlist.add(new Board(title, content, id, date, 0, category, 0, 0, 0, boardtnum));
-		boardtnum++;
 		/* 파일처리 메소드 처리 성공시 true반환
 		 * 
 		 */		
@@ -67,8 +74,9 @@ public class Controller {
 		//index 받아와서 해당글찾기
 		 //인덱스번호
 		for(Board temp : boardlist) {
-			if(temp.getIndex() == index) {
+			if(temp.getIndex() == index) { 
 				//찾은 인덱스 번호 있다고 true 반환
+				temp.setView(temp.getView() + 1);
 				return true;
 			}
 		}
