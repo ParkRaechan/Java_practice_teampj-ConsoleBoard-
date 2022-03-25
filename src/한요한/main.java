@@ -152,6 +152,9 @@ public class main {
 						if(pass) { // 글찾기 성공시
 							while(true) {
 								for(Board temp : Controller.boardlist) {
+									for() {
+										
+									}
 									if(temp.getIndex() == index) {
 										System.out.println("작성일: " + temp.getDate());
 										System.out.println("번호: "+ temp.getIndex()  +" 제목: " + temp.getTitle() +" 카테고리: "+ temp.getCategory());
@@ -202,6 +205,8 @@ public class main {
 									Controller.추천비추(true, index, id);
 								}else if(선택 == 8) {
 									Controller.추천비추(false, index, id);
+								}else if(선택 == 9) {
+									Controller.신고();
 								}
 								else {
 									System.out.println("알수없는 행동");

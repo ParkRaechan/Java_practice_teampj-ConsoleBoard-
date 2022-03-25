@@ -28,7 +28,7 @@ public class Controller {
 				}
 			}
 		}
-		ArrayList<Acount> templist = new ArrayList<>();
+		ArrayList<String> templist = new ArrayList<>();
 		Acount temp = new Acount(id, pw, name, email, phone, 0, templist, 0, "" );
 		acountlist.add(temp);
 		return 4; // 회원가입 성공
@@ -199,8 +199,17 @@ public class Controller {
 	public static void 포인트랭킹() {
 		
 	}
-	public static void 신고() {
-		
+	public static void 신고(int index, String id) {
+		//해당글의 인덱스를 받아오고 id 받아오고 차단
+		for(Board temp : boardlist) {
+			if(temp.getIndex() == index) {
+				for(Acount temp2 : acountlist) {
+					if(temp2.getId().equals(id)) {
+						temp2.getBlockuser().add(temp.getWriter());
+					}
+				}
+			}
+		}
 	}
 	public static void 친구추가() {
 		
