@@ -78,6 +78,7 @@ public class Controller {
 		}
 		return false;	
 	}
+	
 	public static void 카테고리글출력() {
 		
 	}
@@ -98,8 +99,6 @@ public class Controller {
 						return true;
 					}
 				}
-				
-			
 		}
 		return false;
 	}
@@ -111,17 +110,18 @@ public class Controller {
 	}
 	
 	public static void 글삭제(String id, String pw, int boardnum) {
-		if(boardlist.get(boardnum).getWriter().equals(id)) {
-			for(Acount temp : acountlist) {
-				if(temp.getPw().equals(pw) && temp.getId().equals(id)) {
-					boardlist.remove(boardnum);
-					for(Board temp2 : boardlist) {
-						temp2.getReplylist().remove(boardnum);
+		for(Board temp2 : boardlist) {
+			if(temp2.getIndex()==boardnum) {
+				for(Acount temp : acountlist) {
+					if(temp.getPw().equals(pw) && temp.getId().equals(id)) {
+						boardlist.remove(temp2);
+						
+						게시물저장();
+						댓글저장();
 					}
-					게시물저장();
-					댓글저장();
 				}
 			}
+			
 		}
 	}
 	
