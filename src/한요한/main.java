@@ -125,15 +125,14 @@ public class main {
 	}
 	
 	public static void 카테고리메뉴(String id) {
-			System.out.println("1.시사 2.야구");
+			System.out.println("0.시사 1.야구");
 			int 카테고리선택 = scanner.nextInt();
 			while(true) {
-			if(카테고리선택 == 1) {//시사카테고리	
-					System.out.println("*** 시사 ***");
+					System.out.println("*** "+Controller.카테고리[카테고리선택]+" ***");
 					// 출력
 					System.out.println("제목\t내용\t번호");
 					for(Board temp : Controller.boardlist) {
-						if(temp.getCategory().equals("시사")) {
+						if(temp.getCategory().equals(Controller.카테고리[카테고리선택])) {
 							System.out.println(temp.getTitle() + temp.getContent() + temp.getIndex());
 						}
 					}
@@ -142,7 +141,7 @@ public class main {
 					if(행동선택 == 1) {
 						System.out.println("제목: "); String title = scanner.next(); //제목 입력받기
 						System.out.println("내용: "); String content = scanner.next();//내용 입력받기
-						boolean pass = Controller.글쓰기(id, title, content, "시사");
+						boolean pass = Controller.글쓰기(id, title, content, Controller.카테고리[카테고리선택]);
 						if(pass) { //성공시
 						System.out.println("글작성성공");	
 						}else { // 실패시
@@ -164,14 +163,16 @@ public class main {
 										if(temp.getReply() == null) {
 											
 										}else {
+											int 인덱스 = 0;
 											for(Reply temp2 : temp.getReply()) {
-												System.out.println("내용: " + temp2.getContent());
-											}
-										}
+												System.out.println(인덱스 + " 내용: " + temp2.getContent());
+												인덱스++;
+											}// 댓글 출력 end
+										}// 댓글 출력 if문 end
 										break;
 									}								
 								}// 출력 for문 end
-								System.out.println("1.수정 2.삭제 3.댓글달기 4.뒤로가기"); int 선택 = scanner.nextInt();
+								System.out.println("1.수정 2.삭제 3.댓글달기 4.댓글수정 5.댓글삭제 6.뒤로가기"); int 선택 = scanner.nextInt();
 								if(선택 == 1) { // 수정
 									
 								}else if(선택 == 2) { // 삭제
@@ -179,8 +180,17 @@ public class main {
 								}else if(선택 == 3) { // 댓글달기
 									System.out.println("내용: "); String con = scanner.next();
 									Controller.댓글작성(con, index, id);
-								}else if(선택 == 4){ // 뒤로가기
+								}else if(선택 == 4){ // 댓글수정
+									System.out.println("수정할댓글인덱스: "); int 댓글인덱스 = scanner.nextInt();
+									System.out.println("수정할내용: "); 	  String 댓글수정 = scanner.next();
+									boolean pass2 = Controller.댓글수정(index, 댓글인덱스, 댓글수정, id);
 									
+								}else if(선택 == 5) {// 댓글삭제
+									
+								}else if(선택 == 6) {// 뒤로가기
+									
+								}else {
+									System.out.println("알수없는 행동");
 								}
 							}	
 						}//글찾기 성공 if 출력문 end
@@ -192,28 +202,6 @@ public class main {
 					}else {
 						System.out.println("알수없는 행동");
 					}	
-			}else if(카테고리선택 == 2) {//야구카테고리
-				System.out.println("*** 야구 ***");
-				//카테고리 글출력
-				System.out.println("------------"); //구분선
-				System.out.println("1. 글쓰기 2.글보기 3.뒤로가기"); int 행동선택 = scanner.nextInt();//선택입력받기
-				if(행동선택 == 1) {
-					System.out.println("제목: "); String title = scanner.next(); //제목 입력받기
-					System.out.println("내용: "); String content = scanner.next();//내용 입력받기
-					boolean pass = Controller.글쓰기(id, title, content, "야구");
-					if(pass) {
-					System.out.println("글작성성공");	
-					}else {
-					System.out.println("글작성실패");	
-					}
-				}else if(행동선택 == 2) {
-					
-				}else if(행동선택 == 3) {
-					main.로그인메뉴(id);
-				}else {
-					System.out.println("알수없는 행동");
-				}	
-			}
 		}// while end
 	}// 카테고리 선택 end
 	

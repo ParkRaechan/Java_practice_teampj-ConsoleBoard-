@@ -9,6 +9,7 @@ public class Controller {
 	public static ArrayList<Acount> acountlist = new ArrayList<>();
 	public static ArrayList<Board> boardlist = new ArrayList<>();
 	public static int boardtnum = 1;
+	public static String[] 카테고리 = {"시사","야구"}; 
 	
 	public static int 회원가입(String id, String pw, String pwcheck, String name, String email, String phone) {
 		if(id.length()<4 || id.length()>13) {
@@ -129,8 +130,19 @@ public class Controller {
 	public static void 인기글() {
 		
 	}
-	public static void 댓글수정() {
-		
+	public static boolean 댓글수정(int 글인덱스, int 댓글인덱스, String 댓글수정, String id) {
+		// 글인덱스 / 인덱스/ 수정할 내용 / id 받아와서 
+		// 해당글내에 댓글리스트중 댓글인덱스 비교한후 아이디 체크 후 수정
+		for(Board temp : boardlist) {
+			if(temp.getIndex() == 글인덱스) { // 해당글 찾기
+				if(temp.getReply().get(댓글인덱스).getWriter().equals(id)) {// 해당글의 원하는 댓글인덱스의 작성자가 id랑일치했을때
+					// 내용 변경
+					temp.getReply().get(댓글인덱스).setContent(댓글수정);
+					return true;
+				}		
+			}// 게시물 글찾기 if end
+		}
+		return false;
 	}
 	public static void 댓글삭제() {
 		
