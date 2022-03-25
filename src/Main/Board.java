@@ -1,6 +1,12 @@
 package Main;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 
 public class Board {
 
@@ -8,19 +14,20 @@ public class Board {
 	private String title; // 게시물 제목
 	private String content; // 게시물 내용
 	private String writer; // 작성자
-	private String date; // 날짜
+	private LocalDateTime date; // 날짜
 	private int view; // 조회수
 	private String category; // 카테고리
 	private int good; // 추천수
 	private int bad; // 비추천수
-	private ArrayList<Reply> reply; // 댓글클래스
+	private ArrayList<Reply> replylist = new ArrayList<Reply>(); // 댓글클래스
 	private int report;  // 신고누적횟수
+	private int index; // 번호
 	
 	// 생성자
 	public Board() {}
 	
-	public Board(String title, String content, String writer, String date, int view, String category, int good, int bad,
-			ArrayList<Reply> reply, int report) {
+	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good
+			, int bad, int report, int index) {
 		super();
 		this.title = title;
 		this.content = content;
@@ -30,8 +37,22 @@ public class Board {
 		this.category = category;
 		this.good = good;
 		this.bad = bad;
-		this.reply = reply;
 		this.report = report;
+		this.index = index; 
+	}
+	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good,
+			int bad, ArrayList<Reply> replylist, int report, int index) {
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.date = date;
+		this.view = view;
+		this.category = category;
+		this.good = good;
+		this.bad = bad;
+		this.replylist = replylist;
+		this.report = report;
+		this.index = index;
 	}
 
 	// 메소드
@@ -59,11 +80,11 @@ public class Board {
 		this.writer = writer;
 	}
 
-	public String getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
@@ -99,14 +120,6 @@ public class Board {
 		this.bad = bad;
 	}
 
-	public ArrayList<Reply> getReply() {
-		return reply;
-	}
-
-	public void setReply(ArrayList<Reply> reply) {
-		this.reply = reply;
-	}
-
 	public int getReport() {
 		return report;
 	}
@@ -114,6 +127,24 @@ public class Board {
 	public void setReport(int report) {
 		this.report = report;
 	}
+
+	public ArrayList<Reply> getReplylist() {
+		return replylist;
+	}
+
+	public void setReplylist(ArrayList<Reply> replylist) {
+		this.replylist = replylist;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
+	
 	
 	
 	
