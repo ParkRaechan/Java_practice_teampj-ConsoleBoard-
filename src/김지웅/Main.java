@@ -144,7 +144,7 @@ public class Main {
 				글상세보기메뉴(id,boardnum);
 			}
 			else if(ch2==3) { // 검색
-				
+				System.out.println("제목 검색 : ");
 			}
 			else if(ch2==4) { // 이전페이지
 				
