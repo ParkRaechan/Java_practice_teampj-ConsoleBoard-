@@ -2,7 +2,8 @@ package ±èÁö¿õ;
 
 import java.util.ArrayList;
 
-public class Acount {
+
+public class Acount implements Comparable<Acount>  {
 
 	
 	// ÇÊµå
@@ -105,6 +106,11 @@ public class Acount {
 
 	public void setFriend(String friend) {
 		this.friend = friend;
+	}
+
+	@Override
+	public int compareTo(Acount o) {
+		return this.point-o.point;
 	}
 
 	

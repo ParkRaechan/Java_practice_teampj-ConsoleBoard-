@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 
 
+
 public class Main {
 	static Scanner scanner = new Scanner(System.in);
 	public static void main(String[] args) {
@@ -41,7 +42,7 @@ public class Main {
 				카테고리메뉴(id);
 			}
 			else if(ch==2) {
-				
+				놀이방메뉴(id);
 			}
 			else if(ch==3) {
 				
@@ -70,22 +71,20 @@ public class Main {
 				System.out.println("제목\t내용\t번호");
 				for(Acount temp : Controller.acountlist) {
 					if(temp.getId().equals(id)) { // 로그인한 아이디에서 차단유저 목록 꺼내오기
-						if(temp.getBlockuser()==null) {
+						if(temp.getBlockuser()==null) { // 차단유저가 없으면 전체 출력
 							for(Board temp3 : Controller.boardlist) {
 								if(temp3.getCategory().equals(Controller.카테고리[카테고리선택])) {
 									System.out.println(temp3.getTitle()+ "\t" + temp3.getContent()+"\t"+temp3.getWriter()+"\t" + temp3.getIndex());
 								}
 							} // for end
 						}
-						else if(temp.getBlockuser()!=null){
+						else if(temp.getBlockuser()!=null){ // 차단유저가 있으면
 							for(Board temp2 : Controller.boardlist) {
-								for(int i=0; i<temp.getBlockuser().size(); i++) {
-									if(temp.getBlockuser().get(i).equals(temp2.getWriter() ) ) {
-										System.out.println("차단된 유저의 글");
-									}
-									else if(!temp.getBlockuser().get(i).equals(temp2.getWriter() )){
-										System.out.println(temp2.getTitle()+ "\t" + temp2.getContent()+"\t"+temp2.getWriter()+"\t" + temp2.getIndex());
-									}
+								if(temp.getBlockuser().contains(temp2.getWriter())  ) { // 로그인한 아이디의 차단유저목록에 글작성자가 포함되어있으면
+									System.out.println("차단된 유저의 글");
+								}
+								else {
+									System.out.println(temp2.getTitle()+ "\t" + temp2.getContent()+"\t"+temp2.getWriter()+"\t" + temp2.getIndex());
 								}
 							}
 						}
@@ -116,31 +115,30 @@ public class Main {
 	}
 	
 	public static void 회원가입() {	
-		System.out.println("----------------회원가입 페이지----------------");
-		System.out.println("(아이디는 4~12글자 사이여야 합니다.)");
-		System.out.print("아이디 입력 : "); String id = scanner.next();
-		System.out.print("비밀번호 입력 : "); String pw = scanner.next();
-		System.out.print("비밀번호 확인 : "); String pwcheck = scanner.next();
-		System.out.print("이름 입력 : "); String name = scanner.next();
-		System.out.print("이메일 입력 : "); String email = scanner.next();
-		System.out.print("전화번호 입력 : "); String phone = scanner.next();
+		System.out.println("\t\t\t----------------회원가입 페이지----------------");
+		System.out.println("\t\t\t(아이디는 4~12글자 사이여야 합니다.)");
+		scanner.nextLine();
+		System.out.print("\t\t\t아이디 입력 : "); String id = scanner.nextLine();
+		int idresult = Controller.회원가입아이디(id);
+		if(idresult==1) System.out.println("\t\t\t공백 혹은 특수문자가 입력되었습니다.");
+		else if(idresult==2) System.out.println("\t\t\t아이디의 길이는 4~12글자만 가능합니다.");
+		else if(idresult==3) System.out.println("\t\t\t중복된 아이디입니다.");
+		else if(idresult==4) {
+			System.out.print("\t\t\t비밀번호 입력 : "); String pw = scanner.nextLine();
+			System.out.print("\t\t\t비밀번호 확인 : "); String pwcheck = scanner.nextLine();
+			int pwresult = Controller.회원가입비밀번호(pw, pwcheck);
+			if(pwresult==1) System.out.println("\t\t\t비밀번호에 공백은 포함될 수 없습니다.");
+			else if(pwresult==2) System.out.println("\t\t\t비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			else if(pwresult==3) {
+				System.out.print("\t\t\t이름 입력 : "); String name = scanner.next();
+				System.out.print("\t\t\t이메일 입력 : "); String email = scanner.next();
+				System.out.print("\t\t\t전화번호 입력 : "); String phone = scanner.next();
+				boolean result = Controller.회원가입(id,pw,pwcheck,name,email,phone);
+				if(result) System.out.println("\t\t\t회원가입에 성공하였습니다.");
+				else System.out.println("\t\t\t해당 전화번호로 더이상 가입이 불가능합니다.");
+			}
+		}
 	
-		int result = Controller.회원가입(id,pw,pwcheck,name,email,phone);
-		if(result == 1) {
-			System.out.println("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-		}
-		else if(result == 2) {
-			System.out.println("중복된 아이디입니다.");
-		}
-		else if(result == 3) {
-			System.out.println("해당 전화번호로 더이상 가입이 불가능합니다.");
-		}
-		else if(result == 4) {
-			System.out.println("회원가입에 성공하였습니다.");
-		}
-		else if(result == 5) {
-			System.out.println("아이디의 길이는 4~12글자만 가능합니다.");
-		}
 	}
 	
 	public static void 로그인() {
@@ -152,7 +150,11 @@ public class Main {
 		if(result == 1) {
 			System.out.println(id+"님 환영합니다.");
 			System.out.println();
-			
+			for(Acount temp : Controller.acountlist) {
+				if(temp.getId().equals(id)) {
+					temp.setPoint(temp.getPoint()+10);
+				}
+			}
 			로그인메뉴(id);
 		}
 		else if(result == 2) {
@@ -226,7 +228,7 @@ public class Main {
 	
 	public static void 글보기(String id, int 카테고리선택) {
 		System.out.println("글번호입력: "); int index = scanner.nextInt();
-		boolean pass = Controller.글상세보기(index);
+		boolean pass = Controller.글상세보기(id, index);
 		if(pass) { // 글찾기 성공시
 			while(true) {
 				for(Board temp : Controller.boardlist) {
@@ -324,4 +326,26 @@ public class Main {
 			System.out.println("해당글을 찾지못했습니다");
 		}
 	}
-}
+
+	public static void 놀이방메뉴(String id) {
+		System.out.println("\t\t\t1.포인트복권 2.포인트랭킹 3.뒤로가기");
+		int ch = scanner.nextInt();
+		if(ch==1) {
+			
+		}
+		else if(ch==2) {
+			ArrayList<Acount> ranking = Controller.포인트랭킹();
+			int i=1;
+			for(Acount temp : ranking) {
+				System.out.println(i+"등\t"+temp.getId()+"\t"+temp.getPoint());
+				i++;
+			}
+			
+		}
+		else if(ch==3) {
+			로그인메뉴(id);
+		}
+		else { System.out.println("\t\t\t제시된 번호 입력 바람");}
+	}
+	
+} // c e

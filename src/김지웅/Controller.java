@@ -2,6 +2,8 @@ package ±èÁö¿õ;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.regex.Pattern;
 
 
 
@@ -15,27 +17,43 @@ public class Controller {
 	public static int boardtnum = 1;
 	public static String[] Ä«Å×°í¸® = {"½Ã»ç","¾ß±¸"};
 	
-	
-	public static int È¸¿ø°¡ÀÔ(String id, String pw, String pwcheck, String name, String email, String phone) {
+	public static int È¸¿ø°¡ÀÔ¾ÆÀÌµğ(String id) {
+		String pattern = "^[0-9|a-z|A-Z|¤¡-¤¾|¤¿-¤Ó|°¡-ÆR]*$";
+		if(!Pattern.matches(pattern, id)){
+			  return 1; // ¾ÆÀÌµğ¿¡ Æ¯¼ö¹®ÀÚ or °ø¹éÀÌ µé¾î°¨
+			}
 		if(id.length()<4 || id.length()>13) {
-			return 5; // ¾ÆÀÌµğ±æÀÌ°¡ 4~12ÀÚ¸®°¡ ¾Æ´Ô
-		}
-		if(!pw.equals(pwcheck)) {
-			return 1; // ºñ¹Ğ¹øÈ£ È®ÀÎ Æ²¸²
+			return 2; // ¾ÆÀÌµğ±æÀÌ°¡ 4~12ÀÚ¸®°¡ ¾Æ´Ô
 		}
 		for(Acount temp : acountlist) {
 			if(temp.getId().equals(id)) {
-				return 2; // ¾ÆÀÌµğ Áßº¹
+				return 3; // ¾ÆÀÌµğ Áßº¹
 			}
-			else {
-				if(temp.getPhone().equals(phone)) {
-					return 3; // ÇØ´ç ÀüÈ­¹øÈ£·Î °¡ÀÔÇÑ È¸¿øÀÌ ÀÖÀ½
-				}
+		}
+		return 4; // Á¤»óÀûÀÎ ¾ÆÀÌµğ
+	}
+	
+	public static int È¸¿ø°¡ÀÔºñ¹Ğ¹øÈ£(String pw, String pwcheck) {
+		
+		if(pw.contains(" ")) {
+			  return 1; // ºñ¹Ğ¹øÈ£¿¡ °ø¹é Æ÷ÇÔ
+			}
+		if(!pw.equals(pwcheck)) {
+			return 2; // ºñ¹Ğ¹øÈ£ È®ÀÎ Æ²¸²
+		}
+		return 3; // Á¤»óÀûÀÎ ºñ¹Ğ¹øÈ£
+	}
+	
+	public static boolean È¸¿ø°¡ÀÔ(String id, String pw, String pwcheck, String name, String email, String phone) {
+		for(Acount temp : acountlist) {
+			if(temp.getPhone().equals(phone)) {
+				return false; // ÇØ´ç ÀüÈ­¹øÈ£·Î °¡ÀÔÇÑ È¸¿øÀÌ ÀÖÀ½
 			}
 		}
 		Acount temp = new Acount(id, pw, name, email, phone, 0, null, 0, null );
 		acountlist.add(temp);
-		return 4; // È¸¿ø°¡ÀÔ ¼º°ø
+		È¸¿øÀúÀå();
+		return true; // È¸¿ø°¡ÀÔ ¼º°ø
 		
 	}
 	
@@ -69,7 +87,17 @@ public class Controller {
 		return true;// ÀÓ½Ã¹İÈ¯
 	}
 	
-	public static boolean ±Û»ó¼¼º¸±â(int index) {// ÀÎµ¦½ºÀÏÄ¡ÇÏ´Â ¹øÈ£ Ã£ÀºÈÄ ±ÛÀÌ ÀÖÀ½ ¹İÈ¯
+	public static boolean ±Û»ó¼¼º¸±â(String id, int index) {// ÀÎµ¦½ºÀÏÄ¡ÇÏ´Â ¹øÈ£ Ã£ÀºÈÄ ±ÛÀÌ ÀÖÀ½ ¹İÈ¯
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id) && temp.getBlockuser()!=null ) { // ·Î±×ÀÎÇÑ ¾ÆÀÌµğÀÇ Â÷´ÜÀ¯Àú¸ñ·ÏÀÌ ÀÖÀ¸¸é
+				for(Board temp2 : boardlist) {
+					if(temp2.getIndex()==index && temp.getBlockuser().contains(temp2.getWriter())) {
+						// ÇØ´ç ÀÎµ¦½ºÀÇ ±Û ÀÛ¼ºÀÚ°¡ Â÷´ÜÀ¯Àú¸ñ·Ï¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ¸¸é
+						return false; // ÇØ´ç ±Û º¼·¯¿À±â ½ÇÆĞ
+					}
+				}
+			}
+		}
 		//index ¹Ş¾Æ¿Í¼­ ÇØ´ç±ÛÃ£±â
 		 //ÀÎµ¦½º¹øÈ£
 		for(Board temp : boardlist) {
@@ -151,6 +179,7 @@ public class Controller {
 	public static void ÀÎ±â±Û() {
 		
 	}
+	
 	public static boolean ´ñ±Û¼öÁ¤(int ±ÛÀÎµ¦½º, int ´ñ±ÛÀÎµ¦½º, String ´ñ±Û¼öÁ¤, String id) {
 		// ±ÛÀÎµ¦½º / ÀÎµ¦½º/ ¼öÁ¤ÇÒ ³»¿ë / id ¹Ş¾Æ¿Í¼­ 
 		// ÇØ´ç±Û³»¿¡ ´ñ±Û¸®½ºÆ®Áß ´ñ±ÛÀÎµ¦½º ºñ±³ÇÑÈÄ ¾ÆÀÌµğ Ã¼Å© ÈÄ ¼öÁ¤
@@ -165,6 +194,7 @@ public class Controller {
 		}
 		return false;
 	}
+	
 	public static boolean ´ñ±Û»èÁ¦(int ±ÛÀÎµ¦½º, int ´ñ±ÛÀÎµ¦½º, String id) {
 		// ±ÛÀÎµ¦½º / ÀÎµ¦½º/ ¼öÁ¤ÇÒ ³»¿ë / id ¹Ş¾Æ¿Í¼­ 
 				// ÇØ´ç±Û³»¿¡ ´ñ±Û¸®½ºÆ®Áß ´ñ±ÛÀÎµ¦½º ºñ±³ÇÑÈÄ ¾ÆÀÌµğ Ã¼Å© ÈÄ ¼öÁ¤
@@ -179,38 +209,51 @@ public class Controller {
 				}
 				return false;
 		}
+	
 	public static void º¹±Ç() {
 		
 	}
-	public static void Æ÷ÀÎÆ®·©Å·() {
+	public static ArrayList<Acount> Æ÷ÀÎÆ®·©Å·() {
+		ArrayList<Acount> rank = new ArrayList<>();
+		rank.addAll(acountlist);
 		
+		Collections.sort(rank, new Acountsort());
+		
+		return rank;
+		
+
 	}
+	
 	public static boolean ½Å°í(String id,int index) {
+		
 		for(Board temp : boardlist) {
-			if(temp.getWriter().equals(id)) {
+			if(temp.getIndex()==index && temp.getWriter().equals(id)) {
 				return false; // ½Å°íÇÑ ¾ÆÀÌµğ°¡ ÀÚ½ÅÀÇ ¾ÆÀÌµğ
 			}
 		}
 		ArrayList<String> reportid = new ArrayList<>();
 		for(Board temp : boardlist) {
 			if(temp.getIndex()==index) {
+				
 				temp.setReport(temp.getReport()+1);
 				reportid.add(temp.getWriter()) ;
 				break;
 			}
 		}
-
 		for(int i=0; i<acountlist.size(); i++) {
 			if(acountlist.get(i).getId().equals(id)) {
-				acountlist.get(i).setBlockuser(reportid);
+				if(acountlist.get(i).getBlockuser()==null) {
+					acountlist.get(i).setBlockuser(reportid);
+				}
+				else {
+					acountlist.get(i).getBlockuser().addAll(acountlist.get(i).getBlockuser().size() ,reportid);
+				}
 				break;
 			}
 		}
 		return true;
 	}
-	public static void Ä£±¸Ãß°¡() {
-		
-	}
+	
 	public static void ÂÊÁöÈ®ÀÎ() {
 		
 	}
@@ -247,6 +290,7 @@ public class Controller {
 		}
 		return "1";
 	}
+	
 	public static String ºñ¹Ğ¹øÈ£Ã£±â(String id, String phone, String email) {
 		for(Acount temp : acountlist) {
 			if(temp.getId().equals(id) && temp.getEmail().equals(email)
