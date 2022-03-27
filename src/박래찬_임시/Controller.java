@@ -1,4 +1,4 @@
-package Main;
+package 박래찬_임시;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,6 +18,7 @@ public class Controller {
 	public static ArrayList<Board> boardlist = new ArrayList<>();
 	public static int boardtnum = 1;
 	public static String[] 카테고리 = {"시사","야구"}; 
+	public static ArrayList<차단유저> blockUser = new ArrayList<>();
 
 	
 	public static int 회원가입(String id, String pw, String pwcheck, String name, String email, String phone) {
@@ -340,4 +341,18 @@ public class Controller {
 		return "1";
 	}
 	
+	
+	
+	
+	public static boolean 차단유저확인(String id1, String id2) {
+		for(차단유저 temp : blockUser) {
+			if(temp.getIndex().equals(id1)&&temp.getTarget().equals(id2)) {
+				return true;
+			}
+		}
+		
+		
+		return false;
+
+	}
 }
