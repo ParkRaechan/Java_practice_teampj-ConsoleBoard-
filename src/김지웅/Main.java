@@ -150,11 +150,13 @@ public class Main {
 		if(result == 1) {
 			System.out.println(id+"님 환영합니다.");
 			System.out.println();
+			///////////////// 나중에 지울것/ 포인트+100 ////////////////////
 			for(Acount temp : Controller.acountlist) {
 				if(temp.getId().equals(id)) {
-					temp.setPoint(temp.getPoint()+10);
+					temp.setPoint(temp.getPoint()+100);
 				}
 			}
+			///////////////////////////////////////////////////
 			로그인메뉴(id);
 		}
 		else if(result == 2) {
@@ -330,22 +332,42 @@ public class Main {
 	public static void 놀이방메뉴(String id) {
 		System.out.println("\t\t\t1.포인트복권 2.포인트랭킹 3.뒤로가기");
 		int ch = scanner.nextInt();
-		if(ch==1) {
-			
+		if(ch==1) { // 포인트복권
+			String[] result = Controller.복권(id);
+			if(result[0].equals("[ ]")) {
+				System.out.println("\t\t\t보유 포인트가 부족해서 구매할 수 없습니다.");
+			}
+			else {
+				System.out.print("\t\t\t");
+				for(int i=0; i<result.length; i++) {
+					System.out.print(result[i]);
+				}
+				int result2 = Controller.복권결과(result,id);
+				
+				if(result2==1) System.out.println("\n\t\t\t1등 1000포인트 당첨");
+				else if(result2==2) System.out.println("\n\t\t\t2등 300포인트 당첨");
+				else if(result2==3) System.out.println("\n\t\t\t3등 100포인트 당첨");
+				else if(result2==4) System.out.println("\n\t\t\t4등 10포인트 당첨");
+				else if(result2==5) System.out.println("\n\t\t\t꽝");
+			}
+			놀이방메뉴(id);
 		}
+		
 		else if(ch==2) {
 			ArrayList<Acount> ranking = Controller.포인트랭킹();
 			int i=1;
 			for(Acount temp : ranking) {
-				System.out.println(i+"등\t"+temp.getId()+"\t"+temp.getPoint());
+				System.out.println("\t\t\t"+i+"등\t"+temp.getId()+"\t"+temp.getPoint());
 				i++;
 			}
+			놀이방메뉴(id);
 			
 		}
 		else if(ch==3) {
 			로그인메뉴(id);
 		}
-		else { System.out.println("\t\t\t제시된 번호 입력 바람");}
+		else { System.out.println("\t\t\t제시된 번호 입력 바람"); 놀이방메뉴(id);}
+		
 	}
 	
 } // c e

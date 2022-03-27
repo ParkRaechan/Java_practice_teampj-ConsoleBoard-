@@ -3,6 +3,7 @@ package ±èÁö¿õ;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 
@@ -16,6 +17,7 @@ public class Controller {
 	public static ArrayList<Board> boardlist = new ArrayList<>();
 	public static int boardtnum = 1;
 	public static String[] Ä«Å×°í¸® = {"½Ã»ç","¾ß±¸"};
+	public static String[] Æ÷ÀÎÆ®º¹±Ç = new String[6];
 	
 	public static int È¸¿ø°¡ÀÔ¾ÆÀÌµð(String id) {
 		String pattern = "^[0-9|a-z|A-Z|¤¡-¤¾|¤¿-¤Ó|°¡-ÆR]*$";
@@ -210,16 +212,68 @@ public class Controller {
 				return false;
 		}
 	
-	public static void º¹±Ç() {
-		
+	public static String[] º¹±Ç(String id) {
+		String[] Æ÷ÀÎÆ®º¹±Ç = {"[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"};
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id)) {
+				if(temp.getPoint()<10) { // º¸À¯Æ÷ÀÎÆ®°¡ 10º¸´Ù ÀÛÀ¸¸é
+					return Æ÷ÀÎÆ®º¹±Ç;
+				}else { // º¸À¯Æ÷ÀÎÆ®°¡ 10 ÀÌ»óÀÌ¸é º¸À¯Æ÷ÀÎÆ®¿¡¼­ 10 Â÷°¨
+					temp.setPoint(temp.getPoint()-10); 
+				}
+			}
+		}
+			
+		Random random = new Random();
+		for(int i=0; i<Æ÷ÀÎÆ®º¹±Ç.length; i++) {
+			int num = random.nextInt(Æ÷ÀÎÆ®º¹±Ç.length)+1; // 1~6 ³­¼ö »ý¼º
+			Æ÷ÀÎÆ®º¹±Ç[i]="["+num+"]";
+		}
+		return Æ÷ÀÎÆ®º¹±Ç;
 	}
+	
+	public static int º¹±Ç°á°ú(String[] result,String id) {
+		int[] count = new int[result.length]; // ÀÏÄ¡ÇÏ´Â ¼ö È®ÀÎ¿ë ¹è¿­ 
+		int max = 0; 
+		for(int i=0; i<result.length; i++) {
+			for(int j=0; j<result.length; j++) {
+				if(result[i].equals("["+(j+1)+"]") ) { // °°Àº ¼ö È®ÀÎ
+					count[j]++; // ÀÏÄ¡ÇÏ´Â ¼ö Áõ°¡
+				}
+			}
+		}
+		for(int i=0; i<count.length; i++) {
+			if(count[i]>max) {
+				max=count[i]; // °¡Àå ¸¹ÀÌ ÀÏÄ¡ÇÏ´Â ¼ö
+			}
+		}
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id)) {
+				if(max==6) { // 1µî
+					temp.setPoint(temp.getPoint()+1000); // Æ÷ÀÎÆ® 1000 Ãß°¡
+					return 1;
+				} else if(max==5) {
+					temp.setPoint(temp.getPoint()+300); // Æ÷ÀÎÆ® 300 Ãß°¡
+					return 2;
+				} else if(max==4) {
+					temp.setPoint(temp.getPoint()+100); // Æ÷ÀÎÆ® 100 Ãß°¡
+					return 3;
+				} else if(max==3) {
+					temp.setPoint(temp.getPoint()+10); // Æ÷ÀÎÆ® 10 Ãß°¡
+					return 4;
+				} 	
+			} // if end
+		} // for end
+		return 5; // ²Î
+	}
+	
 	public static ArrayList<Acount> Æ÷ÀÎÆ®·©Å·() {
-		ArrayList<Acount> rank = new ArrayList<>();
-		rank.addAll(acountlist);
+		ArrayList<Acount> rank = new ArrayList<>(); // ·©Å· ¸®½ºÆ® »ý¼º
+		rank.addAll(acountlist); // È¸¿ø ¸®½ºÆ®¸¦ ·©Å· ¸®½ºÆ®¿¡ ÀúÀå
 		
-		Collections.sort(rank, new Acountsort());
+		Collections.sort(rank, new Acountsort()); // ·©Å· ¸®½ºÆ®¸¦ Æ÷ÀÎÆ®Á¡¼ö ¼ø¼­´ë·Î Á¤·Ä
 		
-		return rank;
+		return rank; // ·©Å· ¸®½ºÆ® ¹ÝÈ¯
 		
 
 	}
