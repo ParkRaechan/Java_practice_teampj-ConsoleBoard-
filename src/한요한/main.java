@@ -1,5 +1,6 @@
 package 한요한;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -101,13 +102,15 @@ public class main {
 	public static void 로그인메뉴(String id) {
 		while(true){
 			////////////////////////////////////////////인기글출력
-			Board[] s = Controller.인기글();
-			for(int i = 0 ; i < 5 ; i++) {
-				if(s[i] != null) {
-					System.out.println(s[i].getTitle() +"\t"+ s[i].getGood());
-				}	
-			}
-			
+			//for(int i = 0; i < Controller.카테고리.length ; i++) {
+				Board[] 인기글 = Controller.인기글("야구"); // 각 카테고리 인기글 가져오기
+				//System.out.println("카테고리: " + Controller.카테고리[i]);
+				for(int i = 0; i < 인기글.length ; i++) {
+					if(인기글[i] != null) {
+						System.out.println(인기글[i].getTitle() +"\t"+ 인기글[i].get랭킹());
+					}
+				}
+			//}
 			///////////////////////////////////////////////////
 			System.out.println("1.카테고리 선택 2.놀이방 (3.회원정보 관리 4.쪽지[임시]) 5.로그아웃");
 			int ch = scanner.nextInt();
@@ -117,11 +120,25 @@ public class main {
 			else if(ch==2) {
 				
 			}
-			else if(ch==3) {
+			else if(ch==3) {// 쪽지테스
+				System.out.println("받는 mail: "); String mail = scanner.next();
+				System.out.println("내용: "); String con = scanner.next();
 				
+				boolean pass = Controller.쪽지보내기(mail, id, con);
+				if(pass) {
+					System.out.println("성공");
+				}else {
+					System.out.println("실패");
+				}
 			}
-			else if(ch==4) {
-				
+			else if(ch==4) {// 쪽지확인 텧스트
+				for(Acount temp : Controller.acountlist) {
+					if(temp.getId().equals(id)) {
+						for(쪽지클래스 temp2 : temp.get쪽지()) {
+							System.out.println(temp2.get내용());
+						}
+					}
+				}
 			}else if(ch==5) {
 				
 			}

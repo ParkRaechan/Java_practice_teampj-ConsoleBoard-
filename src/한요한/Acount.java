@@ -16,6 +16,7 @@ public class Acount {
 	private ArrayList<String> blockuser = new ArrayList<>(); // 차단유저목록
 	private int report; // 신고누적횟수
 	private String friend; // 친구
+	private ArrayList<쪽지클래스> 쪽지 = new ArrayList<>(); 
 	
 	// 생성자
 	public Acount() {}
@@ -106,6 +107,14 @@ public class Acount {
 
 	public void setFriend(String friend) {
 		this.friend = friend;
+	}
+
+	public ArrayList<쪽지클래스> get쪽지() {
+		return 쪽지;
+	}
+
+	public void set쪽지(ArrayList<쪽지클래스> 쪽지) {
+		this.쪽지 = 쪽지;
 	}
 
 	
