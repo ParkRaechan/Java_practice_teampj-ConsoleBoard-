@@ -20,6 +20,7 @@ public class Board {
 	private ArrayList<Reply> replylist = new ArrayList<>(); // 댓글리스트
 	private int report;  // 신고누적횟수
 	private int index; // 게시물 인덱스번호
+	private ArrayList<String> p = new ArrayList<>();
 	
 	// 생성자
 	public Board() {}
@@ -132,6 +133,15 @@ public class Board {
 	public void setIndex(int index) {
 		this.index = index;
 	}
+
+	public ArrayList<String> getP() {
+		return p;
+	}
+
+	public void setP(ArrayList<String> p) {
+		this.p = p;
+	}
+	
 	
 	
 	

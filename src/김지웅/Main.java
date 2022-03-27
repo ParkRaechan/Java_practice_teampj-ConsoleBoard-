@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 
 
+
+
 public class Main {
 	static Scanner scanner = new Scanner(System.in);
 	public static void main(String[] args) {
@@ -35,8 +37,22 @@ public class Main {
 	
 	public static void 로그인메뉴(String id) {
 		while(true){
-			//인기글출력
-			System.out.println("1.카테고리 선택 2.놀이방 (3.회원정보 관리 4.쪽지[임시]) 5.로그아웃");
+			////////////////////////////////////////////인기글출력
+			for(int i = 0; i < Controller.카테고리.length ; i++) {
+				ArrayList<Board> 인기글 = Controller.인기글(Controller.카테고리[i]); // 각 카테고리 인기글 가져오기
+				System.out.println("카테고리: " + Controller.카테고리[i]);
+				
+				for(int j = 0; j < 인기글.size() ; j++) {
+					if(인기글.size() != 0) {
+						System.out.println(인기글.get(j).getTitle()+ "\t"+ 인기글.get(j).getGood() );	
+					}
+					if(i == 4) {
+						break;
+					}
+				}
+			}
+			///////////////////////////////////////////////////
+			System.out.println("1.카테고리 선택 2.놀이방 3.쪽지보내기 4.쪽지확인 5.로그아웃");
 			int ch = scanner.nextInt();
 			if(ch==1) {
 				카테고리메뉴(id);
@@ -44,11 +60,31 @@ public class Main {
 			else if(ch==2) {
 				놀이방메뉴(id);
 			}
-			else if(ch==3) {
+			else if(ch==3) { // 쪽지 보내기
+				System.out.println("받는 사람 id: "); String receiveid  = scanner.next();
+				scanner.nextLine();
+				System.out.println("내용: "); String con = scanner.nextLine();
 				
+				boolean pass = Controller.쪽지보내기(receiveid, id, con);
+				if(pass) {
+					System.out.println("성공");
+				}else {
+					System.out.println("실패");
+				}
 			}
-			else if(ch==4) {
-				
+			else if(ch==4) { // 쪽지확인
+				for(Acount temp : Controller.acountlist) {
+					if(temp.getId().equals(id)) {
+						for(쪽지클래스 temp2 : temp.get쪽지()) {
+							System.out.println("--------------------------------------------");
+							System.out.print("번호 : "+temp2.get번호()+"\t");
+							System.out.print("보낸사람 : "+temp2.get보낸사람()+"\t");
+							System.out.print("받는사람 : "+temp2.get받는사람()+"\n");
+							System.out.print("내용 : "+temp2.get내용()+"\n");
+							System.out.println("--------------------------------------------");
+						}
+					}
+				}
 			}
 			else if(ch==5) { // 로그아웃
 				scanner= new Scanner(System.in); 
@@ -58,8 +94,6 @@ public class Main {
 				 System.out.println("제시된 번호 입력 바람");	
 			}
 		}
-		
-		
 	}
 	
 	public static void 카테고리메뉴(String id) {
@@ -254,7 +288,7 @@ public class Main {
 					}								
 				}// 출력 for문 end
 				
-				System.out.println("1.수정 2.삭제 3.댓글달기 4.댓글수정 5.댓글삭제 6.신고하기 7.뒤로가기"); int 선택 = scanner.nextInt();
+				System.out.println("1.수정 2.삭제 3.댓글달기 4.댓글수정 5.댓글삭제 6.신고하기 7.뒤로가기 8.추천 9.비추"); int 선택 = scanner.nextInt();
 				////////////////////////////// 글 수정 //////////////////////////////////////////////////
 				if(선택 == 1) {
 					boolean result = Controller.글수정아이디체크(id);
@@ -320,6 +354,12 @@ public class Main {
 					
 				}
 				else if(선택 == 7) {	break;} // 뒤로가기
+				else if(선택 == 8) {
+					Controller.추천비추(true, index, id);
+				}
+				else if(선택 == 9) {
+					Controller.추천비추(false, index, id);
+				}
 				else System.out.println("알수없는 행동");
 			} // while end	
 			

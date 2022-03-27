@@ -7,10 +7,6 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 
-
-
-
-
 public class Controller {
 
 	public static ArrayList<Acount> acountlist = new ArrayList<>();
@@ -122,7 +118,6 @@ public class Controller {
 		}
 	}
 	
-	
 	public static boolean 글수정아이디체크(String id) {
 		for(Board temp : boardlist) {
 			if(temp.getWriter().equals(id)) {return true;}
@@ -145,6 +140,34 @@ public class Controller {
 		boardlist.get(index).setTitle(title);
 		boardlist.get(index).setContent(content);
 		게시물저장();
+	}
+	
+	public static void 추천비추(boolean 여부, int index, String id) {
+		boolean pass = true; // 아이디 중복여부 체크
+		for(Board temp : boardlist) {
+			for(String s : temp.getP()) { // 해당글 p리스트안에
+				if(temp.getIndex()==index && s.equals(id)) {		 // 아이디값이 일치하면
+					pass = false; 		//추천 비추 못누르게
+				}
+			}	
+		}
+		if(pass) { // 중복된아이디가 아니라면
+			for(Board temp : boardlist) {
+				if(여부) {
+					if(temp.getIndex() == index) {
+						temp.setGood(temp.getGood() + 1);//추천 개수늘리기
+						temp.getP().add(id);
+						break;
+					}		
+				}else {
+					if(temp.getIndex() == index) {
+						temp.setBad(temp.getBad() + 1);//비추 개수늘리기
+						temp.getP().add(id);
+						break;
+					}		
+				}
+			}	
+		}	
 	}
 	
 	public static void 글삭제(String id, String pw, int index) {
@@ -178,9 +201,28 @@ public class Controller {
 		return 검색결과;
 	}
 	
-	public static void 인기글() {
+	public static ArrayList<Board> 인기글(String 카테고리) {// 카테고리 끌고와서
 		
-	}
+		// 임시로 쓸 board 리스트
+		ArrayList<Board> 임시 = new ArrayList<>();
+		for(Board temp : boardlist) {
+			if(temp.getCategory().equals(카테고리)) {
+				임시.add(temp);
+			}	
+		}
+		// 비교후 같거나 크면 넣고 지우기
+		for(int i = 0; i < 임시.size(); i++) {
+			Board temp = 임시.get(i);
+			for(int j = 0; j < 임시.size() ; j++) {
+				if(temp.getGood() > 임시.get(j).getGood()) {
+					temp = 임시.get(j);
+					임시.set(j, 임시.get(i));
+					임시.set(i, temp);
+				}
+			}
+		}
+		return 임시;
+	}// m end
 	
 	public static boolean 댓글수정(int 글인덱스, int 댓글인덱스, String 댓글수정, String id) {
 		// 글인덱스 / 인덱스/ 수정할 내용 / id 받아와서 
@@ -308,33 +350,61 @@ public class Controller {
 		return true;
 	}
 	
-	public static void 쪽지확인() {
+	public static boolean 쪽지확인(String id, int 번호) {
+		// 쪽지번호, 아이디 받아와서 있는지없는지체크
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id)) {// 아이디값이 일치하면
+				for(쪽지클래스 temp2 : temp.get쪽지()) { // 그안에 쪽지 list 뒤져보고
+					if(temp2.get번호() == 번호) { // list 안 번호가 같은게있음
+						return true;
+					}
+				}
+			}
+		}// for end
+		return false;
+	}
+	
+	public static boolean 쪽지보내기(String receiveid, String id, String con) {
+		// 받는사람, id, 내용받아서
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(receiveid)) {// id값일치하는 acount 클래스를 찾아서
+					// 쪽지list에 쪽지 추가
+					temp.get쪽지().add(new 쪽지클래스(temp.getId(), id, con, temp.get쪽지().size() + 1));
+					return true;
+			}
+		}
+		return false;
 		
 	}
-	public static void 쪽지보내기() {
-		
-	}
+	
 	public static void 답글달기() {
 		
 	}
+	
 	public static void 게시물저장() {
 		
 	}
+	
 	public static void 게시물불러오기() {
 		
 	}
+	
 	public static void 회원저장() {
 		
 	}
+	
 	public static void 회원불러오기() {
 		
 	}
+	
 	public static void 댓글저장() {
 		
 	}
+	
 	public static void 댓글불러오기() {
 		
 	}
+	
 	public static String 아이디찾기(String name, String phone, String email) {
 		for(Acount temp : acountlist) {
 			if(temp.getName().equals(name) && temp.getEmail().equals(email)
