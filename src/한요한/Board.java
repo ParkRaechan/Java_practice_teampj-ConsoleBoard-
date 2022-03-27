@@ -18,7 +18,6 @@ public class Board {
 	private int report;  // ½Å°í´©ÀûÈ½¼ö
 	private int index; // ¹øÈ£
 	private ArrayList<String> p = new ArrayList<>();
-	private int ·©Å· = 1;
 	// »ı¼ºÀÚ
 	public Board() {}
 	
@@ -134,13 +133,6 @@ public class Board {
 		this.p = p;
 	}
 
-	public int get·©Å·() {
-		return ·©Å·;
-	}
-
-	public void set·©Å·(int ·©Å·) {
-		this.·©Å· = ·©Å·;
-	}
 	
 	
 	

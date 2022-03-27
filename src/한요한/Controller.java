@@ -2,6 +2,10 @@ package 한요한;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 public class Controller {
@@ -162,9 +166,8 @@ public class Controller {
 	public static void 검색() {
 		
 	}
-	public static Board[] 인기글(String 카테고리) {// 카테고리 끌고와서
-		// 인기글 5개
-		Board[] 인기글 = new Board[5];
+	public static ArrayList<Board> 인기글(String 카테고리) {// 카테고리 끌고와서
+		
 		// 임시로 쓸 board 리스트
 		ArrayList<Board> 임시 = new ArrayList<>();
 		for(Board temp : boardlist) {
@@ -173,19 +176,17 @@ public class Controller {
 			}	
 		}
 		// 비교후 같거나 크면 넣고 지우기
-		for(int i = 0; i < 임시.size() ; i++) {
-			Board temp = null;
-			int index = 0;
-			for(int j = 0; j < 임시.size() ; i++) {
-				if(임시.get(i).getGood() <= 임시.get(j).getGood()) {
+		for(int i = 0; i < 임시.size(); i++) {
+			Board temp = 임시.get(i);
+			for(int j = 0; j < 임시.size() ; j++) {
+				if(temp.getGood() > 임시.get(j).getGood()) {
 					temp = 임시.get(j);
+					임시.set(j, 임시.get(i));
+					임시.set(i, temp);
 				}
-				index++;
 			}
-			인기글[i] = temp;
-			임시.remove(index);
 		}
-		return 인기글;
+		return 임시;
 	}// m end
 	public static boolean 댓글수정(int 글인덱스, int 댓글인덱스, String 댓글수정, String id) {
 		// 글인덱스 / 인덱스/ 수정할 내용 / id 받아와서 

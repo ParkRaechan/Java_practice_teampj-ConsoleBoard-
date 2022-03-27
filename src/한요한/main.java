@@ -103,11 +103,15 @@ public class main {
 		while(true){
 			////////////////////////////////////////////인기글출력
 			//for(int i = 0; i < Controller.카테고리.length ; i++) {
-				Board[] 인기글 = Controller.인기글("야구"); // 각 카테고리 인기글 가져오기
+				ArrayList<Board> 인기글 = Controller.인기글(Controller.카테고리[1]); // 각 카테고리 인기글 가져오기
 				//System.out.println("카테고리: " + Controller.카테고리[i]);
-				for(int i = 0; i < 인기글.length ; i++) {
-					if(인기글[i] != null) {
-						System.out.println(인기글[i].getTitle() +"\t"+ 인기글[i].get랭킹());
+			
+				for(int i = 0; i < 인기글.size() ; i++) {
+					if(인기글.size() != 0) {
+						System.out.println(인기글.get(i).getTitle()+ "\t"+ 인기글.get(i).getGood() );	
+					}
+					if(i == 4) {
+						break;
 					}
 				}
 			//}
