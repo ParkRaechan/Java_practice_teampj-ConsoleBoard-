@@ -100,7 +100,15 @@ public class main {
 	
 	public static void 로그인메뉴(String id) {
 		while(true){
-			//인기글출력
+			////////////////////////////////////////////인기글출력
+			Board[] s = Controller.인기글();
+			for(int i = 0 ; i < 5 ; i++) {
+				if(s[i] != null) {
+					System.out.println(s[i].getTitle() +"\t"+ s[i].getGood());
+				}	
+			}
+			
+			///////////////////////////////////////////////////
 			System.out.println("1.카테고리 선택 2.놀이방 (3.회원정보 관리 4.쪽지[임시]) 5.로그아웃");
 			int ch = scanner.nextInt();
 			if(ch==1) {
@@ -151,10 +159,7 @@ public class main {
 						boolean pass = Controller.글상세보기(index);
 						if(pass) { // 글찾기 성공시
 							while(true) {
-								for(Board temp : Controller.boardlist) {
-									for() {
-										
-									}
+								for(Board temp : Controller.boardlist) {						
 									if(temp.getIndex() == index) {
 										System.out.println("작성일: " + temp.getDate());
 										System.out.println("번호: "+ temp.getIndex()  +" 제목: " + temp.getTitle() +" 카테고리: "+ temp.getCategory());
@@ -206,7 +211,7 @@ public class main {
 								}else if(선택 == 8) {
 									Controller.추천비추(false, index, id);
 								}else if(선택 == 9) {
-									Controller.신고();
+									
 								}
 								else {
 									System.out.println("알수없는 행동");

@@ -162,8 +162,22 @@ public class Controller {
 	public static void 검색() {
 		
 	}
-	public static void 인기글() {
-		
+	public static Board[] 인기글() {// 카테고리 끌고와서
+		// 5개 담을 배열 선언
+		ArrayList<E>
+		// max 임시변수 선언
+		Board temp = null;
+		// 5번 반복 // 하나씩 비교하여 max 객체리턴;
+		for(int i = 0; i < boardlist.size(); i++) {
+			temp = boardlist.get(i);
+			for(int j = 1; j < boardlist.size(); j++) {
+				if(인기글[i] != null && 인기글[i].getGood() >= temp.getGood() || boardlist.get(i).getGood() < boardlist.get(j).getGood()) {
+					temp = boardlist.get(j);
+				}
+			}
+			인기글[i] = temp;
+		}
+		return 인기글;
 	}
 	public static boolean 댓글수정(int 글인덱스, int 댓글인덱스, String 댓글수정, String id) {
 		// 글인덱스 / 인덱스/ 수정할 내용 / id 받아와서 
