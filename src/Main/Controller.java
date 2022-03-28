@@ -102,7 +102,7 @@ public class Controller {
 				
 				
 				
-				ArrayList<String> g_a = null; // 회원 차단유저
+				ArrayList<차단유저> g_a = null; // 회원 차단유저
 				//차단유저 목록 -> 파일에 어떻게 넣어서 어떻게 뺄 것인가,,,,,
 				String h_a = 회원요소[7]; // 회원 신고
 				String i_a = 회원요소[8]; // 회원 친구
@@ -117,12 +117,12 @@ public class Controller {
 		return true; //일별매출 리턴
 	}
 	
-	//////////////////////////////////회원내부 차단유저 파일처리 시작/////////////////////////////////////////////
+	                       ///////회원내부 차단유저 파일처리 시작/////////   
 	static void 차단파일처리(String id) throws IOException {
 		for(차단유저 temp : 차단유저list) {
 			if(temp.getIndex().equals(id)) {
 				FileOutputStream out_c = new FileOutputStream("D:/java/차단유저test.txt",true);
-				String storage_c = id+"끊기"+temp.getTarget()+"\n";		
+				String storage_c = id+","+temp.getTarget()+"\n";		
 				out_c.write(storage_c.getBytes());		
 				
 			}
@@ -138,7 +138,7 @@ public class Controller {
 		String[] 차단1 = str_c.split("\n"); //1회글마다 자르기
 		for(int t = 0; t < 차단1.length-1 ; t++) {	// 회당매출길이만큼 반복
 			if(차단1[t] != null && !차단1[t].equals("") ) {
-				String[] 차단요소 = 차단1[t].split("끊기");
+				String[] 차단요소 = 차단1[t].split(",");
 				
 				String a_c = 차단요소[0]; 
 				String b_c = 차단요소[1]; 
@@ -152,8 +152,7 @@ public class Controller {
 		}
 		return true; 
 	}
-	//////////////////////////////////회원내부 차단유저 파일처리 끝/////////////////////////////////////////////
-
+	                          //////회원내부 차단유저 파일처리 끝//////
 	
 	
 	
@@ -453,29 +452,34 @@ public class Controller {
 		
 
 	}
-	public static boolean 신고(String id,int index) {
+public static boolean 신고(String id,int index) throws IOException {
 		
 		for(Board temp : boardlist) {
 			if(temp.getIndex()==index && temp.getWriter().equals(id)) {
 				return false; // 신고한 아이디가 자신의 아이디
 			}
 		}
-		ArrayList<String> reportid = new ArrayList<>();
+		String reportid = null;
 		for(Board temp : boardlist) {
 			if(temp.getIndex()==index) {
 				
 				temp.setReport(temp.getReport()+1);
-				reportid.add(temp.getWriter()) ;
+				reportid = temp.getWriter() ;
 				break;
 			}
 		}
+		
+		차단유저 a = new 차단유저(id, reportid); 
+		차단유저list.add(a);
+		차단파일처리(id);
 		for(int i=0; i<acountlist.size(); i++) {
 			if(acountlist.get(i).getId().equals(id)) {
 				if(acountlist.get(i).getBlockuser()==null) {
-					acountlist.get(i).setBlockuser(reportid);
+					acountlist.get(i).setBlockuser(차단유저list);
+					
 				}
 				else {
-					acountlist.get(i).getBlockuser().addAll(acountlist.get(i).getBlockuser().size() ,reportid);
+					acountlist.get(i).getBlockuser().addAll(acountlist.get(i).getBlockuser().size(), 차단유저list);
 				}
 				break;
 			}

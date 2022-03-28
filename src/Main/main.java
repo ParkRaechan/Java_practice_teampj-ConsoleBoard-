@@ -14,6 +14,7 @@ public class main {
 		try {
 			Controller.게시물출력();
 			Controller.회원출력();
+			Controller.차단출력();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
