@@ -116,12 +116,15 @@ public class Main {
 							
 							for(Board temp2 : Controller.boardlist) {
 								for(int i=0; i<temp.getBlockuser().size(); i++) {
-									if(temp.getBlockuser().get(i).getTarget().equals(temp2.getWriter())  ) { // 로그인한 아이디의 차단유저목록에 글작성자가 포함되어있으면
-										System.out.println("차단된 유저의 글");
+									if(temp2.getCategory().equals(Controller.카테고리[카테고리선택])) {
+										if(temp.getBlockuser().get(i).getTarget().equals(temp2.getWriter())  ) { // 로그인한 아이디의 차단유저목록에 글작성자가 포함되어있으면
+											System.out.println("차단된 유저의 글");
+										}
+										else {
+											System.out.println(temp2.getTitle()+ "\t" + temp2.getContent()+"\t"+temp2.getWriter()+"\t" + temp2.getIndex());
+										}
 									}
-									else {
-										System.out.println(temp2.getTitle()+ "\t" + temp2.getContent()+"\t"+temp2.getWriter()+"\t" + temp2.getIndex());
-									}
+									
 								}
 							}
 						}

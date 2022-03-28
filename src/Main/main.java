@@ -144,6 +144,7 @@ public class main {
 				System.out.println("*** "+Controller.카테고리[카테고리선택]+" ***");
 				// 출력
 				System.out.println("제목\t내용\t번호");
+				ArrayList<String> templist = new ArrayList<>();
 				for(Acount temp : Controller.acountlist) {
 					if(temp.getId().equals(id)) { // 로그인한 아이디에서 차단유저 목록 꺼내오기
 						if(temp.getBlockuser()==null) { // 차단유저가 없으면 전체 출력
@@ -156,15 +157,15 @@ public class main {
 						else if(temp.getBlockuser()!=null){ // 차단유저가 있으면
 							for(Board temp2 : Controller.boardlist) {
 								for(int i=0; i<temp.getBlockuser().size(); i++) {
-									if(temp2.getCategory().equals(Controller.카테고리[카테고리선택])) {
-										if(temp.getBlockuser().get(i).getTarget().equals(temp2.getWriter())  ) { // 로그인한 아이디의 차단유저목록에 글작성자가 포함되어있으면
-											System.out.println("차단된 유저의 글");
-										}
-										else {
-											System.out.println(temp2.getTitle()+ "\t" + temp2.getContent()+"\t"+temp2.getWriter()+"\t" + temp2.getIndex());
-										}
+									templist.add(temp.getBlockuser().get(i).getTarget());
+								}
+								if(temp2.getCategory().equals(Controller.카테고리[카테고리선택])) {
+									if(templist.contains(temp2.getWriter())  ) { // 로그인한 아이디의 차단유저목록에 글작성자가 포함되어있으면
+										System.out.println("차단된 유저의 글");
 									}
-									
+									else {
+										System.out.println(temp2.getTitle()+ "\t" + temp2.getContent()+"\t"+temp2.getWriter()+"\t" + temp2.getIndex());
+									}
 								}
 							}
 						}
