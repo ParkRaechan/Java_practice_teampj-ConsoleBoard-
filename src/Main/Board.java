@@ -26,7 +26,7 @@ public class Board {
 	
 	
 	// 생성자
-	public Board() {}
+	public Board() {}//깡통생성자
 	
 	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good
 			, int bad, int report, int index) {
@@ -41,7 +41,7 @@ public class Board {
 		this.bad = bad;
 		this.report = report;
 		this.index = index; 
-	}
+	}//댓글제외생성자
 	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good,
 			int bad, ArrayList<Reply> replylist, int report, int index) {
 		this.title = title;
@@ -55,9 +55,10 @@ public class Board {
 		this.replylist = replylist;
 		this.report = report;
 		this.index = index;
-	}
+	}//꽉꽉생성자
 
 	// 메소드
+		//getter,setter메소드
 	public String getTitle() {
 		return title;
 	}
@@ -148,7 +149,13 @@ public class Board {
 	
 	
 	
-	
+	public ArrayList<String> getP() {
+		return p;
+	}
+
+	public void setP(ArrayList<String> p) {
+		this.p = p;
+	}
 	
 	
 	

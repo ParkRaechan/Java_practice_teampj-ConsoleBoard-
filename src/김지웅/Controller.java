@@ -49,6 +49,7 @@ public class Controller {
 			}
 		}
 		Acount temp = new Acount(id, pw, name, email, phone, 0, null, 0, null );
+		Controller.회원파일처리(id, pw, name, email, phone, 0, null, 0, null);
 		acountlist.add(temp);
 		회원저장();
 		return true; // 회원가입 성공

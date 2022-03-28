@@ -350,14 +350,57 @@ public class Controller {
 				return true;
 			}
 		}
-		
-		
-		
-		
-/////////////////////////////////차단유저 파일처리//////////////////////////////////////////////////////////////
-		
-		
 		return false;
-
 	}
+	
+/////////////////////////////////차단유저 파일처리 시작//////////////////////////////////////////////////////////////
+	
+	static void 차단유저파일처리(String id, String blockuser) throws IOException{
+		//회원저장
+			//파일에 [아이디,비번,이름,이메일,폰번]형식으로 저장
+		FileOutputStream out_u = new FileOutputStream("D:/java/차단유저test.txt",true);
+		String storage_u = id+","+blockuser+"\n";	
+		out_u.write(storage_u.getBytes());		
+
+	}//차단유저e
+	
+	
+	public static boolean 차단유저출력() throws IOException {
+		
+		FileInputStream input_u = new FileInputStream("D:/java/차단유저test.txt");
+		byte[] bytes_u = new byte[1024]; // 바이트배열선
+		input_u.read(bytes_u);				// 바이트 읽기
+		String str_u= new String(bytes_u); // 일어온거 저장
+		String[] 회원1 = str_u.split("\n"); //1회글마다 자르기
+		for(int t = 0; t < 회원1.length-1 ; t++) {	// 회당매출길이만큼 반복
+			if(회원1[t] != null && !회원1[t].equals("") ) {
+				String[] 회원요소 = 회원1[t].split(",");
+				String a_a = 회원요소[0]; // 회원 아이디
+				String b_a = 회원요소[1]; // 회원 비번
+				String c_a = 회원요소[2]; // 회원 이름
+				String d_a = 회원요소[3]; // 회원 이메일
+				String e_a = 회원요소[4]; // 회원 폰번
+				String f_a = 회원요소[5]; // 회원 포인트
+								
+				
+				ArrayList<String> g_a = null; // 회원 차단유저
+				//차단유저 목록 -> 파일에 어떻게 넣어서 어떻게 뺄 것인가,,,,,
+				String h_a = 회원요소[7]; // 회원 신고
+				String i_a = 회원요소[8]; // 회원 친구
+
+				Acount o_a = new Acount(a_a,b_a,c_a,d_a,e_a,Integer.parseInt(f_a),g_a,Integer.parseInt(h_a),i_a);
+				
+				//배열에 파일 요소값 저장
+				Controller.acountlist.add(o_a);
+			
+			}
+		}
+		return true; //일별매출 리턴
+	}
+	
+	
+	
+	
+/////////////////////////////////차단유저 파일처리 끝//////////////////////////////////////////////////////////////
+
 }
