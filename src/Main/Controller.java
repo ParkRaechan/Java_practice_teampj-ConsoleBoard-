@@ -365,7 +365,7 @@ public class Controller {
 		for(int i = 0; i < 임시.size(); i++) {
 			Board temp = 임시.get(i);
 			for(int j = 0; j < 임시.size() ; j++) {
-				if(temp.getGood() > 임시.get(j).getGood()) {
+				if(temp.getGood() - temp.getBad() > 임시.get(j).getGood() - 임시.get(j).getBad()) {
 					temp = 임시.get(j);
 					임시.set(j, 임시.get(i));
 					임시.set(i, temp);

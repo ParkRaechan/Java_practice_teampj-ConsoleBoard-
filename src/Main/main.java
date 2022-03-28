@@ -40,7 +40,7 @@ public class main {
 				ArrayList<Board> 인기글 = Controller.인기글(Controller.카테고리[i]); // 각 카테고리 인기글 가져오기
 				System.out
 						.println("---------------------카테고리: " + Controller.카테고리[i] + "-----------------------------");
-				System.out.println("제목\t\t내용\t\t글번호\t\t추천수");
+				System.out.println("제목\t\t내용\t\t글번호\t\t추천수\t\t비추수");
 				for (int j = 0; j < 인기글.size(); j++) {
 					if (인기글.size() != 0) {
 						String 내용 = "";
@@ -58,7 +58,7 @@ public class main {
 							}
 						}
 						System.out.println(String.format("%-15s", 제목)+ String.format("%-15s", 내용)
-								+ 인기글.get(j).getIndex() + "\t\t" + 인기글.get(j).getGood());
+								+ 인기글.get(j).getIndex() + "\t\t" + 인기글.get(j).getGood() +"\t\t"+ 인기글.get(j).getBad());
 
 					}
 					if (j == 4) {
