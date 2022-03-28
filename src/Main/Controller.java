@@ -495,7 +495,7 @@ public class Controller {
 		
 
 	}
-public static boolean 신고(String id,int index) throws IOException {
+	public static boolean 신고(String id,int index) throws IOException {
 		
 		for(Board temp : boardlist) {
 			if(temp.getIndex()==index && temp.getWriter().equals(id)) {
