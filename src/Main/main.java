@@ -1,6 +1,7 @@
 package Main;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -50,7 +51,14 @@ public class main {
 								break;
 							}
 						}
-						System.out.println(인기글.get(j).getTitle() + "\t\t" + String.format("%-15s", 내용)
+						String 제목 = "";
+						for (int s = 0; s < 인기글.get(j).getTitle().length(); s++) {
+							제목 += 인기글.get(j).getTitle().charAt(s);
+							if (s == 9) {
+								break;
+							}
+						}
+						System.out.println(String.format("%-15s", 제목)+ String.format("%-15s", 내용)
 								+ 인기글.get(j).getIndex() + "\t\t" + 인기글.get(j).getGood());
 
 					}
@@ -425,9 +433,9 @@ public class main {
 			while (true) {
 				for (Board temp : Controller.boardlist) {
 					if (temp.getIndex() == index) {
-						System.out.println("작성일: " + temp.getDate());
+						System.out.println("작성일: " + temp.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd | hh:mm")) + "\n");
 						System.out.println(
-								"번호: " + temp.getIndex() + " 제목: " + temp.getTitle() + " 카테고리: " + temp.getCategory());
+								"번호: " + temp.getIndex() + " 제목: " + temp.getTitle() + " 카테고리: " + temp.getCategory() +"\n");
 						System.out.println("내용: " + temp.getContent());
 						System.out.println(
 								"추천수: " + temp.getGood() + " 비추: " + temp.getBad() + " 신고수: " + temp.getReport());
