@@ -555,9 +555,12 @@ public class main {
 							System.out.println("남은기회: "+ 기회 +" | 인덱스선택: "); int 선택 = scanner.nextInt(); // 인덱스받기
 							int 당첨여부 = Controller.보물찾기(선택, id, 등수); //보물찾기 메소드 호출
 							if(기회 == 0) { break; }// 게임끝기회가 끝나면
-							if(당첨여부 == 1) {System.out.println("1등 당첨");}
-							else if(당첨여부 == 2) {System.out.println("2등 당첨");}
-							else if(당첨여부 == 3) {	System.out.println("3등 당첨");}
+							if(당첨여부 == 1) {System.out.println("1등 당첨");					Controller.회원파일처리(id);
+}
+							else if(당첨여부 == 2) {System.out.println("2등 당첨");					Controller.회원파일처리(id);
+}
+							else if(당첨여부 == 3) {	System.out.println("3등 당첨");					Controller.회원파일처리(id);
+}
 							else if(당첨여부 == -1) {System.out.println("꽝");}
 						}
 						//게임판 출력
