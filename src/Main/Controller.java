@@ -12,7 +12,6 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 
-
 public class Controller {
 
 	static LocalDateTime yourDate;
@@ -122,7 +121,7 @@ public class Controller {
 		for(차단유저 temp : 차단유저list) {
 			if(temp.getIndex().equals(id)) {
 				FileOutputStream out_c = new FileOutputStream("D:/java/차단유저test.txt",true);
-				String storage_c = id+","+temp.getTarget()+"\n";		
+				String storage_c = id+"@@"+temp.getTarget()+"\n";		
 				out_c.write(storage_c.getBytes());		
 				
 			}
@@ -137,8 +136,8 @@ public class Controller {
 		String str_c = new String(bytes_c); // 일어온거 저장
 		String[] 차단1 = str_c.split("\n"); //1회글마다 자르기
 		for(int t = 0; t < 차단1.length-1 ; t++) {	// 회당매출길이만큼 반복
-			if(차단1[t] != null && !차단1[t].equals("") ) {
-				String[] 차단요소 = 차단1[t].split(",");
+			if(차단1[t] != null ) {
+				String[] 차단요소 = 차단1[t].split("@@");
 				
 				String a_c = 차단요소[0]; 
 				String b_c = 차단요소[1]; 
@@ -212,6 +211,7 @@ public class Controller {
 							return false; // 해당 글 볼러오기 실패
 						}
 					}
+					
 				}
 			}
 		}
@@ -225,6 +225,7 @@ public class Controller {
 		}
 		return false;	
 	}
+	
 	
 	////////////////////////////////////글쓰기 파일처리 시작////////////////////////////////////////////////////
 
