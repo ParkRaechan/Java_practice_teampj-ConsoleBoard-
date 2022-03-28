@@ -1,4 +1,4 @@
-package Main;
+package 임시;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 
 
+
 public class Controller {
 
 	static LocalDateTime yourDate;
@@ -22,14 +23,10 @@ public class Controller {
 	public static ArrayList<Acount> acountlist = new ArrayList<>();
 	public static ArrayList<Board> boardlist = new ArrayList<>();
 	public static ArrayList<차단유저> 차단유저list = new ArrayList<>();
+
+	
 	public static int boardtnum = 1;
-	public static String[] 카테고리 = {"시사","야구"};
-
-	public static String[] 포인트복권 = new String[6];
-	public static String[] 게임판 = {"[■]","[■]","[■]","[■]","[■]",
-			  "[■]","[■]","[■]","[■]","[■]",
-			  "[■]","[■]","[■]","[■]","[■]"};// 0 ~ 14 인덱스
-
+	public static String[] 카테고리 = {"시사","야구"}; 
 
 	
 	public static int 회원가입아이디(String id) {
@@ -207,19 +204,22 @@ public class Controller {
 		return true;// 임시반환
 	}
 	public static boolean 글상세보기(String id, int index) {// 인덱스일치하는 번호 찾은후 글이 있음 반환
-		for(Acount temp : acountlist) {
-			if(temp.getId().equals(id) && temp.getBlockuser()!=null ) { // 로그인한 아이디의 차단유저목록이 있으면
-				for(Board temp2 : boardlist) {
-					for(int i=0;  i<temp.getBlockuser().size(); i++) {
-						if(temp2.getIndex()==index && temp.getBlockuser().get(i).getTarget().contains(temp2.getWriter()) ) {
-							// 해당 인덱스의 글 작성자가 차단유저목록에 포함되어 있으면
-							return false; // 해당 글 볼러오기 실패
-						}
-					}
-					
-				}
+		String djdj = null;
+		for(Board temp98 : boardlist) {
+			if(temp98.getIndex()==index) {
+				djdj = temp98.getWriter();
+			}
+			else {
+				
 			}
 		}
+		for(차단유저 temp99 : 차단유저list) {
+			if(temp99.getIndex().equals(id)&&temp99.getTarget().equals(djdj)) {
+				return false;
+			}
+		}
+		
+		
 		//index 받아와서 해당글찾기
 		 //인덱스번호
 		for(Board temp : boardlist) {
@@ -579,63 +579,5 @@ public static boolean 신고(String id,int index) throws IOException {
 			}	
 		}	
 	}
-	
-	
-	
-	public static int[] 보물찾기게임설정() {
-		// 1. 게임설정
-		Random random = new Random();
-		int[] 등수 = new int[3];
-		for(int i = 0 ; i < 등수.length ; i++) {
-			boolean pass = false;
-			int temp = random.nextInt(15);// 난수 생성
-			for(int j = 0 ; j < 등수.length ; j++) {
-				if(temp != 등수[i]) { pass = true; }// 같지않다면
-			}
-			if(pass) {
-				등수[i] = temp;
-			}else {	i--; }
-			if(i == 2) {break;}
-		}// for end
-		return 등수;
-	}
-
-	
-	
-	
-	
-
-	public static int 보물찾기(int chindex, String id, int[] 등수) { // 인덱스 / id 받기
-		// 임시 게임 1등 400 /2등 200 /3등 100 /4장려 10
-		 //2. 뽑기
-			int i = 1; // 등수 기준
-			if(게임판[chindex].equals("[■]")) { //빈값이라면
-				for(int temp : 등수) {
-					if(chindex == temp) { // temp 0 1 2 순서대로 당첨되면
-						게임판[chindex] = "["+i+"]";  // 게임판 변경
-						break;	// 나가기
-					}else {게임판[chindex] = "[ ]";}
-					i++; // 다음 등수
-				}
-			}
-			for(Acount temp : acountlist) { // 회원 목록에서
-				if(temp.getId().equals(id)) { // 아이디값일치하면
-					temp.setPoint(temp.getPoint() - 10); // 포인트 10을 빼고
-					if(i == 1) { // 1등당첨되면
-						temp.setPoint(temp.getPoint() + 400); // 추가
-						return 1;
-					}else if(i == 2) {
-						temp.setPoint(temp.getPoint() + 300);
-						return 2;
-					}else if(i == 3) {
-						temp.setPoint(temp.getPoint() + 200);
-						return 3;
-					}
-				}
-			}
-			return -1; 
-		}// 보물찾기 메소드 end
-	
-	
 	
 }

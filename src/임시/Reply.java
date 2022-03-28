@@ -1,4 +1,4 @@
-package 박래찬_임시;
+package 임시;
 
 import java.time.LocalDateTime;
 
