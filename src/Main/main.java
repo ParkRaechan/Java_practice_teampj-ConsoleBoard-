@@ -52,7 +52,7 @@ public class main {
 				}
 			}
 			///////////////////////////////////////////////////
-			그림();
+			
 			System.out.println("-------------");
 			System.out.println("|1.카테고리 선택|");
 			System.out.println("-------------");

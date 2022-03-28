@@ -12,6 +12,8 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 
+
+
 public class Controller {
 
 	static LocalDateTime yourDate;
@@ -549,7 +551,13 @@ public static boolean 신고(String id,int index) throws IOException {
 	
 	public static void 추천비추(boolean 여부, int index, String id) {
 		boolean pass = true; // 아이디 중복여부 체크
-
+		for(Board temp : boardlist) {
+			for(String s : temp.getP()) { // 해당글 p리스트안에
+				if(temp.getIndex()==index && s.equals(id)) {		 // 아이디값이 일치하면
+					pass = false; 		//추천 비추 못누르게
+				}
+			}	
+		}
 		if(pass) { // 중복된아이디가 아니라면
 			for(Board temp : boardlist) {
 				if(여부) {
