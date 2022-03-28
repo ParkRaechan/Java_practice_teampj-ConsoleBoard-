@@ -276,14 +276,14 @@ public class main {
 					if(pass) {// 돈이 있다면
 						int 기회 = 3;
 						int[] 등수 = Controller.보물찾기게임설정(); // 당첨번호 초기화
-						for(int  j= 0 ; j < 3 ; j++, 기회--) {
+						for(int  j= 0 ; j < 3 ; j++, 기회--) { // 3번 돌리기
 							//게임판 출력
 							for(int i = 0; i < Controller.게임판.length ; i++) {
 								System.out.print(Controller.게임판[i]);
-								if(i % 5 == 4) {System.out.println();}
+								if(i % 5 == 4) {System.out.println();} // 줄바꿈
 							}
-							System.out.println("남은기회: "+ 기회 +" | 인덱스선택: "); int 선택 = scanner.nextInt();
-							int 당첨여부 = Controller.보물찾기(선택, id, 등수);
+							System.out.println("남은기회: "+ 기회 +" | 인덱스선택: "); int 선택 = scanner.nextInt(); // 인덱스받기
+							int 당첨여부 = Controller.보물찾기(선택, id, 등수); //보물찾기 메소드 호출
 							if(기회 == 0) { break; }// 게임끝기회가 끝나면
 							if(당첨여부 == 1) {System.out.println("1등 당첨");}
 							else if(당첨여부 == 2) {System.out.println("2등 당첨");}
@@ -293,11 +293,11 @@ public class main {
 						//게임판 출력
 						for(int i = 0; i < Controller.게임판.length ; i++) {
 							System.out.print(Controller.게임판[i]);
-							if(i % 5 == 4) {System.out.println();}
+							if(i % 5 == 4) {System.out.println();} // 줄바꿈
 						}
 						System.out.println("게임종료");
 					}else {System.out.println("돈부족");}
-				}else if(ch == 2) {			
+				}else if(ch == 2) { // 뒤로가기	
 					
 				}else {System.out.println("알수없는 선택");}
 			}		
