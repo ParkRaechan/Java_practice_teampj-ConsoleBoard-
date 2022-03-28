@@ -13,7 +13,6 @@ public class Acount {
 	private String email; // 이메일
 	private String phone; // 전화번호
 	private int point; // 포인트
-	private ArrayList<차단유저> blockuser = new ArrayList<>(); // 차단유저목록
 	private int report; // 신고누적횟수
 	private String friend; // 친구
 	private ArrayList<쪽지클래스> 쪽지 = new ArrayList<>(); 
@@ -21,7 +20,7 @@ public class Acount {
 	// 생성자
 	public Acount() {}//깡통생성자
 
-	public Acount(String id, String pw, String name, String email, String phone, int point, ArrayList<차단유저> blockuser,
+	public Acount(String id, String pw, String name, String email, String phone, int point, 
 			int report, String friend) {
 		this.id = id;
 		this.pw = pw;
@@ -29,7 +28,6 @@ public class Acount {
 		this.email = email;
 		this.phone = phone;
 		this.point = point;
-		this.blockuser = blockuser;
 		this.report = report;
 		this.friend = friend;
 	}//꽉꽉생성자
@@ -85,15 +83,7 @@ public class Acount {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-
-	public ArrayList<차단유저> getBlockuser() {
-		return blockuser;
-	}
-
-	public void setBlockuser(ArrayList<차단유저> blockuser) {
-		this.blockuser = blockuser;
-	}
-
+	
 	public int getReport() {
 		return report;
 	}

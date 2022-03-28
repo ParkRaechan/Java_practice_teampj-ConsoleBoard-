@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 
 
 
+
+
 public class Controller {
 
 	static LocalDateTime yourDate;
@@ -27,7 +29,11 @@ public class Controller {
 	
 	public static int boardtnum = 1;
 	public static String[] Ä«Å×°í¸® = {"½Ã»ç","¾ß±¸"}; 
-
+	public static String[] Æ÷ÀÎÆ®º¹±Ç = new String[6];
+	public static String[] °ÔÀÓÆÇ = {"[¡á]","[¡á]","[¡á]","[¡á]","[¡á]",
+			  "[¡á]","[¡á]","[¡á]","[¡á]","[¡á]",
+			  "[¡á]","[¡á]","[¡á]","[¡á]","[¡á]"};// 0 ~ 14 ÀÎµ¦½º
+	
 	
 	public static int È¸¿ø°¡ÀÔ¾ÆÀÌµğ(String id) {
 		String pattern = "^[0-9|a-z|A-Z|¤¡-¤¾|¤¿-¤Ó|°¡-ÆR]*$";
@@ -62,9 +68,9 @@ public class Controller {
 				return false; // ÇØ´ç ÀüÈ­¹øÈ£·Î °¡ÀÔÇÑ È¸¿øÀÌ ÀÖÀ½
 			}
 		}
-		Acount temp = new Acount(id, pw, name, email, phone, 0, null, 0, null );
-		Controller.È¸¿øÆÄÀÏÃ³¸®(id, pw, name, email, phone, 0, null, 0, null);
+		Acount temp = new Acount(id, pw, name, email, phone, 0, 0, null );
 		acountlist.add(temp);
+		Controller.È¸¿øÆÄÀÏÃ³¸®(id);
 		return true; // È¸¿ø°¡ÀÔ ¼º°ø
 		
 	}
@@ -72,15 +78,33 @@ public class Controller {
 	
 	
 	///////////////////////////////////È¸¿øÆÄÀÏ Ã³¸® ½ÃÀÛ/////////////////////////////////////////////
-	static void È¸¿øÆÄÀÏÃ³¸®(String id, String pw, String name, String email, String phone, int point, ArrayList<String> blockuser,
-			int report, String friend) throws IOException{
+	static void È¸¿øÆÄÀÏÃ³¸®(String id) throws IOException{
 		
 		//È¸¿øÀúÀå
 			//ÆÄÀÏ¿¡ [¾ÆÀÌµğ,ºñ¹ø,ÀÌ¸§,ÀÌ¸ŞÀÏ,Æù¹ø]Çü½ÄÀ¸·Î ÀúÀå
-		FileOutputStream out_a = new FileOutputStream("D:/java/È¸¿øtest.txt",true);
-		String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+blockuser+","+Integer.toString(report)+","+friend+"\n";		
-		out_a.write(storage_a.getBytes());		
+		FileOutputStream out_a = new FileOutputStream("D:/java/È¸¿øtest.txt");
+		String storage_a1="";
+		for(Acount temp001 : acountlist) {
+				id = temp001.getId();
+				String pw = temp001.getPw();
+				String name = temp001.getName();
+				String email = temp001.getEmail();
+				String phone = temp001.getPhone();
+				int point = temp001.getPoint();
+				int report = temp001.getReport();
+				String friend = null;
+				
+			
+				String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+Integer.toString(report)+","+friend+"\n";		
+				
+				storage_a1 =storage_a1+ storage_a;
+					
+				
+		}
 
+		out_a.write(storage_a1.getBytes());		
+	
+		
 	}//È¸¿øe
 	
 	
@@ -101,14 +125,10 @@ public class Controller {
 				String e_a = È¸¿ø¿ä¼Ò[4]; // È¸¿ø Æù¹ø
 				String f_a = È¸¿ø¿ä¼Ò[5]; // È¸¿ø Æ÷ÀÎÆ®
 				
-				
-				
-				ArrayList<Â÷´ÜÀ¯Àú> g_a = null; // È¸¿ø Â÷´ÜÀ¯Àú
-				//Â÷´ÜÀ¯Àú ¸ñ·Ï -> ÆÄÀÏ¿¡ ¾î¶»°Ô ³Ö¾î¼­ ¾î¶»°Ô »¬ °ÍÀÎ°¡,,,,,
-				String h_a = È¸¿ø¿ä¼Ò[7]; // È¸¿ø ½Å°í
-				String i_a = È¸¿ø¿ä¼Ò[8]; // È¸¿ø Ä£±¸
+				String h_a = È¸¿ø¿ä¼Ò[6]; // È¸¿ø ½Å°í
+				String i_a = È¸¿ø¿ä¼Ò[7]; // È¸¿ø Ä£±¸
 
-				Acount o_a = new Acount(a_a,b_a,c_a,d_a,e_a,Integer.parseInt(f_a),g_a,Integer.parseInt(h_a),i_a);
+				Acount o_a = new Acount(a_a,b_a,c_a,d_a,e_a,Integer.parseInt(f_a),Integer.parseInt(h_a),i_a);
 				
 				//¹è¿­¿¡ ÆÄÀÏ ¿ä¼Ò°ª ÀúÀå
 				Controller.acountlist.add(o_a);
@@ -204,16 +224,22 @@ public class Controller {
 		return true;// ÀÓ½Ã¹İÈ¯
 	}
 	public static boolean ±Û»ó¼¼º¸±â(String id, int index) {// ÀÎµ¦½ºÀÏÄ¡ÇÏ´Â ¹øÈ£ Ã£ÀºÈÄ ±ÛÀÌ ÀÖÀ½ ¹İÈ¯
+		ArrayList<String> templist = new ArrayList<>();
+		for (Acount temp2 : Controller.acountlist) {
+			for (Â÷´ÜÀ¯Àú temp : Controller.Â÷´ÜÀ¯Àúlist) {
+				if (temp2.getId().equals(id) && temp.getIndex().equals(id)) {
+					templist.add(temp.getTarget());
+				}
+			}
+		}
+		
 		for(Acount temp : acountlist) {
-			if(temp.getId().equals(id) && temp.getBlockuser()!=null ) { // ·Î±×ÀÎÇÑ ¾ÆÀÌµğÀÇ Â÷´ÜÀ¯Àú¸ñ·ÏÀÌ ÀÖÀ¸¸é
+			if(temp.getId().equals(id) && !templist.isEmpty() ) { // ·Î±×ÀÎÇÑ ¾ÆÀÌµğÀÇ Â÷´ÜÀ¯Àú¸ñ·ÏÀÌ ÀÖÀ¸¸é
 				for(Board temp2 : boardlist) {
-					for(int i=0;  i<temp.getBlockuser().size(); i++) {
-						if(temp2.getIndex()==index && temp.getBlockuser().get(i).getTarget().contains(temp2.getWriter()) ) {
-							// ÇØ´ç ÀÎµ¦½ºÀÇ ±Û ÀÛ¼ºÀÚ°¡ Â÷´ÜÀ¯Àú¸ñ·Ï¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ¸¸é
-							return false; // ÇØ´ç ±Û º¼·¯¿À±â ½ÇÆĞ
-						}
+					if(temp2.getIndex()==index && templist.contains(temp2.getWriter()) ) {
+						// ÇØ´ç ÀÎµ¦½ºÀÇ ±Û ÀÛ¼ºÀÚ°¡ Â÷´ÜÀ¯Àú¸ñ·Ï¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ¸¸é
+						return false; // ÇØ´ç ±Û º¼·¯¿À±â ½ÇÆĞ
 					}
-					
 				}
 			}
 		}
@@ -365,7 +391,7 @@ public class Controller {
 		for(int i = 0; i < ÀÓ½Ã.size(); i++) {
 			Board temp = ÀÓ½Ã.get(i);
 			for(int j = 0; j < ÀÓ½Ã.size() ; j++) {
-				if(temp.getGood() - temp.getBad() > ÀÓ½Ã.get(j).getGood() - ÀÓ½Ã.get(j).getBad()) {
+				if(temp.getGood() > ÀÓ½Ã.get(j).getGood()) {
 					temp = ÀÓ½Ã.get(j);
 					ÀÓ½Ã.set(j, ÀÓ½Ã.get(i));
 					ÀÓ½Ã.set(i, temp);
@@ -487,18 +513,7 @@ public static boolean ½Å°í(String id,int index) throws IOException {
 		Â÷´ÜÀ¯Àú a = new Â÷´ÜÀ¯Àú(id, reportid); 
 		Â÷´ÜÀ¯Àúlist.add(a);
 		Â÷´ÜÆÄÀÏÃ³¸®(id);
-		for(int i=0; i<acountlist.size(); i++) {
-			if(acountlist.get(i).getId().equals(id)) {
-				if(acountlist.get(i).getBlockuser()==null) {
-					acountlist.get(i).setBlockuser(Â÷´ÜÀ¯Àúlist);
-					
-				}
-				else {
-					acountlist.get(i).getBlockuser().addAll(acountlist.get(i).getBlockuser().size(), Â÷´ÜÀ¯Àúlist);
-				}
-				break;
-			}
-		}
+		
 		return true;
 	}
 	
@@ -576,5 +591,64 @@ public static boolean ½Å°í(String id,int index) throws IOException {
 			}	
 		}	
 	}
+	
+	public static int[] º¸¹°Ã£±â°ÔÀÓ¼³Á¤() {
+		// 1. °ÔÀÓ¼³Á¤
+		Random random = new Random();
+		int[] µî¼ö = new int[3];
+		for(int i = 0 ; i < µî¼ö.length ; i++) {
+			boolean pass = false;
+			int temp = random.nextInt(15);// ³­¼ö »ı¼º
+			for(int j = 0 ; j < µî¼ö.length ; j++) {
+				if(temp != µî¼ö[i]) { pass = true; }// °°Áö¾Ê´Ù¸é
+			}
+			if(pass) {
+				µî¼ö[i] = temp;
+			}else {	i--; }
+			if(i == 2) {break;}
+		}// for end
+		return µî¼ö;
+	}
+
+	
+	
+	
+	
+
+	public static int º¸¹°Ã£±â(int chindex, String id, int[] µî¼ö) throws IOException { // ÀÎµ¦½º / id ¹Ş±â
+		// ÀÓ½Ã °ÔÀÓ 1µî 400 /2µî 200 /3µî 100 /4Àå·Á 10
+		 //2. »Ì±â
+			int i = 1; // µî¼ö ±âÁØ
+			if(°ÔÀÓÆÇ[chindex].equals("[¡á]")) { //ºó°ªÀÌ¶ó¸é
+				for(int temp : µî¼ö) {
+					if(chindex == temp) { // temp 0 1 2 ¼ø¼­´ë·Î ´çÃ·µÇ¸é
+						°ÔÀÓÆÇ[chindex] = "["+i+"]";  // °ÔÀÓÆÇ º¯°æ
+						break;	// ³ª°¡±â
+					}else {°ÔÀÓÆÇ[chindex] = "[ ]";}
+					i++; // ´ÙÀ½ µî¼ö
+				}
+			}
+			for(Acount temp : acountlist) { // È¸¿ø ¸ñ·Ï¿¡¼­
+				if(temp.getId().equals(id)) { // ¾ÆÀÌµğ°ªÀÏÄ¡ÇÏ¸é
+					temp.setPoint(temp.getPoint() - 10); // Æ÷ÀÎÆ® 10À» »©°í
+					if(i == 1) { // 1µî´çÃ·µÇ¸é
+						temp.setPoint(temp.getPoint() + 400); // Ãß°¡
+						Controller.È¸¿øÆÄÀÏÃ³¸®(id);
+						return 1;
+					}else if(i == 2) {
+						temp.setPoint(temp.getPoint() + 300);
+						Controller.È¸¿øÆÄÀÏÃ³¸®(id);
+						return 2;
+					}else if(i == 3) {
+						temp.setPoint(temp.getPoint() + 200);
+						Controller.È¸¿øÆÄÀÏÃ³¸®(id);
+						return 3;
+					}
+					
+					
+				}
+			}
+			return -1; 
+		}// º¸¹°Ã£±â ¸Ş¼Òµå end
 	
 }

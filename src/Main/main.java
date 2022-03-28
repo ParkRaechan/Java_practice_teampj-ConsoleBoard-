@@ -1,9 +1,9 @@
 package Main;
 
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 
 public class main {
@@ -32,7 +32,7 @@ public class main {
 
 	}
 
-	public static void 로그인메뉴(String id) {
+	public static void 로그인메뉴(String id) throws IOException {
 		while (true) {
 			//////////////////////////////////////////// 인기글출력
 //////////////////////////////////////////////인기글출력
@@ -40,7 +40,7 @@ public class main {
 				ArrayList<Board> 인기글 = Controller.인기글(Controller.카테고리[i]); // 각 카테고리 인기글 가져오기
 				System.out
 						.println("---------------------카테고리: " + Controller.카테고리[i] + "-----------------------------");
-				System.out.println("제목\t\t내용\t\t글번호\t\t추천수\t\t비추수");
+				System.out.println("제목\t\t내용\t\t글번호\t\t추천수");
 				for (int j = 0; j < 인기글.size(); j++) {
 					if (인기글.size() != 0) {
 						String 내용 = "";
@@ -50,15 +50,8 @@ public class main {
 								break;
 							}
 						}
-						String 제목 = "";
-						for (int s = 0; s < 인기글.get(j).getTitle().length(); s++) {
-							제목 += 인기글.get(j).getTitle().charAt(s);
-							if (s == 9) {
-								break;
-							}
-						}
-						System.out.println(String.format("%-15s", 제목)+ String.format("%-15s", 내용)
-								+ 인기글.get(j).getIndex() + "\t\t" + 인기글.get(j).getGood() +"\t\t"+ 인기글.get(j).getBad());
+						System.out.println(인기글.get(j).getTitle() + "\t\t" + String.format("%-15s", 내용)
+								+ 인기글.get(j).getIndex() + "\t\t" + 인기글.get(j).getGood());
 
 					}
 					if (j == 4) {
@@ -163,42 +156,43 @@ public class main {
 					}
 				}
 			}
-			if(templist.isEmpty()) block = false;
-			if(block) {
-				for(int i=0; i<templist.size(); i++) {
-					for(Board temp : Controller.boardlist) {
-						if(temp.getCategory().equals(Controller.카테고리[카테고리선택])) {
-							if(templist.get(i).contains(temp.getWriter())){
-								System.out.println("차단된 유저의 글");
-							}
-							else {
-								System.out.println(temp.getTitle()+ "\t" + temp.getContent()+"\t"+temp.getWriter()+"\t" + temp.getIndex());
-							}
-						}
-						
-					}
-				}
-			}
-			else { // 차단유저가 없으면
-				for(Board temp : Controller.boardlist) {
-					if(temp.getCategory().equals(Controller.카테고리[카테고리선택])) {
-						System.out.println(temp.getTitle()+ "\t" + temp.getContent()+"\t"+temp.getWriter()+"\t" + temp.getIndex());
-					}
-				}
-			}
-			
-		templist.clear();
-		System.out.println("------------"); // 구분선
-		try {
-			카테고리보기(id, 카테고리선택);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	} // while end
+			if (templist.isEmpty())
+				block = false;
+			if (block) {
 
-} // 카테고리 선택 end
+				for (Board temp : Controller.boardlist) {
+					if (temp.getCategory().equals(Controller.카테고리[카테고리선택])) {
+						if (templist.contains(temp.getWriter())) {
+							System.out.println("차단된 유저의 글");
+						} else {
+							System.out.println(temp.getTitle() + "\t" + temp.getContent() + "\t" + temp.getWriter()
+									+ "\t" + temp.getIndex());
+						}
+					}
+
+				}
+
+			} else { // 차단유저가 없으면
+				for (Board temp : Controller.boardlist) {
+					if (temp.getCategory().equals(Controller.카테고리[카테고리선택])) {
+						System.out.println(temp.getTitle() + "\t" + temp.getContent() + "\t" + temp.getWriter() + "\t"
+								+ temp.getIndex());
+					}
+				}
+			}
+
+			templist.clear();
+			System.out.println("------------"); // 구분선
+			try {
+				카테고리보기(id, 카테고리선택);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} // while end
+
+	} // 카테고리 선택 end
 
 	public static void 그림() {
 		System.out.println(
@@ -326,7 +320,7 @@ public class main {
 
 	}
 
-	public static void 로그인() {
+	public static void 로그인() throws IOException {
 
 		String id = null;
 		String pw = null;
@@ -431,11 +425,14 @@ public class main {
 			while (true) {
 				for (Board temp : Controller.boardlist) {
 					if (temp.getIndex() == index) {
-						System.out.println("작성일: " + temp.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd | hh:mm")));
-						System.out.println("번호: "+ temp.getIndex()  +" 제목: " + temp.getTitle() +" 카테고리: "+ temp.getCategory()+"\n");
-						System.out.println("내용: " + temp.getContent()+"\n");
-						System.out.println("추천수: " + temp.getGood() +" 비추: "+ temp.getBad() +" 신고수: " + temp.getReport());
-						System.out.println("----댓글창-----------------------------------------------------------");		
+						System.out.println("작성일: " + temp.getDate());
+						System.out.println(
+								"번호: " + temp.getIndex() + " 제목: " + temp.getTitle() + " 카테고리: " + temp.getCategory());
+						System.out.println("내용: " + temp.getContent());
+						System.out.println(
+								"추천수: " + temp.getGood() + " 비추: " + temp.getBad() + " 신고수: " + temp.getReport());
+						System.out.println("----댓글창-----------------------------------------------------------");
+
 						if (temp.getReplylist() == null) {
 
 						} else {
@@ -548,8 +545,8 @@ public class main {
 		}
 	}
 
-	public static void 놀이방메뉴(String id) {
-		System.out.println("\t\t\t1.포인트복권 2.포인트랭킹 3.뒤로가기");
+	public static void 놀이방메뉴(String id) throws IOException {
+		System.out.println("\t\t\t1.포인트복권 2.포인트랭킹 3. 보물찾기 4.뒤로가기");
 		int ch = scanner.nextInt();
 		if (ch == 1) { // 포인트복권
 			String[] result = Controller.복권(id);
@@ -586,6 +583,78 @@ public class main {
 			놀이방메뉴(id);
 
 		} else if (ch == 3) {
+			// 1.게임판 초기화
+			while (true) { // 프로그램실행
+				int 게임판인덱스 = 0;
+				for (String temp : Controller.게임판) { // 전부 for 문돌려서
+					if (temp != "[■]") {
+						Controller.게임판[게임판인덱스] = "[■]";
+					} // "[■]" 초기화
+					게임판인덱스++; // 다음인덱스
+				}
+				System.out.println("보물땅창기 1번 3회 30원");
+				System.out.println("1.뽑기 2.뒤로가기");
+				int ch2 = scanner.nextInt(); // 선택입력받기
+				if (ch2 == 1) {// 뽑기 시작
+					boolean pass = true; // 돈 pass 체크
+					for (Acount temp : Controller.acountlist) { // 회원돌려서
+						if (temp.getId().equals(id)) { // id 일치하면
+							if (temp.getPoint() < 30) { // 돈 체크
+								System.out.println("돈부족");
+								pass = false; // 실행실행 스위치 역활
+							}
+						}
+					}
+					if (pass) {// 돈이 있다면
+						int 기회 = 3;
+						int[] 등수 = Controller.보물찾기게임설정(); // 당첨번호 초기화
+						for (int j = 0; j < 3; j++, 기회--) { // 3번 돌리기
+							// 게임판 출력
+							for (int i = 0; i < Controller.게임판.length; i++) {
+								System.out.print(Controller.게임판[i]);
+								if (i % 5 == 4) {
+									System.out.println();
+								} // 줄바꿈
+							}
+							System.out.println("남은기회: " + 기회 + " | 인덱스선택: ");
+							int 선택 = scanner.nextInt(); // 인덱스받기
+							int 당첨여부 = Controller.보물찾기(선택, id, 등수); // 보물찾기 메소드 호출
+							if (기회 == 0) {
+								break;
+							} // 게임끝기회가 끝나면
+							if (당첨여부 == 1) {
+								System.out.println("1등 당첨");
+								Controller.회원파일처리(id);
+							} else if (당첨여부 == 2) {
+								System.out.println("2등 당첨");
+								Controller.회원파일처리(id);
+							} else if (당첨여부 == 3) {
+								System.out.println("3등 당첨");
+								Controller.회원파일처리(id);
+							} else if (당첨여부 == -1) {
+								System.out.println("꽝");
+							}
+						}
+						// 게임판 출력
+						for (int i = 0; i < Controller.게임판.length; i++) {
+							System.out.print(Controller.게임판[i]);
+							if (i % 5 == 4) {
+								System.out.println();
+							} // 줄바꿈
+						}
+						System.out.println("게임종료");
+					} else {
+						System.out.println("돈부족");
+					}
+				} else if (ch2 == 2) { // 뒤로가기
+					break;
+				} else {
+					System.out.println("알수없는 선택");
+				}
+			}
+		}
+
+		else if (ch == 4) {
 			로그인메뉴(id);
 		} else {
 			System.out.println("\t\t\t제시된 번호 입력 바람");
