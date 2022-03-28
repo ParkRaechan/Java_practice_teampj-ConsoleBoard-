@@ -68,34 +68,42 @@ public class Controller {
 		Acount temp = new Acount(id, pw, name, email, phone, 0, null, 0, null );
 		
 		acountlist.add(temp);
-		Controller.회원파일처리();
+		Controller.회원파일처리(id);
 		return true; // 회원가입 성공
 		
 	}
 	
 	
 	
-	///////////////////////////////////회원파일 처리 시작/////////////////////////////////////////////
-	static void 회원파일처리() throws IOException{
+	///////////////////////////////1////회원파일 처리 시작/////////////////////////////////////////////
+	static void 회원파일처리(String id) throws IOException{
 		
 		//회원저장
 			//파일에 [아이디,비번,이름,이메일,폰번]형식으로 저장
+		FileOutputStream out_a = new FileOutputStream("D:/java/회원test.txt");
+		String storage_a1="";
 		for(Acount temp001 : acountlist) {
-			String id = temp001.getId();
-			String pw = temp001.getPw();
-			String name = temp001.getName();
-			String email = temp001.getEmail();
-			String phone = temp001.getPhone();
-			int point = temp001.getPoint();
-			ArrayList<String> blockuser = null;
-			int report = temp001.getReport();
-			String friend = null;
+				id = temp001.getId();
+				String pw = temp001.getPw();
+				String name = temp001.getName();
+				String email = temp001.getEmail();
+				String phone = temp001.getPhone();
+				int point = temp001.getPoint();
+				ArrayList<String> blockuser = null;
+				int report = temp001.getReport();
+				String friend = null;
+				
 			
-			FileOutputStream out_a = new FileOutputStream("D:/java/회원test.txt");
-			String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+blockuser+","+Integer.toString(report)+","+friend+"\n";		
-			out_a.write(storage_a.getBytes());		
-
+				String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+blockuser+","+Integer.toString(report)+","+friend+"\n";		
+				
+				storage_a1 =storage_a1+ storage_a;
+					
+				
 		}
+
+		out_a.write(storage_a1.getBytes());		
+	
+		
 	}//회원e
 	
 	
@@ -417,7 +425,7 @@ public class Controller {
 				}
 				return false;
 		}
-	public static int 복권결과(String[] result,String id) {
+	public static int 복권결과(String[] result,String id) throws IOException {
 		int[] count = new int[result.length]; // 일치하는 수 확인용 배열 
 		int max = 0; 
 		for(int i=0; i<result.length; i++) {
@@ -436,15 +444,19 @@ public class Controller {
 			if(temp.getId().equals(id)) {
 				if(max==6) { // 1등
 					temp.setPoint(temp.getPoint()+1000); // 포인트 1000 추가
+					Controller.회원파일처리(id);
 					return 1;
 				} else if(max==5) {
 					temp.setPoint(temp.getPoint()+300); // 포인트 300 추가
+					Controller.회원파일처리(id);
 					return 2;
 				} else if(max==4) {
 					temp.setPoint(temp.getPoint()+100); // 포인트 100 추가
+					Controller.회원파일처리(id);
 					return 3;
 				} else if(max==3) {
 					temp.setPoint(temp.getPoint()+10); // 포인트 10 추가
+					Controller.회원파일처리(id);
 					return 4;
 				} 	
 			} // if end
@@ -452,7 +464,7 @@ public class Controller {
 		return 5; // 꽝
 	}
 	
-	public static String[] 복권(String id) {
+	public static String[] 복권(String id) throws IOException {
 		String[] 포인트복권 = {"[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"};
 		for(Acount temp : acountlist) {
 			if(temp.getId().equals(id)) {
@@ -460,6 +472,7 @@ public class Controller {
 					return 포인트복권;
 				}else { // 보유포인트가 10 이상이면 보유포인트에서 10 차감
 					temp.setPoint(temp.getPoint()-10); 
+					Controller.회원파일처리(id);
 				}
 			}
 		}
@@ -617,7 +630,7 @@ public static boolean 신고(String id,int index) throws IOException {
 	
 	
 
-	public static int 보물찾기(int chindex, String id, int[] 등수) { // 인덱스 / id 받기
+	public static int 보물찾기(int chindex, String id, int[] 등수) throws IOException { // 인덱스 / id 받기
 		// 임시 게임 1등 400 /2등 200 /3등 100 /4장려 10
 		 //2. 뽑기
 			int i = 1; // 등수 기준
@@ -635,21 +648,19 @@ public static boolean 신고(String id,int index) throws IOException {
 					temp.setPoint(temp.getPoint() - 10); // 포인트 10을 빼고
 					if(i == 1) { // 1등당첨되면
 						temp.setPoint(temp.getPoint() + 400); // 추가
+						Controller.회원파일처리(id);
 						return 1;
 					}else if(i == 2) {
 						temp.setPoint(temp.getPoint() + 300);
+						Controller.회원파일처리(id);
 						return 2;
 					}else if(i == 3) {
 						temp.setPoint(temp.getPoint() + 200);
+						Controller.회원파일처리(id);
 						return 3;
 					}
 					
-					try {
-						Controller.회원파일처리();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
 				}
 			}
 			return -1; 

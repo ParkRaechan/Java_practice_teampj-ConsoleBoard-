@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 
 
-
 public class Controller {
 
 	static LocalDateTime yourDate;
@@ -23,10 +22,14 @@ public class Controller {
 	public static ArrayList<Acount> acountlist = new ArrayList<>();
 	public static ArrayList<Board> boardlist = new ArrayList<>();
 	public static ArrayList<차단유저> 차단유저list = new ArrayList<>();
-
-	
 	public static int boardtnum = 1;
-	public static String[] 카테고리 = {"시사","야구"}; 
+	public static String[] 카테고리 = {"시사","야구"};
+
+	public static String[] 포인트복권 = new String[6];
+	public static String[] 게임판 = {"[■]","[■]","[■]","[■]","[■]",
+			  "[■]","[■]","[■]","[■]","[■]",
+			  "[■]","[■]","[■]","[■]","[■]"};// 0 ~ 14 인덱스
+
 
 	
 	public static int 회원가입아이디(String id) {
@@ -63,24 +66,44 @@ public class Controller {
 			}
 		}
 		Acount temp = new Acount(id, pw, name, email, phone, 0, null, 0, null );
-		Controller.회원파일처리(id, pw, name, email, phone, 0, null, 0, null);
+		
 		acountlist.add(temp);
+		Controller.회원파일처리(id);
 		return true; // 회원가입 성공
 		
 	}
 	
 	
 	
-	///////////////////////////////////회원파일 처리 시작/////////////////////////////////////////////
-	static void 회원파일처리(String id, String pw, String name, String email, String phone, int point, ArrayList<String> blockuser,
-			int report, String friend) throws IOException{
+	///////////////////////////////1////회원파일 처리 시작/////////////////////////////////////////////
+	static void 회원파일처리(String id) throws IOException{
 		
 		//회원저장
 			//파일에 [아이디,비번,이름,이메일,폰번]형식으로 저장
-		FileOutputStream out_a = new FileOutputStream("D:/java/회원test.txt",true);
-		String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+blockuser+","+Integer.toString(report)+","+friend+"\n";		
-		out_a.write(storage_a.getBytes());		
+		FileOutputStream out_a = new FileOutputStream("D:/java/회원test.txt");
+		String storage_a1="";
+		for(Acount temp001 : acountlist) {
+				id = temp001.getId();
+				String pw = temp001.getPw();
+				String name = temp001.getName();
+				String email = temp001.getEmail();
+				String phone = temp001.getPhone();
+				int point = temp001.getPoint();
+				ArrayList<String> blockuser = null;
+				int report = temp001.getReport();
+				String friend = null;
+				
+			
+				String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+blockuser+","+Integer.toString(report)+","+friend+"\n";		
+				
+				storage_a1 =storage_a1+ storage_a;
+					
+				
+		}
 
+		out_a.write(storage_a1.getBytes());		
+	
+		
 	}//회원e
 	
 	
@@ -204,22 +227,19 @@ public class Controller {
 		return true;// 임시반환
 	}
 	public static boolean 글상세보기(String id, int index) {// 인덱스일치하는 번호 찾은후 글이 있음 반환
-		String djdj = null;
-		for(Board temp98 : boardlist) {
-			if(temp98.getIndex()==index) {
-				djdj = temp98.getWriter();
-			}
-			else {
-				
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id) && temp.getBlockuser()!=null ) { // 로그인한 아이디의 차단유저목록이 있으면
+				for(Board temp2 : boardlist) {
+					for(int i=0;  i<temp.getBlockuser().size(); i++) {
+						if(temp2.getIndex()==index && temp.getBlockuser().get(i).getTarget().contains(temp2.getWriter()) ) {
+							// 해당 인덱스의 글 작성자가 차단유저목록에 포함되어 있으면
+							return false; // 해당 글 볼러오기 실패
+						}
+					}
+					
+				}
 			}
 		}
-		for(차단유저 temp99 : 차단유저list) {
-			if(temp99.getIndex().equals(id)&&temp99.getTarget().equals(djdj)) {
-				return false;
-			}
-		}
-		
-		
 		//index 받아와서 해당글찾기
 		 //인덱스번호
 		for(Board temp : boardlist) {
@@ -405,7 +425,7 @@ public class Controller {
 				}
 				return false;
 		}
-	public static int 복권결과(String[] result,String id) {
+	public static int 복권결과(String[] result,String id) throws IOException {
 		int[] count = new int[result.length]; // 일치하는 수 확인용 배열 
 		int max = 0; 
 		for(int i=0; i<result.length; i++) {
@@ -424,15 +444,19 @@ public class Controller {
 			if(temp.getId().equals(id)) {
 				if(max==6) { // 1등
 					temp.setPoint(temp.getPoint()+1000); // 포인트 1000 추가
+					Controller.회원파일처리(id);
 					return 1;
 				} else if(max==5) {
 					temp.setPoint(temp.getPoint()+300); // 포인트 300 추가
+					Controller.회원파일처리(id);
 					return 2;
 				} else if(max==4) {
 					temp.setPoint(temp.getPoint()+100); // 포인트 100 추가
+					Controller.회원파일처리(id);
 					return 3;
 				} else if(max==3) {
 					temp.setPoint(temp.getPoint()+10); // 포인트 10 추가
+					Controller.회원파일처리(id);
 					return 4;
 				} 	
 			} // if end
@@ -440,7 +464,7 @@ public class Controller {
 		return 5; // 꽝
 	}
 	
-	public static String[] 복권(String id) {
+	public static String[] 복권(String id) throws IOException {
 		String[] 포인트복권 = {"[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"};
 		for(Acount temp : acountlist) {
 			if(temp.getId().equals(id)) {
@@ -448,6 +472,7 @@ public class Controller {
 					return 포인트복권;
 				}else { // 보유포인트가 10 이상이면 보유포인트에서 10 차감
 					temp.setPoint(temp.getPoint()-10); 
+					Controller.회원파일처리(id);
 				}
 			}
 		}
@@ -579,5 +604,68 @@ public static boolean 신고(String id,int index) throws IOException {
 			}	
 		}	
 	}
+	
+	
+	
+	public static int[] 보물찾기게임설정() {
+		// 1. 게임설정
+		Random random = new Random();
+		int[] 등수 = new int[3];
+		for(int i = 0 ; i < 등수.length ; i++) {
+			boolean pass = false;
+			int temp = random.nextInt(15);// 난수 생성
+			for(int j = 0 ; j < 등수.length ; j++) {
+				if(temp != 등수[i]) { pass = true; }// 같지않다면
+			}
+			if(pass) {
+				등수[i] = temp;
+			}else {	i--; }
+			if(i == 2) {break;}
+		}// for end
+		return 등수;
+	}
+
+	
+	
+	
+	
+
+	public static int 보물찾기(int chindex, String id, int[] 등수) throws IOException { // 인덱스 / id 받기
+		// 임시 게임 1등 400 /2등 200 /3등 100 /4장려 10
+		 //2. 뽑기
+			int i = 1; // 등수 기준
+			if(게임판[chindex].equals("[■]")) { //빈값이라면
+				for(int temp : 등수) {
+					if(chindex == temp) { // temp 0 1 2 순서대로 당첨되면
+						게임판[chindex] = "["+i+"]";  // 게임판 변경
+						break;	// 나가기
+					}else {게임판[chindex] = "[ ]";}
+					i++; // 다음 등수
+				}
+			}
+			for(Acount temp : acountlist) { // 회원 목록에서
+				if(temp.getId().equals(id)) { // 아이디값일치하면
+					temp.setPoint(temp.getPoint() - 10); // 포인트 10을 빼고
+					if(i == 1) { // 1등당첨되면
+						temp.setPoint(temp.getPoint() + 400); // 추가
+						Controller.회원파일처리(id);
+						return 1;
+					}else if(i == 2) {
+						temp.setPoint(temp.getPoint() + 300);
+						Controller.회원파일처리(id);
+						return 2;
+					}else if(i == 3) {
+						temp.setPoint(temp.getPoint() + 200);
+						Controller.회원파일처리(id);
+						return 3;
+					}
+					
+					
+				}
+			}
+			return -1; 
+		}// 보물찾기 메소드 end
+	
+	
 	
 }

@@ -100,7 +100,12 @@ public class main {
 				카테고리메뉴(id);
 			}
 			else if(ch==2) {
-				놀이방메뉴(id);
+				try {
+					놀이방메뉴(id);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			else if(ch==3) { // 쪽지 보내기
 				System.out.println("받는 사람 id: "); String receiveid  = scanner.next();
@@ -285,7 +290,7 @@ public class main {
 	
 	}
 	
-	public static void 로그인() {
+	public static void 로그인() throws IOException {
 		String id = null;
 		String pw = null;
 		System.out.print("아이디 입력 : "); id = scanner.next();
@@ -298,6 +303,7 @@ public class main {
 			for(Acount temp : Controller.acountlist) {
 				if(temp.getId().equals(id)) {
 					temp.setPoint(temp.getPoint()+100);
+					Controller.회원파일처리(id);
 				}
 			}
 			///////////////////////////////////////////////////
@@ -477,7 +483,7 @@ public class main {
 		}
 	}
 	
-	public static void 놀이방메뉴(String id) {
+	public static void 놀이방메뉴(String id) throws IOException {
 		System.out.println("\t\t\t1.포인트복권 2.포인트랭킹 3. 보물찾기 4.뒤로가기");
 		int ch = scanner.nextInt();
 		if(ch==1) { // 포인트복권
