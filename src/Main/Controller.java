@@ -24,11 +24,12 @@ public class Controller {
 	public static ArrayList<차단유저> 차단유저list = new ArrayList<>();
 	public static int boardtnum = 1;
 	public static String[] 카테고리 = {"시사","야구"};
+
 	public static String[] 포인트복권 = new String[6];
 	public static String[] 게임판 = {"[■]","[■]","[■]","[■]","[■]",
 			  "[■]","[■]","[■]","[■]","[■]",
 			  "[■]","[■]","[■]","[■]","[■]"};// 0 ~ 14 인덱스
-	
+
 
 	
 	public static int 회원가입아이디(String id) {
