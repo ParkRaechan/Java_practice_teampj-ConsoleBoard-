@@ -1,6 +1,7 @@
 package Main;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class Controller {
 	
 	public static ArrayList<Acount> acountlist = new ArrayList<>();
 	public static ArrayList<Board> boardlist = new ArrayList<>();
+	public static ArrayList<차단유저> 차단유저list = new ArrayList<>();
 
 	
 	public static int boardtnum = 1;
@@ -98,6 +100,8 @@ public class Controller {
 				String e_a = 회원요소[4]; // 회원 폰번
 				String f_a = 회원요소[5]; // 회원 포인트
 				
+				
+				
 				ArrayList<String> g_a = null; // 회원 차단유저
 				//차단유저 목록 -> 파일에 어떻게 넣어서 어떻게 뺄 것인가,,,,,
 				String h_a = 회원요소[7]; // 회원 신고
@@ -113,7 +117,43 @@ public class Controller {
 		return true; //일별매출 리턴
 	}
 	
+	//////////////////////////////////회원내부 차단유저 파일처리 시작/////////////////////////////////////////////
+	static void 차단파일처리(String id) throws IOException {
+		for(차단유저 temp : 차단유저list) {
+			if(temp.getIndex().equals(id)) {
+				FileOutputStream out_c = new FileOutputStream("D:/java/차단유저test.txt",true);
+				String storage_c = id+"끊기"+temp.getTarget()+"\n";		
+				out_c.write(storage_c.getBytes());		
+				
+			}
+		}
+	}
 	
+	public static boolean 차단출력() throws IOException {
+		
+		FileInputStream input_c = new FileInputStream("D:/java/차단유저test.txt");
+		byte[] bytes_c = new byte[1024]; // 바이트배열선
+		input_c.read(bytes_c);				// 바이트 읽기
+		String str_c = new String(bytes_c); // 일어온거 저장
+		String[] 차단1 = str_c.split("\n"); //1회글마다 자르기
+		for(int t = 0; t < 차단1.length-1 ; t++) {	// 회당매출길이만큼 반복
+			if(차단1[t] != null && !차단1[t].equals("") ) {
+				String[] 차단요소 = 차단1[t].split("끊기");
+				
+				String a_c = 차단요소[0]; 
+				String b_c = 차단요소[1]; 
+
+				차단유저 o_c = new 차단유저(a_c,b_c);
+				
+				//배열에 파일 요소값 저장
+				Controller.차단유저list.add(o_c);
+			
+			}
+		}
+		return true; 
+	}
+	//////////////////////////////////회원내부 차단유저 파일처리 끝/////////////////////////////////////////////
+
 	
 	
 	
