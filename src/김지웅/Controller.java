@@ -49,6 +49,7 @@ public class Controller {
 			}
 		}
 		Acount temp = new Acount(id, pw, name, email, phone, 0, null, 0, null );
+		
 		acountlist.add(temp);
 		회원저장();
 		return true; // 회원가입 성공
@@ -319,6 +320,7 @@ public class Controller {
 		
 
 	}
+	//ㅁㄴㅇㄴㅁㅇㄴㅁㅇㅇㅁㄴ
 	
 	public static boolean 신고(String id,int index) {
 		
@@ -327,22 +329,26 @@ public class Controller {
 				return false; // 신고한 아이디가 자신의 아이디
 			}
 		}
-		ArrayList<String> reportid = new ArrayList<>();
+		String reportid = null;
 		for(Board temp : boardlist) {
 			if(temp.getIndex()==index) {
 				
 				temp.setReport(temp.getReport()+1);
-				reportid.add(temp.getWriter()) ;
+				reportid = temp.getWriter() ;
 				break;
 			}
 		}
+		
+		차단유저 a = new 차단유저(id, reportid); 
+		ArrayList<차단유저> b = new ArrayList<>();
+		b.add(a);
 		for(int i=0; i<acountlist.size(); i++) {
 			if(acountlist.get(i).getId().equals(id)) {
 				if(acountlist.get(i).getBlockuser()==null) {
-					acountlist.get(i).setBlockuser(reportid);
+					acountlist.get(i).setBlockuser(b);
 				}
 				else {
-					acountlist.get(i).getBlockuser().addAll(acountlist.get(i).getBlockuser().size() ,reportid);
+					acountlist.get(i).getBlockuser().addAll(acountlist.get(i).getBlockuser().size(), b);
 				}
 				break;
 			}
