@@ -26,7 +26,7 @@ public class Controller {
 
 	
 	public static int boardtnum = 1;
-	public static String[] 카테고리 = {"시사","야구"}; 
+	public static String[] 카테고리 = {"시사","야구"};
 
 	
 	public static int 회원가입아이디(String id) {
