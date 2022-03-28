@@ -286,16 +286,16 @@ public class Controller {
 			}
 		}
 	}
-	public static boolean 글수정아이디체크(String id) {
+	public static boolean 글수정아이디체크(String id, int index) {
 		for(Board temp : boardlist) {
-			if(temp.getWriter().equals(id)) {return true;}
+			if(temp.getWriter().equals(id) && temp.getIndex()==index) {return true;}
 		}
 		return false;
 	}
-	public static boolean 글수정비밀번호체크(String id,String pw) {
+	public static boolean 글수정비밀번호체크(String id,String pw,int index) {
 		for(Board temp : boardlist) {
 				for(Acount temp2 : acountlist) {
-					if(temp.getWriter().equals(id) && temp2.getPw().equals(pw)) {
+					if(temp.getWriter().equals(id) && temp2.getPw().equals(pw) && temp.getIndex()==index) {
 						return true;
 					}
 				}
@@ -308,14 +308,24 @@ public class Controller {
 	}
 
 
-	public static void 글삭제(String id, String pw, int boardnum) {
+	public static void 글삭제(String id, String pw, int index) {
+		boolean delete = false;
 		for(Board temp2 : boardlist) {
-			if(temp2.getIndex()==boardnum) {
+			if(temp2.getIndex()==index) {
 				for(Acount temp : acountlist) {
 					if(temp.getPw().equals(pw) && temp.getId().equals(id)) {
-						boardlist.remove(temp2);
-						
+						delete = true;
+
 					}
+				}
+			}
+			
+		}
+		if(delete) {
+			for(Board temp : boardlist) {
+				if(temp.getIndex()==index) {
+					boardlist.remove(temp);
+					break;
 				}
 			}
 			

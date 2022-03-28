@@ -390,10 +390,10 @@ public class main {
 				System.out.println("1.수정 2.삭제 3.댓글달기 4.댓글수정 5.댓글삭제 6.신고하기 7.뒤로가기 8.추천 9.비추"); int 선택 = scanner.nextInt();
 				////////////////////////////// 글 수정 //////////////////////////////////////////////////
 				if(선택 == 1) {
-					boolean result = Controller.글수정아이디체크(id);
+					boolean result = Controller.글수정아이디체크(id,index);
 					if(result) {
 						System.out.print("비밀번호 입력 : "); String pw = scanner.next();
-						boolean result2 = Controller.글수정비밀번호체크(id, pw);
+						boolean result2 = Controller.글수정비밀번호체크(id, pw, index);
 						if(result2) {
 							System.out.print("수정할 제목 입력 : "); String title = scanner.next();
 							scanner.next();
@@ -404,10 +404,10 @@ public class main {
 					}else System.out.println("본인이 작성한 글만 수정이 가능합니다.");
 				//////////////////////////////////// 글 삭제 ////////////////////////////////////////	
 				}else if(선택 == 2) {
-					boolean result = Controller.글수정아이디체크(id);
+					boolean result = Controller.글수정아이디체크(id,index);
 					if(result) {
 						System.out.print("비밀번호 입력 : "); String pw = scanner.next();
-						boolean result2 = Controller.글수정비밀번호체크(id, pw);
+						boolean result2 = Controller.글수정비밀번호체크(id, pw,index);
 						if(result2) {
 							Controller.글삭제(id,pw,index);
 							System.out.println("삭제가 완료되었습니다.");
