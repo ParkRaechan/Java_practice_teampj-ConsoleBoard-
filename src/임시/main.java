@@ -1,4 +1,4 @@
-package Main;
+package 임시;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -469,7 +469,7 @@ public class main {
 	}
 	
 	public static void 놀이방메뉴(String id) {
-		System.out.println("\t\t\t1.포인트복권 2.포인트랭킹 3. 보물찾기 4.뒤로가기");
+		System.out.println("\t\t\t1.포인트복권 2.포인트랭킹 3.뒤로가기");
 		int ch = scanner.nextInt();
 		if(ch==1) { // 포인트복권
 			String[] result = Controller.복권(id);
@@ -501,57 +501,8 @@ public class main {
 			}
 			놀이방메뉴(id);
 			
-		}else if(ch == 3) {
-			//1.게임판 초기화
-			while(true) { // 프로그램실행
-				int 게임판인덱스 = 0; 
-				for(String temp : Controller.게임판) { // 전부 for 문돌려서
-					if(temp != "[■]") {Controller.게임판[게임판인덱스] = "[■]";}// "[■]" 초기화
-					게임판인덱스++;	//다음인덱스
-				}
-				System.out.println("보물땅창기 1번 3회 30원");
-				System.out.println("1.뽑기 2.뒤로가기"); int ch2 = scanner.nextInt(); // 선택입력받기
-				if(ch2 == 1) {// 뽑기 시작
-					boolean pass = true; // 돈 pass 체크
-					for(Acount temp : Controller.acountlist) { //회원돌려서
-						if(temp.getId().equals(id)) { // id 일치하면
-							if(temp.getPoint() < 30) { // 돈 체크
-								System.out.println("돈부족");
-								pass = false; 			// 실행실행 스위치 역활
-							}
-						}
-					}
-					if(pass) {// 돈이 있다면
-						int 기회 = 3;
-						int[] 등수 = Controller.보물찾기게임설정(); // 당첨번호 초기화
-						for(int  j= 0 ; j < 3 ; j++, 기회--) { // 3번 돌리기
-							//게임판 출력
-							for(int i = 0; i < Controller.게임판.length ; i++) {
-								System.out.print(Controller.게임판[i]);
-								if(i % 5 == 4) {System.out.println();} // 줄바꿈
-							}
-							System.out.println("남은기회: "+ 기회 +" | 인덱스선택: "); int 선택 = scanner.nextInt(); // 인덱스받기
-							int 당첨여부 = Controller.보물찾기(선택, id, 등수); //보물찾기 메소드 호출
-							if(기회 == 0) { break; }// 게임끝기회가 끝나면
-							if(당첨여부 == 1) {System.out.println("1등 당첨");}
-							else if(당첨여부 == 2) {System.out.println("2등 당첨");}
-							else if(당첨여부 == 3) {	System.out.println("3등 당첨");}
-							else if(당첨여부 == -1) {System.out.println("꽝");}
-						}
-						//게임판 출력
-						for(int i = 0; i < Controller.게임판.length ; i++) {
-							System.out.print(Controller.게임판[i]);
-							if(i % 5 == 4) {System.out.println();} // 줄바꿈
-						}
-						System.out.println("게임종료");
-					}else {System.out.println("돈부족");}
-				}else if(ch2 == 2) { // 뒤로가기	
-					break;
-				}else {System.out.println("알수없는 선택");}
-			}			
 		}
-		
-		else if(ch== 4) {
+		else if(ch==3) {
 			로그인메뉴(id);
 		}
 		else { System.out.println("\t\t\t제시된 번호 입력 바람"); 놀이방메뉴(id);}
