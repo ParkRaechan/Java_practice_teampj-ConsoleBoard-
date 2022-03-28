@@ -155,11 +155,16 @@ public class main {
 						}
 						else if(temp.getBlockuser()!=null){ // 차단유저가 있으면
 							for(Board temp2 : Controller.boardlist) {
-								if(temp.getBlockuser().contains(temp2.getWriter())  ) { // 로그인한 아이디의 차단유저목록에 글작성자가 포함되어있으면
-									System.out.println("차단된 유저의 글");
-								}
-								else {
-									System.out.println(temp2.getTitle()+ "\t" + temp2.getContent()+"\t"+temp2.getWriter()+"\t" + temp2.getIndex());
+								for(int i=0; i<temp.getBlockuser().size(); i++) {
+									if(temp2.getCategory().equals(Controller.카테고리[카테고리선택])) {
+										if(temp.getBlockuser().get(i).getTarget().equals(temp2.getWriter())  ) { // 로그인한 아이디의 차단유저목록에 글작성자가 포함되어있으면
+											System.out.println("차단된 유저의 글");
+										}
+										else {
+											System.out.println(temp2.getTitle()+ "\t" + temp2.getContent()+"\t"+temp2.getWriter()+"\t" + temp2.getIndex());
+										}
+									}
+									
 								}
 							}
 						}

@@ -206,9 +206,11 @@ public class Controller {
 		for(Acount temp : acountlist) {
 			if(temp.getId().equals(id) && temp.getBlockuser()!=null ) { // 로그인한 아이디의 차단유저목록이 있으면
 				for(Board temp2 : boardlist) {
-					if(temp2.getIndex()==index && temp.getBlockuser().contains(temp2.getWriter())) {
-						// 해당 인덱스의 글 작성자가 차단유저목록에 포함되어 있으면
-						return false; // 해당 글 볼러오기 실패
+					for(int i=0;  i<temp.getBlockuser().size(); i++) {
+						if(temp2.getIndex()==index && temp.getBlockuser().get(i).getTarget().contains(temp2.getWriter()) ) {
+							// 해당 인덱스의 글 작성자가 차단유저목록에 포함되어 있으면
+							return false; // 해당 글 볼러오기 실패
+						}
 					}
 				}
 			}
