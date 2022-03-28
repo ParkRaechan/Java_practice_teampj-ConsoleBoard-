@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class main {
 	
 	static Scanner scanner = new Scanner(System.in);
@@ -104,7 +105,12 @@ public class main {
 			System.out.print("번호: ");
 			int ch = scanner.nextInt();
 			if(ch==1) {
-				카테고리메뉴(id);
+				try {
+					카테고리메뉴(id);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			else if(ch==2) {
 				try {
@@ -158,7 +164,7 @@ public class main {
 	
 	
 	
-	public static void 카테고리메뉴(String id) {
+	public static void 카테고리메뉴(String id) throws IOException {
 		System.out.println("0.시사 1.야구");
 		int 카테고리선택 = scanner.nextInt();
 		while(true) {
@@ -195,12 +201,7 @@ public class main {
 				} // for end
 
 				System.out.println("------------"); //구분선
-				try {
-					카테고리보기(id,카테고리선택);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				카테고리보기(id,카테고리선택);
 					
 		} // while end
 } // 카테고리 선택 end
