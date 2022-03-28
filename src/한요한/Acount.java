@@ -2,8 +2,7 @@ package 한요한;
 
 import java.util.ArrayList;
 
-
-public class Acount {
+public class Acount implements Comparable<Acount>{
 
 	
 	// 필드
@@ -115,6 +114,12 @@ public class Acount {
 
 	public void set쪽지(ArrayList<쪽지클래스> 쪽지) {
 		this.쪽지 = 쪽지;
+	}
+
+	@Override
+	public int compareTo(Acount o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

@@ -3,8 +3,10 @@ package 한요한;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+
 public class Board {
 
+	
 	// 필드
 	private String title; // 게시물 제목
 	private String content; // 게시물 내용
@@ -14,16 +16,16 @@ public class Board {
 	private String category; // 카테고리
 	private int good; // 추천수
 	private int bad; // 비추천수
-	private ArrayList<Reply> reply = new ArrayList<Reply>(); // 댓글클래스
+	private ArrayList<Reply> replylist = new ArrayList<>(); // 댓글리스트
 	private int report;  // 신고누적횟수
-	private int index; // 번호
+	private int index; // 게시물 인덱스번호
 	private ArrayList<String> p = new ArrayList<>();
+	
 	// 생성자
 	public Board() {}
-	
-	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good, int bad
-			, int report, int index) {
-		super();
+
+	public Board(String title, String content, String writer, LocalDateTime date, int view, String category, int good,
+			int bad, ArrayList<Reply> replylist, int report, int index) {
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
@@ -32,9 +34,15 @@ public class Board {
 		this.category = category;
 		this.good = good;
 		this.bad = bad;
+		this.replylist = replylist;
 		this.report = report;
-		this.index = index; 
+		this.index = index;
 	}
+
+
+
+
+
 
 	// 메소드
 	public String getTitle() {
@@ -101,20 +109,20 @@ public class Board {
 		this.bad = bad;
 	}
 
-	public ArrayList<Reply> getReply() {
-		return reply;
-	}
-
-	public void setReply(ArrayList<Reply> reply) {
-		this.reply = reply;
-	}
-
 	public int getReport() {
 		return report;
 	}
 
 	public void setReport(int report) {
 		this.report = report;
+	}
+
+	public ArrayList<Reply> getReplylist() {
+		return replylist;
+	}
+
+	public void setReplylist(ArrayList<Reply> replylist) {
+		this.replylist = replylist;
 	}
 
 	public int getIndex() {
@@ -132,13 +140,5 @@ public class Board {
 	public void setP(ArrayList<String> p) {
 		this.p = p;
 	}
-
-	
-	
-	
-	
-	
-	
-	
 	
 }
