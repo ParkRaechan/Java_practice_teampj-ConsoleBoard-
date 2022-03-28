@@ -65,8 +65,9 @@ public class Controller {
 			}
 		}
 		Acount temp = new Acount(id, pw, name, email, phone, 0, null, 0, null );
-		Controller.회원파일처리(id, pw, name, email, phone, 0, null, 0, null);
+		
 		acountlist.add(temp);
+		Controller.회원파일처리();
 		return true; // 회원가입 성공
 		
 	}
@@ -74,15 +75,26 @@ public class Controller {
 	
 	
 	///////////////////////////////////회원파일 처리 시작/////////////////////////////////////////////
-	static void 회원파일처리(String id, String pw, String name, String email, String phone, int point, ArrayList<String> blockuser,
-			int report, String friend) throws IOException{
+	static void 회원파일처리() throws IOException{
 		
 		//회원저장
 			//파일에 [아이디,비번,이름,이메일,폰번]형식으로 저장
-		FileOutputStream out_a = new FileOutputStream("D:/java/회원test.txt",true);
-		String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+blockuser+","+Integer.toString(report)+","+friend+"\n";		
-		out_a.write(storage_a.getBytes());		
+		for(Acount temp001 : acountlist) {
+			String id = temp001.getId();
+			String pw = temp001.getPw();
+			String name = temp001.getName();
+			String email = temp001.getEmail();
+			String phone = temp001.getPhone();
+			int point = temp001.getPoint();
+			ArrayList<String> blockuser = null;
+			int report = temp001.getReport();
+			String friend = null;
+			
+			FileOutputStream out_a = new FileOutputStream("D:/java/회원test.txt");
+			String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+blockuser+","+Integer.toString(report)+","+friend+"\n";		
+			out_a.write(storage_a.getBytes());		
 
+		}
 	}//회원e
 	
 	
@@ -629,6 +641,13 @@ public static boolean 신고(String id,int index) throws IOException {
 					}else if(i == 3) {
 						temp.setPoint(temp.getPoint() + 200);
 						return 3;
+					}
+					
+					try {
+						Controller.회원파일처리();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			}
