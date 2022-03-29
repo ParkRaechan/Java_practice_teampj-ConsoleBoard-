@@ -85,7 +85,7 @@ public class Controller {
 		
 		//회원저장
 			//파일에 [아이디,비번,이름,이메일,폰번]형식으로 저장
-		FileOutputStream out_a = new FileOutputStream("C:/Users/504/Desktop/ds/회원.txt");
+		FileOutputStream out_a = new FileOutputStream("C:/Users/504/Desktop/리뉴얼6조 엔터테이먼트 커뮤니티/ds/회원.txt");
 		String storage_a1="";
 		for(Acount temp001 : acountlist) {
 				id = temp001.getId();
@@ -115,7 +115,7 @@ public class Controller {
 	
 	public static boolean 회원출력() throws IOException {
 		
-		FileInputStream input_a = new FileInputStream("C:/Users/504/Desktop/ds/회원.txt");
+		FileInputStream input_a = new FileInputStream("C:/Users/504/Desktop/리뉴얼6조 엔터테이먼트 커뮤니티/ds/회원.txt");
 		byte[] bytes_a = new byte[1024]; // 바이트배열선
 		input_a.read(bytes_a);				// 바이트 읽기
 		String str_a = new String(bytes_a); // 일어온거 저장
@@ -147,7 +147,7 @@ public class Controller {
 	static void 차단파일처리(String id) throws IOException {
 		for(차단유저 temp : 차단유저list) {
 			if(temp.getIndex().equals(id)) {
-				FileOutputStream out_c = new FileOutputStream("C:/Users/504/Desktop/ds/차단유저.txt");
+				FileOutputStream out_c = new FileOutputStream("C:/Users/504/Desktop/리뉴얼6조 엔터테이먼트 커뮤니티/ds/차단유저.txt");
 				String storage_c = id+"@@"+temp.getTarget()+"\n";		
 				out_c.write(storage_c.getBytes());		
 				
@@ -157,7 +157,7 @@ public class Controller {
 	
 	public static boolean 차단출력() throws IOException {
 		
-		FileInputStream input_c = new FileInputStream("C:/Users/504/Desktop/ds/차단유저.txt");
+		FileInputStream input_c = new FileInputStream("C:/Users/504/Desktop/리뉴얼6조 엔터테이먼트 커뮤니티/ds/차단유저.txt");
 		byte[] bytes_c = new byte[1024]; // 바이트배열선
 		input_c.read(bytes_c);				// 바이트 읽기
 		String str_c = new String(bytes_c); // 일어온거 저장
@@ -271,7 +271,7 @@ public class Controller {
 	////////////////////////////////////글쓰기 파일처리 시작////////////////////////////////////////////////////
 
 	static void 게시물파일처리() throws IOException{
-	      FileOutputStream out = new FileOutputStream("C:/Users/504/Desktop/ds/게시물.txt");
+	      FileOutputStream out = new FileOutputStream("C:/Users/504/Desktop/리뉴얼6조 엔터테이먼트 커뮤니티/ds/게시물.txt");
 	      String storage_c6 = "";
 	      for(Board temp002 : boardlist) {
 	         String title = temp002.getTitle();
@@ -299,7 +299,7 @@ public class Controller {
 	
 	public static boolean 게시물출력() throws IOException {
 		
-		FileInputStream input = new FileInputStream("C:/Users/504/Desktop/ds/게시물.txt");
+		FileInputStream input = new FileInputStream("C:/Users/504/Desktop/리뉴얼6조 엔터테이먼트 커뮤니티/ds/게시물.txt");
 		byte[] bytes = new byte[1024]; // 바이트배열선
 		input.read(bytes);				// 바이트 읽기
 		String str = new String(bytes); // 일어온거 저장
