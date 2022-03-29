@@ -35,7 +35,7 @@ public class main {
 
 				
 			} catch (Exception e) {
-				System.out.println(e);
+				System.err.println("제대로된 입력 바람");
 			}
 		}
 		
@@ -265,9 +265,6 @@ public class main {
 			System.out.println("-------------");
 
 			System.out.println("원하시는 메뉴의 번호를 입력하세요,,,,,,,,,,,@@@,,");
-			System.out.println("");
-			System.out.println("");
-			System.out.println("");
 			System.out.println("");
 			System.out.println("");
 			System.out.println("");
@@ -568,7 +565,7 @@ public class main {
 	}
 
 	public static void 놀이방메뉴(String id) throws IOException {
-		System.out.println("\t\t\t1.포인트복권 2.포인트랭킹 3. 보물찾기 4.뒤로가기");
+		System.out.println("1.포인트복권 2.포인트랭킹 3. 보물찾기 4.뒤로가기");
 		int ch = scanner.nextInt();
 		if (ch == 1) { // 포인트복권
 			String[] result = Controller.복권(id);
@@ -582,15 +579,15 @@ public class main {
 				int result2 = Controller.복권결과(result, id);
 
 				if (result2 == 1)
-					System.out.println("\n\t\t\t1등 1000포인트 당첨");
+					System.out.println("\n1등 1000포인트 당첨");
 				else if (result2 == 2)
-					System.out.println("\n\t\t\t2등 300포인트 당첨");
+					System.out.println("\n2등 300포인트 당첨");
 				else if (result2 == 3)
-					System.out.println("\n\t\t\t3등 100포인트 당첨");
+					System.out.println("\n3등 100포인트 당첨");
 				else if (result2 == 4)
-					System.out.println("\n\t\t\t4등 10포인트 당첨");
+					System.out.println("\n4등 10포인트 당첨");
 				else if (result2 == 5)
-					System.out.println("\n\t\t\t꽝");
+					System.out.println("\n꽝");
 			}
 			놀이방메뉴(id);
 		}
@@ -598,8 +595,12 @@ public class main {
 		else if (ch == 2) {
 			ArrayList<Acount> ranking = Controller.포인트랭킹();
 			int i = 1;
+			System.out.println("등수\t아이디\t포인트");
 			for (Acount temp : ranking) {
-				System.out.println("\t\t\t" + i + "등\t" + temp.getId() + "\t" + temp.getPoint());
+				System.out.println(i + "등\t" + temp.getId() + "\t" + temp.getPoint());
+				if(i == 4) {
+					break;
+				}
 				i++;
 			}
 			놀이방메뉴(id);
@@ -614,7 +615,7 @@ public class main {
 					} // "[■]" 초기화
 					게임판인덱스++; // 다음인덱스
 				}
-				System.out.println("보물땅창기 1번 3회 30원");
+				System.out.println("보물 찾기 1번 3회 30원");
 				System.out.println("1.뽑기 2.뒤로가기");
 				int ch2 = scanner.nextInt(); // 선택입력받기
 				if (ch2 == 1) {// 뽑기 시작
@@ -640,6 +641,16 @@ public class main {
 							}
 							System.out.println("남은기회: " + 기회 + " | 인덱스선택: ");
 							int 선택 = scanner.nextInt(); // 인덱스받기
+							boolean pass2 = false;
+							if(선택 > 14) {
+								while(true) {
+									System.out.println("0~14까지만 다시입력"); 선택 = scanner.nextInt();
+									if(선택>=0 && 선택 < 15) {
+										break;
+									}
+								}
+								
+							}
 							int 당첨여부 = Controller.보물찾기(선택, id, 등수); // 보물찾기 메소드 호출
 							if (기회 == 0) {
 								break;
