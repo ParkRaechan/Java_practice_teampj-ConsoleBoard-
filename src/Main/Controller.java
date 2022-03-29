@@ -28,7 +28,7 @@ public class Controller {
 
 	
 	public static int boardtnum = 1;
-	public static String[] 카테고리 = {"시사","야구"}; 
+	public static String[] 카테고리 = {"자바","C언어","유머"}; 
 	public static String[] 포인트복권 = new String[6];
 	public static String[] 게임판 = {"[■]","[■]","[■]","[■]","[■]",
 			  "[■]","[■]","[■]","[■]","[■]",
@@ -97,8 +97,10 @@ public class Controller {
 			
 				String storage_a = id+","+pw+","+name+","+email+","+phone+","+Integer.toString(point)+","+Integer.toString(report)+","+friend+"\n";		
 				
-				storage_a1 =storage_a1+ storage_a;
-					
+				storage_a1 =storage_a1+ storage_a;// 실시간 변동되는 회원정보를 파일에 저장
+				//회원가입할때뿐만 아니라 실시간으로 회원정보를 저장하기 위해 true를 이용한 이어쓰기 파일처리를
+				//사용한다면 중복회원이 파일내에 존재하게 되어 true없이 한 String클래스내에서
+				//묶어 새로운 파일내용으로 저장하였다.
 				
 		}
 
@@ -447,15 +449,50 @@ public class Controller {
 			if(temp.getId().equals(id)) {
 				if(max==6) { // 1등
 					temp.setPoint(temp.getPoint()+1000); // 포인트 1000 추가
+					try {
+						Controller.회원파일처리(id);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					try {
+						Controller.회원파일처리(id);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 					return 1;
 				} else if(max==5) {
 					temp.setPoint(temp.getPoint()+300); // 포인트 300 추가
+					try {
+						Controller.회원파일처리(id);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 					return 2;
 				} else if(max==4) {
 					temp.setPoint(temp.getPoint()+100); // 포인트 100 추가
+					try {
+						Controller.회원파일처리(id);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 					return 3;
 				} else if(max==3) {
 					temp.setPoint(temp.getPoint()+10); // 포인트 10 추가
+					try {
+						Controller.회원파일처리(id);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 					return 4;
 				} 	
 			} // if end
@@ -471,6 +508,13 @@ public class Controller {
 					return 포인트복권;
 				}else { // 보유포인트가 10 이상이면 보유포인트에서 10 차감
 					temp.setPoint(temp.getPoint()-10); 
+					try {
+						Controller.회원파일처리(id);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
 			}
 		}
@@ -609,12 +653,6 @@ public static boolean 신고(String id,int index) throws IOException {
 		}// for end
 		return 등수;
 	}
-
-	
-	
-	
-	
-
 	public static int 보물찾기(int chindex, String id, int[] 등수) throws IOException { // 인덱스 / id 받기
 		// 임시 게임 1등 400 /2등 200 /3등 100 /4장려 10
 		 //2. 뽑기
@@ -631,6 +669,8 @@ public static boolean 신고(String id,int index) throws IOException {
 			for(Acount temp : acountlist) { // 회원 목록에서
 				if(temp.getId().equals(id)) { // 아이디값일치하면
 					temp.setPoint(temp.getPoint() - 10); // 포인트 10을 빼고
+					Controller.회원파일처리(id);
+
 					if(i == 1) { // 1등당첨되면
 						temp.setPoint(temp.getPoint() + 400); // 추가
 						Controller.회원파일처리(id);

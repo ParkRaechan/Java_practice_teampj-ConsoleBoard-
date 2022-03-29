@@ -24,19 +24,21 @@ public class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-		
-			while (true) {
-				Scanner scanner = new Scanner(System.in);
-				그림();
+		while(true) {
+			scanner = new Scanner(System.in);
+			try {
+				
+					그림();
 
-				// 메뉴
-				메인메뉴();
+					// 메뉴
+					메인메뉴();
 
+				
+			} catch (Exception e) {
+				System.out.println(e);
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
 		}
+		
 		
 
 		
@@ -158,12 +160,14 @@ public class main {
 	}
 
 	public static void 카테고리메뉴(String id) {
-		System.out.println("0.시사 1.야구");
+		for(int i = 0; i < Controller.카테고리.length; i++) {
+			System.out.print(i+". "+Controller.카테고리[i]+" ");
+		}
 		int 카테고리선택 = scanner.nextInt();
 		while (true) {
 			System.out.println("*** " + Controller.카테고리[카테고리선택] + " ***");
 			// 출력
-			System.out.println("제목\t내용\t번호");
+			System.out.println("제목\t내용\t\t작성자\t번호");
 			ArrayList<String> templist = new ArrayList<>();
 			boolean block = true;
 			for (Acount temp2 : Controller.acountlist) {
@@ -173,13 +177,13 @@ public class main {
 					}
 				}
 			}
-			if (templist.isEmpty())
-				block = false;
-			if (block) {
+			if (templist.isEmpty())// 차단유저가 비어있다면
+				block = false; // 차단유저 여부 기본값은 true였던것
+			if (block) {// 차단유저가있다면 출력
 
 				for (Board temp : Controller.boardlist) {
-					if (temp.getCategory().equals(Controller.카테고리[카테고리선택])) {
-						if (templist.contains(temp.getWriter())) {
+					if (temp.getCategory().equals(Controller.카테고리[카테고리선택])) { // 카테고리 같은것만
+						if (templist.contains(temp.getWriter())) {				   // 차단리스트와 작성가 같다면
 							System.out.println("차단된 유저의 글");
 						} else {
 							System.out.println(temp.getTitle() + "\t" + temp.getContent() + "\t" + temp.getWriter()
@@ -353,6 +357,7 @@ public class main {
 			for (Acount temp : Controller.acountlist) {
 				if (temp.getId().equals(id)) {
 					temp.setPoint(temp.getPoint() + 100);
+					Controller.회원파일처리(id);
 				}
 			}
 			/////////////////////////////////////////////////
