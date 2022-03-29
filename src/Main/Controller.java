@@ -215,10 +215,11 @@ public class Controller {
 		yourDate = date;
 		yourCategory = category;
 		yourStoryNum = boardtnum;
-		Controller.게시물파일처리(title,content, id,Controller.yourDate,0,Controller.yourCategory,0,0,0,Controller.yourStoryNum);
 		
 		//제목, 내용, 작성자, 날짜, 조회수, 카테고리, 추천수, 비추천수, 댓글클래스, 신고누적횟수 객체화후list의 저장
 		boardlist.add(new Board(title, content, id, date, 0, category, 0, 0, 0, boardtnum));
+		Controller.게시물파일처리();
+		
 		boardtnum++;
 		/* 파일처리 메소드 처리 성공시 true반환
 		 * 
@@ -259,13 +260,31 @@ public class Controller {
 	
 	////////////////////////////////////글쓰기 파일처리 시작////////////////////////////////////////////////////
 
-	static void 게시물파일처리(String title,String content,String writer,LocalDateTime date,int view, String category,int good,int bad,int report,int index) throws IOException{
-		//게시물저장
-			//파일에 [제목,내용,글쓴이,월,일,시간,조회수,카테고리,추천,비추천,신고누적수]형식으로 저장
-		FileOutputStream out = new FileOutputStream("C:/Users/504/Desktop/ds/게시물.txt", true);
-		String storage = title+","+content+","+writer+","+date.format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"))+","+Integer.toString(view)+","+category+","+Integer.toString(good)+","+Integer.toString(bad)+","+Integer.toString(report)+","+Integer.toString(index)+"\n";
-		out.write(storage.getBytes());		
-	}//글확인e
+	static void 게시물파일처리() throws IOException{
+	      FileOutputStream out = new FileOutputStream("C:/Users/504/Desktop/ds/게시물.txt", true);
+	      String storage_c6 = "";
+	      for(Board temp002 : boardlist) {
+	         String title = temp002.getTitle();
+	         String content = temp002.getContent();
+	         String writer = temp002.getWriter();
+	         LocalDateTime date = temp002.getDate();
+	         int view = temp002.getView();
+	         String category = temp002.getCategory();
+	         int good = temp002.getGood();
+	         int bad = temp002.getBad();
+	         int report = temp002.getReport();
+	         int index = temp002.getIndex();
+	         
+	         String storage_c7 = title+","+content+","+writer+","+date.format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"))+","+Integer.toString(view)+","+category+","+Integer.toString(good)+","+Integer.toString(bad)+","+Integer.toString(report)+","+Integer.toString(index)+"\n";
+	         
+	         storage_c6 = storage_c6+storage_c7;
+	         
+	      }
+	      out.write(storage_c6.getBytes());      
+
+	      
+	   }//글확인e
+	   
 	
 	
 	public static boolean 게시물출력() throws IOException {
@@ -623,12 +642,24 @@ public static boolean 신고(String id,int index) throws IOException {
 					if(temp.getIndex() == index) {
 						temp.setGood(temp.getGood() + 1);//추천 개수늘리기
 						temp.getP().add(id);
+						try {
+							Controller.게시물파일처리();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						break;
 					}		
 				}else {
 					if(temp.getIndex() == index) {
 						temp.setBad(temp.getBad() + 1);//비추 개수늘리기
 						temp.getP().add(id);
+						try {
+							Controller.게시물파일처리();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						break;
 					}		
 				}
