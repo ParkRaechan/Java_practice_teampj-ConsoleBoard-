@@ -18,6 +18,7 @@ public class main {
 			Controller.게시물출력();
 			Controller.회원출력();
 			Controller.차단출력();
+			Controller.쪽지출력();
 			
 			
 		} catch (IOException e) {

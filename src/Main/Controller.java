@@ -627,6 +627,12 @@ public static boolean 신고(String id,int index) throws IOException {
 			if(temp.getId().equals(receiveid)) {// id값일치하는 acount 클래스를 찾아서
 					// 쪽지list에 쪽지 추가
 					temp.get쪽지().add(new 쪽지클래스(temp.getId(), id, con, temp.get쪽지().size() + 1));
+					try {
+						쪽지파일처리(receiveid);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					return true;
 			}
 		}
@@ -748,5 +754,43 @@ public static boolean 신고(String id,int index) throws IOException {
 			}
 			return -1; 
 		}// 보물찾기 메소드 end
+	   static void 쪽지파일처리(String receiveid) throws IOException {
+		      
+		      for(Acount temp : acountlist) {
+		         if(temp.getId().equals(receiveid)) {
+		            for(int i=0; i<temp.get쪽지().size(); i++) {
+		               FileOutputStream out_c = new FileOutputStream("C:/Users/504/Desktop/리뉴얼6조 엔터테이먼트 커뮤니티/ds/쪽지.txt");
+		               String storage_c = temp.get쪽지().get(i).get보낸사람()+"@@"+temp.get쪽지().get(i).get받는사람()+"@@"+temp.get쪽지().get(i).get내용()+"@@"+temp.get쪽지().get(i).get번호()+"\n";   
+		               out_c.write(storage_c.getBytes());
+		            }
+		            
+		         }
+		      }
+		   }
+		   
+		   public static boolean 쪽지출력() throws IOException {
+		      
+		      FileInputStream input_c = new FileInputStream("C:/Users/504/Desktop/리뉴얼6조 엔터테이먼트 커뮤니티/ds/쪽지.txt");
+		      byte[] bytes_c = new byte[1024]; // 바이트배열선
+		      input_c.read(bytes_c);            // 바이트 읽기
+		      String str_c = new String(bytes_c); // 일어온거 저장
+		      String[] 쪽지1 = str_c.split("\n"); //1회글마다 자르기
+		      for(int t = 0; t < 쪽지1.length-1 ; t++) {   // 회당매출길이만큼 반복
+		         if(쪽지1[t] != null ) {
+		            String[] 쪽지요소 = 쪽지1[t].split("@@");
+		             
+		            쪽지클래스 o_c = new 쪽지클래스(쪽지요소[0],쪽지요소[1],쪽지요소[2],Integer.parseInt(쪽지요소[3]) );
+		            
+		            //배열에 파일 요소값 저장
+		            for(Acount temp : acountlist) {
+		               if(temp.getId().equals(쪽지요소[0])) {
+		                  temp.get쪽지().add(o_c);
+		               }
+		            }
+		         
+		         }
+		      }
+		      return true; 
+		   }
 	
 }
