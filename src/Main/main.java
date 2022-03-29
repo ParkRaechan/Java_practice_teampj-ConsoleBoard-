@@ -167,7 +167,7 @@ public class main {
 		while (true) {
 			System.out.println("*** " + Controller.카테고리[카테고리선택] + " ***");
 			// 출력
-			System.out.println("제목\t내용\t\t작성자\t번호");
+			System.out.println("제목\t\t내용\t\t작성자\t번호");
 			ArrayList<String> templist = new ArrayList<>();
 			boolean block = true;
 			for (Acount temp2 : Controller.acountlist) {
@@ -182,11 +182,29 @@ public class main {
 			if (block) {// 차단유저가있다면 출력
 
 				for (Board temp : Controller.boardlist) {
+					// 내용 최대 10글자까지 출력
+					String 내용 = ""; 
+					for (int s = 0; s < temp.getContent().length(); s++) {
+						내용 += temp.getContent().charAt(s);
+						if (s == 9) {
+							break;
+						} 
+						
+					}
+					// 제목 최대 10글자까지 출력
+					String 제목 = "";
+					for (int s = 0; s < temp.getTitle().length(); s++) {
+						제목 += temp.getTitle().charAt(s);
+						if (s == 9) {
+							break;
+						}
+						
+					} 
 					if (temp.getCategory().equals(Controller.카테고리[카테고리선택])) { // 카테고리 같은것만
 						if (templist.contains(temp.getWriter())) {				   // 차단리스트와 작성가 같다면
 							System.out.println("차단된 유저의 글");
 						} else {
-							System.out.println(temp.getTitle() + "\t" + temp.getContent() + "\t" + temp.getWriter()
+							System.out.println(String.format("%-15s", 제목 ) + "\t" + String.format("%-15s", 내용 ) + "\t" + temp.getWriter()
 									+ "\t" + temp.getIndex());
 						}
 					}
@@ -195,9 +213,25 @@ public class main {
 
 			} else { // 차단유저가 없으면
 				for (Board temp : Controller.boardlist) {
+					String 내용 = "";
+					for (int s = 0; s < temp.getContent().length(); s++) {
+						내용 += temp.getContent().charAt(s);
+						if (s == 9) {
+							break;
+						}
+						
+					}
+					String 제목 = "";
+					for (int s = 0; s < temp.getTitle().length(); s++) {
+						제목 += temp.getTitle().charAt(s);
+						if (s == 9) {
+							break;
+						}
+						
+					}
 					if (temp.getCategory().equals(Controller.카테고리[카테고리선택])) {
-						System.out.println(temp.getTitle() + "\t" + temp.getContent() + "\t" + temp.getWriter() + "\t"
-								+ temp.getIndex());
+						System.out.println(String.format("%-15s", 제목 ) + "\t" + String.format("%-15s", 내용 ) + "\t" + temp.getWriter()
+						+ "\t" + temp.getIndex());
 					}
 				}
 			}
