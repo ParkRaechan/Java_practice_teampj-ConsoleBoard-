@@ -82,7 +82,7 @@ public class Controller {
 		
 		//회원저장
 			//파일에 [아이디,비번,이름,이메일,폰번]형식으로 저장
-		FileOutputStream out_a = new FileOutputStream("D:/java/회원test.txt");
+		FileOutputStream out_a = new FileOutputStream("C:/Users/504/Desktop/ds/회원.txt");
 		String storage_a1="";
 		for(Acount temp001 : acountlist) {
 				id = temp001.getId();
@@ -110,7 +110,7 @@ public class Controller {
 	
 	public static boolean 회원출력() throws IOException {
 		
-		FileInputStream input_a = new FileInputStream("D:/java/회원test.txt");
+		FileInputStream input_a = new FileInputStream("C:/Users/504/Desktop/ds/회원.txt");
 		byte[] bytes_a = new byte[1024]; // 바이트배열선
 		input_a.read(bytes_a);				// 바이트 읽기
 		String str_a = new String(bytes_a); // 일어온거 저장
@@ -142,7 +142,7 @@ public class Controller {
 	static void 차단파일처리(String id) throws IOException {
 		for(차단유저 temp : 차단유저list) {
 			if(temp.getIndex().equals(id)) {
-				FileOutputStream out_c = new FileOutputStream("D:/java/차단유저test.txt",true);
+				FileOutputStream out_c = new FileOutputStream("C:/Users/504/Desktop/ds/차단유저.txt");
 				String storage_c = id+"@@"+temp.getTarget()+"\n";		
 				out_c.write(storage_c.getBytes());		
 				
@@ -152,7 +152,7 @@ public class Controller {
 	
 	public static boolean 차단출력() throws IOException {
 		
-		FileInputStream input_c = new FileInputStream("D:/java/차단유저test.txt");
+		FileInputStream input_c = new FileInputStream("C:/Users/504/Desktop/ds/차단유저.txt");
 		byte[] bytes_c = new byte[1024]; // 바이트배열선
 		input_c.read(bytes_c);				// 바이트 읽기
 		String str_c = new String(bytes_c); // 일어온거 저장
@@ -260,7 +260,7 @@ public class Controller {
 	static void 게시물파일처리(String title,String content,String writer,LocalDateTime date,int view, String category,int good,int bad,int report,int index) throws IOException{
 		//게시물저장
 			//파일에 [제목,내용,글쓴이,월,일,시간,조회수,카테고리,추천,비추천,신고누적수]형식으로 저장
-		FileOutputStream out = new FileOutputStream("D:/java/게시물test.txt",true);
+		FileOutputStream out = new FileOutputStream("C:/Users/504/Desktop/ds/게시물.txt", true);
 		String storage = title+","+content+","+writer+","+date.format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"))+","+Integer.toString(view)+","+category+","+Integer.toString(good)+","+Integer.toString(bad)+","+Integer.toString(report)+","+Integer.toString(index)+"\n";
 		out.write(storage.getBytes());		
 	}//글확인e
@@ -268,7 +268,7 @@ public class Controller {
 	
 	public static boolean 게시물출력() throws IOException {
 		
-		FileInputStream input = new FileInputStream("D:/java/게시물test.txt");
+		FileInputStream input = new FileInputStream("C:/Users/504/Desktop/ds/게시물.txt");
 		byte[] bytes = new byte[1024]; // 바이트배열선
 		input.read(bytes);				// 바이트 읽기
 		String str = new String(bytes); // 일어온거 저장

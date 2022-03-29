@@ -13,24 +13,33 @@ public class main {
 	static String yourId;
 	static String yourPw;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		try {
 			Controller.게시물출력();
 			Controller.회원출력();
 			Controller.차단출력();
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+		
+			while (true) {
+				Scanner scanner = new Scanner(System.in);
+				그림();
 
-		while (true) {
-			그림();
+				// 메뉴
+				메인메뉴();
 
-			// 메뉴
-			메인메뉴();
-
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+		
 
+		
 	}
 
 	public static void 로그인메뉴(String id) throws IOException {
@@ -79,7 +88,7 @@ public class main {
 			System.out.println("--------");
 			System.out.println();
 			System.out.println("------------------");
-			System.out.println("|3.쪽지확인|");
+			System.out.println("|3.쪽지 보내기|");
 			System.out.println("------------------");
 			System.out.println();
 			System.out.println("-----------");
