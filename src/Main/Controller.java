@@ -36,12 +36,12 @@ public class Controller {
 	
 	
 	public static int È¸¿ø°¡ÀÔ¾ÆÀÌµğ(String id) {
-		String pattern = "^[0-9|a-z|A-Z|¤¡-¤¾|¤¿-¤Ó|°¡-ÆR]*$";
+		String pattern = "^[0-9|a-z|A-Z]*$";
 		if(!Pattern.matches(pattern, id)){
-			  return 1; // ¾ÆÀÌµğ¿¡ Æ¯¼ö¹®ÀÚ or °ø¹éÀÌ µé¾î°¨
+			  return 1; // ¾ÆÀÌµğ¿¡ Æ¯¼ö¹®ÀÚ or °ø¹é or ÇÑ±ÛÀÌ µé¾î°¨
 			}
-		if(id.length()<4 || id.length()>13) {
-			return 2; // ¾ÆÀÌµğ±æÀÌ°¡ 4~12ÀÚ¸®°¡ ¾Æ´Ô
+		if(id.length()<1 || id.length()>6) {
+			return 2; // ¾ÆÀÌµğ±æÀÌ°¡ 1~6ÀÚ¸®°¡ ¾Æ´Ô
 		}
 		for(Acount temp : acountlist) {
 			if(temp.getId().equals(id)) {
@@ -58,6 +58,9 @@ public class Controller {
 			}
 		if(!pw.equals(pwcheck)) {
 			return 2; // ºñ¹Ğ¹øÈ£ È®ÀÎ Æ²¸²
+		}
+		if(pw.length()<4 || pw.length()>12) {
+			return 4; // ºñ¹Ğ¹øÈ£°¡ 4~12ÀÚ¸®°¡ ¾Æ´Ô
 		}
 		return 3; // Á¤»óÀûÀÎ ºñ¹Ğ¹øÈ£
 	}

@@ -299,18 +299,19 @@ public class main {
 
 	public static void 회원가입() throws IOException {
 		System.out.println("----------------회원가입 페이지----------------");
-		System.out.println("(아이디는 4~12글자 사이여야 합니다.)");
+		System.out.println("(아이디는 1~6글자만 가능하며, 한글,공백,특수문자는 사용할 수 없습니다.)");
 		scanner.nextLine();
 		System.out.print("아이디 입력 : ");
 		String id = scanner.nextLine();
 		int idresult = Controller.회원가입아이디(id);
 		if (idresult == 1)
-			System.out.println("공백 혹은 특수문자가 입력되었습니다.");
+			System.out.println("아이디에 한글,공백,특수문자는 들어갈 수 없습니다.");
 		else if (idresult == 2)
-			System.out.println("아이디의 길이는 4~12글자만 가능합니다.");
+			System.out.println("아이디의 길이는 1~6글자만 가능합니다.");
 		else if (idresult == 3)
 			System.out.println("중복된 아이디입니다.");
 		else if (idresult == 4) {
+			System.out.println("(비밀번호는 4~12글자만 가능합니다.)");
 			System.out.print("비밀번호 입력 : ");
 			String pw = scanner.nextLine();
 			System.out.print("비밀번호 확인 : ");
@@ -333,6 +334,9 @@ public class main {
 					System.out.println("회원가입에 성공하였습니다.");
 				else
 					System.out.println("해당 전화번호로 더이상 가입이 불가능합니다.");
+			}
+			else if(pwresult==4) {
+				System.out.println("비밀번호의 길이는 4~12글자만 가능합니다.");
 			}
 		}
 
