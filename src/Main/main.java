@@ -137,8 +137,8 @@ public class main {
 						for (쪽지클래스 temp2 : temp.get쪽지()) {
 							System.out.println("--------------------------------------------");
 							System.out.print("번호 : " + temp2.get번호() + "\t");
-							System.out.print("보낸사람 : " + temp2.get보낸사람() + "\t");
-							System.out.print("받는사람 : " + temp2.get받는사람() + "\n");
+							System.out.print("보낸사람 : " + temp2.get받는사람() + "\t");
+							System.out.print("받는사람 : " + temp2.get보낸사람() + "\n");
 							System.out.print("내용 : " + temp2.get내용() + "\n");
 							System.out.println("--------------------------------------------");
 						}
@@ -388,14 +388,6 @@ public class main {
 		if (result == 1) {
 			System.out.println(id + "님 환영합니다.");
 			System.out.println();
-			///////////////// 나중에 지울것/ 포인트+100 ////////////////////
-			for (Acount temp : Controller.acountlist) {
-				if (temp.getId().equals(id)) {
-					temp.setPoint(temp.getPoint() + 100);
-					Controller.회원파일처리(id);
-				}
-			}
-			/////////////////////////////////////////////////
 			로그인메뉴(id);
 		} else if (result == 2) {
 			System.out.println("가입된 아이디가 없습니다.");

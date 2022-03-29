@@ -71,7 +71,7 @@ public class Controller {
 				return false; // 해당 전화번호로 가입한 회원이 있음
 			}
 		}
-		Acount temp = new Acount(id, pw, name, email, phone, 0, 0, null );
+		Acount temp = new Acount(id, pw, name, email, phone, 100, 0, null );
 		acountlist.add(temp);
 		Controller.회원파일처리(id);
 		return true; // 회원가입 성공
@@ -224,6 +224,13 @@ public class Controller {
 		Controller.게시물파일처리();
 		
 		boardtnum++;
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id)) {
+				temp.setPoint(temp.getPoint() + 5);
+				Controller.회원파일처리(id);
+				break;
+			}
+		}
 		/* 파일처리 메소드 처리 성공시 true반환
 		 * 
 		 */		
@@ -334,7 +341,19 @@ public class Controller {
 		for(Board temp : Controller.boardlist) {
 			if(temp.getIndex() == index) { // 같은인덱스번호의 글이있으면
 				Reply e = new Reply(con, id, date,0,0,0,index);
-				temp.getReplylist().add(e);
+				temp.getReplylist().add(e);		
+				break;
+			}
+		}
+		for(Acount temp : acountlist) {
+			if(temp.getId().equals(id)) {
+				temp.setPoint(temp.getPoint() + 5);
+				try {
+					Controller.회원파일처리(id);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			}
 		}
