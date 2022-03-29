@@ -515,8 +515,8 @@ public class main {
 						boolean result2 = Controller.글수정비밀번호체크(id, pw, index);
 						if (result2) {
 							System.out.print("수정할 제목 입력 : ");
-							String title = scanner.next();
-							scanner.next();
+							scanner.nextLine();
+							String title = scanner.nextLine();
 							System.out.print("수정할 내용 입력 : ");
 							String content = scanner.nextLine();
 							Controller.글수정(index, title, content);
@@ -545,7 +545,8 @@ public class main {
 					/////////////////////////////////// /////////////////////////////////////////
 				} else if (선택 == 3) {
 					System.out.println("내용: ");
-					String con = scanner.next();
+					scanner.nextLine();
+					String con = scanner.nextLine();
 					Controller.댓글작성(con, index, id);
 					/////////////////////////////////// 댓글 수정
 					/////////////////////////////////// ///////////////////////////////////////////

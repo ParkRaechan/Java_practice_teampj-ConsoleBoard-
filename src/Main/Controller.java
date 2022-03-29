@@ -264,7 +264,7 @@ public class Controller {
 	////////////////////////////////////글쓰기 파일처리 시작////////////////////////////////////////////////////
 
 	static void 게시물파일처리() throws IOException{
-	      FileOutputStream out = new FileOutputStream("C:/Users/504/Desktop/ds/게시물.txt", true);
+	      FileOutputStream out = new FileOutputStream("C:/Users/504/Desktop/ds/게시물.txt");
 	      String storage_c6 = "";
 	      for(Board temp002 : boardlist) {
 	         String title = temp002.getTitle();
@@ -355,9 +355,14 @@ public class Controller {
 		}
 		return false;
 	}
-	public static void 글수정(int boardnum, String title, String content) {
-		boardlist.get(boardnum).setTitle(title);
-		boardlist.get(boardnum).setContent(content);
+	public static void 글수정(int index, String title, String content) {
+		boardlist.get(index-1).setTitle(title);
+		boardlist.get(index-1).setContent(content);
+		try {
+			게시물파일처리();
+		} catch (IOException e) {
+			
+		}
 	}
 
 
@@ -646,7 +651,7 @@ public static boolean 신고(String id,int index) throws IOException {
 						temp.setGood(temp.getGood() + 1);//추천 개수늘리기
 						temp.getP().add(id);
 						try {
-							Controller.게시물파일처리();
+							게시물파일처리();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -658,7 +663,7 @@ public static boolean 신고(String id,int index) throws IOException {
 						temp.setBad(temp.getBad() + 1);//비추 개수늘리기
 						temp.getP().add(id);
 						try {
-							Controller.게시물파일처리();
+							게시물파일처리();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
