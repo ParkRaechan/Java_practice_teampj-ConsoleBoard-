@@ -2,12 +2,12 @@
 ## 콘솔 게시판(회원제 커뮤니티)
 - 주요기능 : 회원가입 로그인 글쓰기 글보기    
      
-
+### 시연영상  
 [![image](https://user-images.githubusercontent.com/100547978/180680128-cde6d5a6-84a9-45d0-bd75-2b8123654fef.png)
-](https://www.youtube.com/watch?v=YI9EJd-iC7Q&t=8s)  
+](https://www.youtube.com/watch?v=YI9EJd-iC7Q&t=8s)   
+  
 
-
-### 기능 소개
+### 기능 소개  
 1. 회원가입
 2. 로그인
 3. 아이디 & 비밀번호 찾기
