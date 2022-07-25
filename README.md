@@ -2,8 +2,8 @@
 ## 콘솔 게시판(회원제 커뮤니티)
 - 주요기능 : 회원가입 로그인 글쓰기 글보기    
      
-
-[!(![image](https://user-images.githubusercontent.com/100547978/180678774-e28109ac-4cb5-47f8-8686-536301421cc0.png)
+  
+(![image](https://user-images.githubusercontent.com/100547978/180678774-e28109ac-4cb5-47f8-8686-536301421cc0.png)
 ](https://www.youtube.com/watch?v=YI9EJd-iC7Q&t=8s)  
 
 
